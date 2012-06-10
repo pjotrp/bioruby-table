@@ -4,8 +4,9 @@
 
 Tables of data are often used in bioinformatics. This biogem contains
 support for reading tables and manipulation of rows and columns, both
-using a command line interface and Ruby library. In time it should be
-good for big data, and support a functional style of programming.
+using a command line interface and Ruby library. In time bio-table
+should be lazy, be good for big data, and support a functional style
+of programming.
 
 Note: this software is under active development!
 

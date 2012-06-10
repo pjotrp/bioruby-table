@@ -4,13 +4,16 @@ module BioTable
 
   class Table
 
-    attr_reader :header, :table
+    attr_reader :header, :table, :rowname
 
     def read_lines lines, options = {}
       @header = CSV.parse(lines[0])[0]
+      @rowname = []
       @table = []
       (lines[1..-1]).each do | line |
-        @table << CSV.parse(line)[0]
+        fields = CSV.parse(line)[0]
+        @rowname << fields[0]
+        @table << fields[1..-1] 
       end
     end
 

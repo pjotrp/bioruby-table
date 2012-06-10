@@ -15,7 +15,8 @@ Feature: Read CSV table
     Then I should correctly parse the comma-separated headers into "#Gene","AJ","B6"
     Then I should correctly parse the first line into 
       """
-      ["105853", "0.06", "0", "0", "0", "0", "0", "0.11", "0", "0", "0", nil, nil, "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", nil, "0", nil, nil, "Mal2", "MAL2 proteolipid protein"]
+      ["0.06", "0", "0", "0", "0", "0", "0.11", "0", "0", "0", nil, nil, "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", nil, "0", nil, nil, "Mal2", "MAL2 proteolipid protein"]
       """
+    Then it should have the field name "105853"
 
 

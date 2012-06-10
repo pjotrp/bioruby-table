@@ -21,3 +21,8 @@ Then /^I should correctly parse the first line into$/ do |string|
   line1.should == s
 end
 
+Then /^it should have the field name "(.*?)"$/ do |arg1|
+  @t.rowname[0].should == "105853"
+end
+
+
