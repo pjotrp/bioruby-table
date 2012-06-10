@@ -51,6 +51,24 @@ into the table. E.g.
       :by_row => { | fields | [fields[0..3],fields[6].to_i].flatten } )
 ```
 
+When by_row returns nil, the table row is skipped.
+
+To write a table to file
+
+```
+    t.write_file('test1a.csv')
+```
+
+again columns can be reordered/transformed using a function. Another
+option is by passing in an list of column numbers or header names,
+e.g.
+
+```
+    t.write_file('test1a.csv', columns: [0,1,2,4,6,8])
+    t.write_file('test1b.csv', columns: ["AJ","B6","Axb1","Axb4","AXB13","Axb15","Axb19"] )
+```
+
+other options are available for excluding row names, etc.
 
 The API doc is online. For more code examples see the test files in
 the source tree.
