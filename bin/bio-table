@@ -4,7 +4,14 @@
 # Author:: Pjotr Prins
 # Copyright:: 2012
 
- USAGE = "Describe bio-table"
+rootpath = File.dirname(File.dirname(__FILE__))
+$: << File.join(rootpath,'lib')
+
+_VERSION = File.new(File.join(rootpath,'VERSION')).read.chomp
+
+$stderr.print "bio-table "+_VERSION+" Copyright (C) 2012 Pjotr Prins <pjotr.prins@thebird.nl>\n\n"
+
+USAGE = "Describe bio-table"
 
 if ARGV.size == 0
   print USAGE
