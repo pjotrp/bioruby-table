@@ -1,4 +1,4 @@
-require 'csv'
+# require 'bio-table'
 
 Given /^a comma separated table$/ do |string|
   @lines = string.split(/\n/)
@@ -8,16 +8,16 @@ When /^I read the multi\-line string$/ do
 end
 
 Then /^I should correctly parse the comma\-separated headers into "(.*?)","(.*?)","(.*?)"$/ do |arg1, arg2, arg3|
-  # parse the headers
-  @headers = CSV.parse(@lines[0])[0]
-  @headers[0].should == arg1
-  @headers[1].should == arg2
-  @headers[2].should == arg3
+  @t = BioTable::Table.new
+  @t.read_lines(@lines)
+  @t.header[0].should == arg1
+  @t.header[1].should == arg2
+  @t.header[2].should == arg3
 end
 
 Then /^I should correctly parse the first line into$/ do |string|
-  @line1 = CSV.parse(@lines[1])[0]
+  line1 = @t[0]
   s = eval(string);
-  @line1.should == s
+  line1.should == s
 end
 
