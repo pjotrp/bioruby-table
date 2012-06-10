@@ -2,7 +2,10 @@
 
 [![Build Status](https://secure.travis-ci.org/pjotrp/bioruby-table.png)](http://travis-ci.org/pjotrp/bioruby-table)
 
-Full description goes here
+Tables of data are often used in bioinformatics. This biogem contains
+support for reading tables and manipulation of rows and columns. In
+time it should be good for big data, and support a functional style of
+programming.
 
 Note: this software is under active development!
 
