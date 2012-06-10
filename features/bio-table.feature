@@ -13,7 +13,7 @@ Feature: Read CSV table
         """
     When I read the multi-line string
     Then I should correctly parse the comma-separated headers into "#Gene","AJ","B6"
-    Then I should correctly parse the first line into 
+    And I should correctly parse the first line into 
       """
       ["0.06", "0", "0", "0", "0", "0", "0.11", "0", "0", "0", nil, nil, "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", nil, "0", nil, nil, "Mal2", "MAL2 proteolipid protein"]
       """

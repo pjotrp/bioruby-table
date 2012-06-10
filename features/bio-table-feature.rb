@@ -15,13 +15,13 @@ Then /^I should correctly parse the comma\-separated headers into "(.*?)","(.*?)
   @t.header[2].should == arg3
 end
 
-Then /^I should correctly parse the first line into$/ do |string|
+And /^I should correctly parse the first line into$/ do |string|
   line1 = @t[0]
   s = eval(string);
   line1.should == s
 end
 
-Then /^it should have the field name "(.*?)"$/ do |arg1|
+And /^it should have the field name "(.*?)"$/ do |arg1|
   @t.rowname[0].should == "105853"
 end
 
