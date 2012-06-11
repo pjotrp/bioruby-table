@@ -7,8 +7,8 @@ module BioTable
       @fields = fields
     end
 
-    def rowname_fields
-      [@rowname] << @fields
+    def all_fields
+      ([@rowname] << @fields).flatten
     end
 
     def valid?

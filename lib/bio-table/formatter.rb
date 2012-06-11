@@ -2,7 +2,7 @@ module BioTable
 
   class TabFormatter
     def write list
-      print list.join("\t"),"\n"
+      print list.map{|field| (field==nil ? "NA" : field)}.join("\t"),"\n"
     end
 
   end
@@ -10,7 +10,10 @@ module BioTable
   class CsvFormatter
 
     def write list
-      list.join(separator)
+      csv_string = CSV.generate do |csv|
+        csv << list
+      end
+      print csv_string
     end
   end
 

@@ -43,13 +43,10 @@ module BioTable
       format = options[:format]
       format = :tab if not format
       formatter = FormatFactory::create(format)
-      if options[:format] == :csv
-      else
-        formatter.write(@header)
-        each do | tablerow |
-          # p tablerow
-          formatter.write(tablerow.rowname_fields) if tablerow.valid?
-        end
+      formatter.write(@header)
+      each do | tablerow |
+        # p tablerow
+        formatter.write(tablerow.all_fields) if tablerow.valid?
       end
     end
 
