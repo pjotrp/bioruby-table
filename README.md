@@ -51,9 +51,18 @@ or, list all rows that have a least a field with value >= 1000.0
     bio-table test/data/input/test1.csv --num-filter "value.max >= 1000.0" > test1a.tab
 ```
 
-The --num-filter will convert fields lazily to numerical values.  Also
-string comparisons and regular expressions can be used. E.g. filter on
-rownames and field[1] both containing 'BGT'
+The --num-filter will convert fields lazily to numerical values (only
+valid numbers are converted). If there are NA values in the table, you
+may wish to do something like this
+
+```
+    bio-table test/data/input/test1.csv --num-filter "value[0..12].compact.max >= 1000.0" > test1a.tab
+```
+
+which takes the first 13 fields and compact removes the nil values.
+
+Also string comparisons and regular expressions can be used. E.g.
+filter on rownames and field[1] both containing 'BGT'
 
 ```
     bio-table test/data/input/test1.csv --filter "rowname =~ /BGT/ and field[1] =~ /BGT/" > test1a.tab
