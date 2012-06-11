@@ -23,10 +23,11 @@ Tables can be transformed through the command line. To transform a
 comma separated file to a tab delimited one
 
 ```
-    bio-table test/data/input/test1.csv --format tab > test1.tab
+    bio-table test/data/input/test1.csv --in-format csv --format tab > test1.tab
 ```
 
-Tab is actually the default. To convert it back
+Tab is actually the general default. Also, if the file name ends in
+csv, it will assume CSV. To convert the table back
 
 ```
     bio-table test1.tab --format csv > test1.csv

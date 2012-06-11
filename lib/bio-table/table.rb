@@ -28,6 +28,11 @@ module BioTable
 
     def read_file filename, options = {}
       lines = []
+      if not options[:in_format] and filename =~ /\.csv$/
+        @logger.debug "Autodetected CSV file"
+        options[:in_format] = :csv
+      end
+      @logger.debug(options)
       File.open(filename).each_line do | line |
         lines << line
       end

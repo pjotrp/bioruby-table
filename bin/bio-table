@@ -35,8 +35,11 @@ options = {:show_help=>false}
 opts = OptionParser.new do |o|
   o.banner = "Usage: #{File.basename($0)} [options] filename\n\n"
 
-  o.on('--format [tab,csv]', [:tab, :csv], 'Format rows (default tab)') do |par|
-    # TODO: your logic here, below an example
+  o.on('--in-format [tab,csv]', [:tab, :csv], 'Input format (default tab)') do |par|
+    options[:in_format] = par.to_sym
+  end
+
+  o.on('--format [tab,csv]', [:tab, :csv], 'Output format (default tab)') do |par|
     options[:format] = par.to_sym
   end
   
@@ -95,6 +98,6 @@ logger.info [options, ARGV]
 include BioTable
 
 ARGV.each do | fn |
-  t = TableReader::read_file(fn)
+  t = TableReader::read_file(fn, options)
   t.write(options)
 end
