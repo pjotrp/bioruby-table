@@ -5,6 +5,7 @@ module BioTable
     attr_reader :header, :table, :rowname
 
     def initialize
+      @logger = Bio::Log::LoggerPlus['bio-table']
       @table = []
       @rowname = []
     end
@@ -34,14 +35,27 @@ module BioTable
     end
 
     def write options = {}
-      print @header.join("\t")
-      @table.each_with_index do | row,i |
-        print rowname[i],"\t",row.join("\t"),"\n" if row
+      format = options[:format]
+      format = :tab if not format
+      formatter = FormatFactory::create(format)
+      if options[:format] == :csv
+      else
+        formatter.write(@header)
+        each do | tablerow |
+          p tablerow
+          formatter.write(tablerow.rowname_fields)
+        end
       end
     end
 
     def [] row
-      @table[row]
+      TableRow.new(@rowname[row],@table[row])
+    end
+
+    def each 
+      @table.each_with_index do | row,i |
+        yield TableRow.new(@rowname[i], row)
+      end
     end
 
   end

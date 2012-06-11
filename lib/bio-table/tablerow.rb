@@ -6,6 +6,10 @@ module BioTable
       @rowname = rowname
       @fields = fields
     end
+
+    def rowname_fields
+      [@rowname] << @fields
+    end
   end
 
 end
