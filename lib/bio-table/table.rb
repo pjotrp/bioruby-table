@@ -1,5 +1,3 @@
-require 'csv'
-
 module BioTable
 
   class Table
@@ -7,16 +5,20 @@ module BioTable
     attr_reader :header, :table, :rowname
 
     def initialize
-      @header = []
       @table = []
       @rowname = []
     end
 
-    def read_lines lines, options = {}
+    # Read lines (list of string) and add them to the table, setting row names 
+    # and row fields. The first row is assumed to be the header and ignored if the
+    # header has been set.
 
-      @header = CSV.parse(lines[0])[0]
+    def read_lines lines, options = {}
+      header = LineParser::parse(lines[0])
+
+      @header = header if not @header
       (lines[1..-1]).each do | line |
-        fields = CSV.parse(line)[0]
+        fields = LineParser::parse(line)
         @rowname << fields[0]
         @table << fields[1..-1] 
       end
@@ -24,9 +26,18 @@ module BioTable
     end
 
     def read_file filename, options = {}
+      lines = []
+      File.open(filename).each_line do | line |
+        lines << line
+      end
+      read_lines(lines)
     end
 
     def write options = {}
+      print @header.join("\t")
+      @table.each_with_index do | row,i |
+        print rowname[i],"\t",row.join("\t"),"\n" if row
+      end
     end
 
     def [] row
