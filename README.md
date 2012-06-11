@@ -36,7 +36,21 @@ csv, it will assume CSV. To convert the table back
 To filter out rows that contain certain values
 
 ```
-    bio-table test/data/input/test1.csv --filter "row[3] > 0.05" > test1a.tab
+    bio-table test/data/input/test1.csv --num-filter "field[3] > 0.05" > test1a.tab
+```
+
+and with math
+
+```
+    bio-table test/data/input/test1.csv --num-filter "field[3]-field[6] > 0.05" > test1a.tab
+```
+
+The --num-filter will convert fields lazily to numerical values.  Also
+string comparisons and regular expressions can be used, filter on
+rownames and field[1] both containing 'BGT'
+
+```
+    bio-table test/data/input/test1.csv --filter "rowname =~ /BGT/ and field[1] =~ /BGT/" > test1a.tab
 ```
 
 To reorder columns by name
