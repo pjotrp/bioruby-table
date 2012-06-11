@@ -6,15 +6,21 @@ module BioTable
 
     attr_reader :header, :table, :rowname
 
-    def read_lines lines, options = {}
-      @header = CSV.parse(lines[0])[0]
-      @rowname = []
+    def initialize
+      @header = []
       @table = []
+      @rowname = []
+    end
+
+    def read_lines lines, options = {}
+
+      @header = CSV.parse(lines[0])[0]
       (lines[1..-1]).each do | line |
         fields = CSV.parse(line)[0]
         @rowname << fields[0]
         @table << fields[1..-1] 
       end
+      return self
     end
 
     def read_file filename, options = {}
