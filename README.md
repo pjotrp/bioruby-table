@@ -6,7 +6,8 @@ Tables of data are often used in bioinformatics. This biogem contains
 support for reading tables and manipulation of rows and columns, both
 using a command line interface and Ruby library. In time bio-table
 should be lazy, be good for big data, and support a functional style
-of programming.
+of programming. You don't need to know Ruby to use the command line
+interface (CLI).
 
 Note: this software is under active development!
 
@@ -16,7 +17,39 @@ Note: this software is under active development!
     gem install bio-table
 ```
 
-## Usage
+## The command line interface (CLI)
+
+Tables can be transformed through the command line. To transform a
+comma separated file to a tab delimited one
+
+```
+    bio-table test/data/input/test1.csv --format tab > test1.tab
+```
+
+To filter out rows that contain certain values
+
+```
+    bio-table test/data/input/test1.csv --filter "row[3] > 0.05" > test1a.csv
+```
+
+To reorder columns by name
+
+```
+    bio-table test/data/input/test1.csv --columns AJ,B6,Axb1,Axb4,AXB13,Axb15,Axb19 > test1a.csv
+```
+
+or use their index numbers
+
+```
+    bio-table test/data/input/test1.csv --columns 0,1,2,4,6,8 > test1a.csv
+```
+
+To sort a table on column 4 and 2
+
+```
+    bio-table test/data/input/test1.csv --sort 4,2 > test1a.csv
+```
+ ## Usage
 
 ```ruby
     require 'bio-table'
@@ -59,11 +92,11 @@ actual table rows.
 
 ```
     t = Table.read_file('test/data/input/test1.csv',
-      :by_header => { | header | ["", header[0..3], header[6]].flatten } )
+      :by_header => { | header | ["Row name", header[0..3], header[6]].flatten } )
       :by_row => { | row | [row.rowname, row[0..3], row[6].to_i].flatten } )
 ```
 
-When by_row returns nil, the table row is skipped. One way to
+When by_row returns nil or false, the table row is skipped. One way to
 transform a file, and not loading it in memory, is
 
 ```
@@ -71,9 +104,12 @@ transform a file, and not loading it in memory, is
     t = Table.read_file('test/data/input/test1.csv', 
       :by_row => { | row | 
         TableRow::write(f,[row.rowname,row[0..3],row[6].to_i].flatten, :separator => "\t") 
-        nil   # don't create a table in memory
+        nil   # don't create a table in memory, effectively a filter
       })
 ```
+
+Another function is :filter which only acts on rows, but can not
+transform them.
 
 To write a full table from memory to file use
 
@@ -106,7 +142,8 @@ Coming soon
 
 The API doc is online. For more code examples see the test files in
 the source tree.
-        
+
+       
 ## Project home page
 
 Information on the source tree, documentation, examples, issues and
