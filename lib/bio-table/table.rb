@@ -15,11 +15,14 @@ module BioTable
     # header has been set.
 
     def read_lines lines, options = {}
+      num_filter = options[:num_filter]
+      @logger.debug "Filtering on #{num_filter}" if num_filter 
       header = LineParser::parse(lines[0], options[:in_format])
 
       @header = header if not @header
       (lines[1..-1]).each do | line |
         fields = LineParser::parse(line, options[:in_format])
+        next if not Filter::numeric(num_filter,fields)
         @rowname << fields[0]
         @table << fields[1..-1] 
       end

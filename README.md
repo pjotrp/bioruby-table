@@ -36,17 +36,23 @@ csv, it will assume CSV. To convert the table back
 To filter out rows that contain certain values
 
 ```
-    bio-table test/data/input/test1.csv --num-filter "field[3] > 0.05" > test1a.tab
+    bio-table test/data/input/test1.csv --num-filter "value[3] <= 0.05" > test1a.tab
 ```
 
-and with math
+and with math, list all rows 
 
 ```
-    bio-table test/data/input/test1.csv --num-filter "field[3]-field[6] > 0.05" > test1a.tab
+    bio-table test/data/input/test1.csv --num-filter "value[3]-value[6] >= 0.05" > test1a.tab
+```
+
+or, list all rows that have a least a field with value >= 1000.0
+
+```
+    bio-table test/data/input/test1.csv --num-filter "value.max >= 1000.0" > test1a.tab
 ```
 
 The --num-filter will convert fields lazily to numerical values.  Also
-string comparisons and regular expressions can be used, filter on
+string comparisons and regular expressions can be used. E.g. filter on
 rownames and field[1] both containing 'BGT'
 
 ```

@@ -4,6 +4,7 @@ module BioTable
 
   module LineParser
 
+    # Converts a string into an array of string fields
     def LineParser::parse(line, in_format)
       if in_format == :csv
         CSV.parse(line)[0]
