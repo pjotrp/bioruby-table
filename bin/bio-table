@@ -11,7 +11,11 @@ _VERSION = File.new(File.join(rootpath,'VERSION')).read.chomp
 
 $stderr.print "bio-table "+_VERSION+" Copyright (C) 2012 Pjotr Prins <pjotr.prins@thebird.nl>\n\n"
 
-USAGE = "Describe bio-table"
+USAGE =<<EOU
+
+bio-table transforms, filters and reorders table files (CSV, tab-delimited).
+
+EOU
 
 if ARGV.size == 0
   print USAGE
@@ -19,51 +23,53 @@ end
 
 require 'bio-table'
 require 'optparse'
+require 'bio-logger'
 
-# Uncomment when using the bio-logger 
-# require 'bio-logger'
-# Bio::Log::CLI.logger('stderr')
-# Bio::Log::CLI.trace('info')
+log = Bio::Log::LoggerPlus.new 'bio-table'
+# log.outputters = Bio::Log::Outputter.stderr
 
-options = {:example_switch=>false,:show_help=>false}
+Bio::Log::CLI.logger('stderr')
+Bio::Log::CLI.trace('info')
+
+options = {:show_help=>false}
 opts = OptionParser.new do |o|
-  o.banner = "Usage: #{File.basename($0)} [options] reponame\ne.g. #{File.basename($0)} the-perfect-gem"
+  o.banner = "Usage: #{File.basename($0)} [options] filename\n\n"
 
-  o.on('--example_parameter [EXAMPLE_PARAMETER]', 'TODO: put a description for the PARAMETER') do |example_parameter|
+  o.on('--format [tab,csv]', [:tab, :csv], 'Format rows (default tab)') do |par|
     # TODO: your logic here, below an example
-    options[:example_parameter] = 'this is a parameter'
+    options[:format] = par.to_sym
   end
   
   o.separator ""
-  o.on("--switch-example", 'TODO: put a description for the SWITCH') do
-    # TODO: your logic here, below an example
-    self[:example_switch] = true
-  end
-
-  # Uncomment the following when using the bio-logger 
-  # o.separator ""
-  # o.on("--logger filename",String,"Log to file (default stderr)") do | name |
-  #   Bio::Log::CLI.logger(name)
-  # end
-  #
-  # o.on("--trace options",String,"Set log level (default INFO, see bio-logger)") do | s |
-  #   Bio::Log::CLI.trace(s)
-  # end
-  # 
-  # o.on("-q", "--quiet", "Run quietly") do |q|
-  #   Bio::Log::CLI.trace('error')
-  # end
-  # 
-  # o.on("-v", "--verbose", "Run verbosely") do |v|
-  #   Bio::Log::CLI.trace('info')
-  # end
-  # 
-  # o.on("--debug", "Show debug messages") do |v|
-  #   Bio::Log::CLI.trace('debug')
+  # o.on("--switch-example", 'TODO: put a description for the SWITCH') do
+     # TODO: your logic here, below an example
+  #   self[:example_switch] = true
   # end
 
   o.separator ""
-  o.on_tail('-h', '--help', 'display this help and exit') do
+  o.on("--logger filename",String,"Log to file (default stderr)") do | name |
+    Bio::Log::CLI.logger(name)
+  end
+  
+  o.on("--trace options",String,"Set log level (default INFO, see bio-logger)") do | s |
+    Bio::Log::CLI.trace(s)
+  end
+  
+  o.on("-q", "--quiet", "Run quietly") do |q|
+    Bio::Log::CLI.trace('error')
+  end
+  
+  o.on("-v", "--verbose", "Run verbosely") do |v|
+    Bio::Log::CLI.trace('info')
+  end
+  
+  o.on("--debug", "Show debug messages") do |v|
+    Bio::Log::CLI.trace('debug')
+  end
+
+  o.separator ""
+
+  o.on_tail('-h', '--help', 'Display this help and exit') do
     options[:show_help] = true
   end
 end
@@ -71,11 +77,17 @@ end
 begin
   opts.parse!(ARGV)
 
-  # Uncomment the following when using the bio-logger 
-  # Bio::Log::CLI.configure('bio-table')
+  if options[:show_help] 
+    print opts
+    print USAGE
+  end
 
   # TODO: your code here
   # use options for your logic
 rescue OptionParser::InvalidOption => e
   options[:invalid_argument] = e.message
 end
+
+Bio::Log::CLI.configure('bio-table')
+logger = Bio::Log::LoggerPlus['bio-table']
+logger.info [options, ARGV]

@@ -26,29 +26,38 @@ comma separated file to a tab delimited one
     bio-table test/data/input/test1.csv --format tab > test1.tab
 ```
 
+Tab is actually the default. To convert it back
+
+```
+    bio-table test1.tab --format csv > test1.csv
+```
+
 To filter out rows that contain certain values
 
 ```
-    bio-table test/data/input/test1.csv --filter "row[3] > 0.05" > test1a.csv
+    bio-table test/data/input/test1.csv --filter "row[3] > 0.05" > test1a.tab
 ```
 
 To reorder columns by name
 
 ```
-    bio-table test/data/input/test1.csv --columns AJ,B6,Axb1,Axb4,AXB13,Axb15,Axb19 > test1a.csv
+    bio-table test/data/input/test1.csv --columns AJ,B6,Axb1,Axb4,AXB13,Axb15,Axb19 > test1a.tab
 ```
 
 or use their index numbers
 
 ```
-    bio-table test/data/input/test1.csv --columns 0,1,2,4,6,8 > test1a.csv
+    bio-table test/data/input/test1.csv --columns 0,1,2,4,6,8 > test1a.tab
 ```
 
 To sort a table on column 4 and 2
 
 ```
-    bio-table test/data/input/test1.csv --sort 4,2 > test1a.csv
+    bio-table test/data/input/test1.csv --sort 4,2 > test1a.tab
 ```
+
+Note: not all is implemented (just yet). Please check bio-table --help first.
+
  ## Usage
 
 ```ruby
