@@ -91,3 +91,10 @@ end
 Bio::Log::CLI.configure('bio-table')
 logger = Bio::Log::LoggerPlus['bio-table']
 logger.info [options, ARGV]
+
+include BioTable
+
+ARGV.each do | fn |
+  t = TableReader::read_file(fn)
+  t.write(options)
+end

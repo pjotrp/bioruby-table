@@ -20,8 +20,22 @@ module BioTable
     def read_file filename, options = {}
     end
 
+    def write options = {}
+    end
+
     def [] row
       @table[row]
+    end
+
+  end
+
+  module TableReader
+    def TableReader::read_file filename, options = {}
+      logger = Bio::Log::LoggerPlus['bio-table']
+      logger.info("Parsing #{filename}")
+      t = Table.new
+      t.read_file(filename, options)
+      t
     end
   end
 
