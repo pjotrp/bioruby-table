@@ -15,11 +15,11 @@ module BioTable
     # header has been set.
 
     def read_lines lines, options = {}
-      header = LineParser::parse(lines[0])
+      header = LineParser::parse(lines[0], options[:in_format])
 
       @header = header if not @header
       (lines[1..-1]).each do | line |
-        fields = LineParser::parse(line)
+        fields = LineParser::parse(line, options[:in_format])
         @rowname << fields[0]
         @table << fields[1..-1] 
       end
@@ -36,7 +36,7 @@ module BioTable
       File.open(filename).each_line do | line |
         lines << line
       end
-      read_lines(lines)
+      read_lines(lines, options)
     end
 
     def write options = {}
@@ -47,8 +47,8 @@ module BioTable
       else
         formatter.write(@header)
         each do | tablerow |
-          p tablerow
-          formatter.write(tablerow.rowname_fields)
+          # p tablerow
+          formatter.write(tablerow.rowname_fields) if tablerow.valid?
         end
       end
     end

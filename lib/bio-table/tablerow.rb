@@ -10,6 +10,10 @@ module BioTable
     def rowname_fields
       [@rowname] << @fields
     end
+
+    def valid?
+      fields != nil and fields.size > 0
+    end
   end
 
 end
