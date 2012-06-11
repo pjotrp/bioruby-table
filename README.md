@@ -20,6 +20,7 @@ Note: this software is under active development!
 
 ```ruby
     require 'bio-table'
+    include BioTable
 ```
 
 ### Loading a table
@@ -27,48 +28,69 @@ Note: this software is under active development!
 Tables are two dimensional matrixes, which can be read from a file
 
 ```
-    t = BioTable::Table.read_file('test/data/input/test1.csv')
+    t = Table.read_file('test/data/input/test1.csv')
     p t.header              # print the header array
-    p t.name[0],t[0]        # print the row name and row fields
+    p t.name[0],t[0]        # print the row name and row row
     p t[0][0]               # print the top corner field
 ```
 
 The table reader has quite a few options for defining field separator,
 which column to use for names etc. More interestingly you can pass a
-function to limit the amount of fields read into memory:
+function to limit the amount of row read into memory:
 
 ```
-    t = BioTable::Table.read_file('test/data/input/test1.csv',
-      :by_row => { | fields | fields[0..3] } )
+    t = Table.read_file('test/data/input/test1.csv',
+      :by_row => { | row | row[0..3] } )
 ```
 
-will create a table of the column name and 2 table fields. You can use
+will create a table of the column name +row[0]+ and 2 table fields. You can use
 the same idea to reformat and reorder table columns when reading data
 into the table. E.g.
 
 ```
-    t = BioTable::Table.read_file('test/data/input/test1.csv',
-      :by_row => { | fields | [fields[0..3],fields[6].to_i].flatten } )
+    t = Table.read_file('test/data/input/test1.csv',
+      :by_row => { | row | [row.rowname, row[0..3], row[6].to_i].flatten } )
 ```
 
-When by_row returns nil, the table row is skipped.
+When a header can not be transformed, it may fail. You can test for
+the header with row.header?, but in this case you
+can pass in a :by_header, which will have :by_row only call on
+actual table rows.
 
-To write a table to file
+```
+    t = Table.read_file('test/data/input/test1.csv',
+      :by_header => { | header | ["", header[0..3], header[6]].flatten } )
+      :by_row => { | row | [row.rowname, row[0..3], row[6].to_i].flatten } )
+```
+
+When by_row returns nil, the table row is skipped. One way to
+transform a file, and not loading it in memory, is
+
+```
+    f = File.new('test.tab','w')
+    t = Table.read_file('test/data/input/test1.csv', 
+      :by_row => { | row | 
+        TableRow::write(f,[row.rowname,row[0..3],row[6].to_i].flatten, :separator => "\t") 
+        nil   # don't create table in memory
+      })
+```
+
+To write a full table from memory to file use
 
 ```
     t.write_file('test1a.csv')
 ```
 
 again columns can be reordered/transformed using a function. Another
-option is by passing in an list of column numbers or header names,
-e.g.
+option is by passing in an list of column numbers or header names, so
+only those cat written e.g.
 
 ```
     t.write_file('test1a.csv', columns: [0,1,2,4,6,8])
     t.write_file('test1b.csv', columns: ["AJ","B6","Axb1","Axb4","AXB13","Axb15","Axb19"] )
 ```
 
-other options are available for excluding row names, etc.
+other options are available for excluding row names (rownames: false), etc.
 
 The API doc is online. For more code examples see the test files in
 the source tree.
