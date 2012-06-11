@@ -23,7 +23,7 @@ Note: this software is under active development!
     include BioTable
 ```
 
-### Loading a table
+### Reading, transforming, and writing a table
 
 Tables are two dimensional matrixes, which can be read from a file
 
@@ -71,7 +71,7 @@ transform a file, and not loading it in memory, is
     t = Table.read_file('test/data/input/test1.csv', 
       :by_row => { | row | 
         TableRow::write(f,[row.rowname,row[0..3],row[6].to_i].flatten, :separator => "\t") 
-        nil   # don't create table in memory
+        nil   # don't create a table in memory
       })
 ```
 
@@ -83,7 +83,7 @@ To write a full table from memory to file use
 
 again columns can be reordered/transformed using a function. Another
 option is by passing in an list of column numbers or header names, so
-only those cat written e.g.
+only those get written, e.g.
 
 ```
     t.write_file('test1a.csv', columns: [0,1,2,4,6,8])
@@ -91,6 +91,18 @@ only those cat written e.g.
 ```
 
 other options are available for excluding row names (rownames: false), etc.
+
+To sort a table file, the current routine is to load the file in
+memory and sort according to table columns. In the near future we aim
+to have a low-memory version, by reading only the sorting columns in
+memory, and indexing them before writing output. That means reading a
+file twice, but being able to handle much larger data.
+
+### Loading a numerical matrix
+
+Coming soon
+
+### More...
 
 The API doc is online. For more code examples see the test files in
 the source tree.
