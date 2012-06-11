@@ -22,11 +22,11 @@ module BioTable
       @header = header if not @header
       (lines[1..-1]).each do | line |
         fields = LineParser::parse(line, options[:in_format])
+        # p fields
         next if not Filter::numeric(num_filter,fields)
         @rowname << fields[0]
         @table << fields[1..-1] 
       end
-      return self
     end
 
     def read_file filename, options = {}
@@ -37,7 +37,7 @@ module BioTable
       end
       @logger.debug(options)
       File.open(filename).each_line do | line |
-        lines << line
+        lines.push line
       end
       read_lines(lines, options)
     end
