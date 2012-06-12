@@ -57,14 +57,14 @@ or, list all rows that have a least a field with values >= 1000.0
     bio-table test/data/input/table1.csv --num-filter "values.max >= 1000.0" > test1a.tab
 ```
 
-Produce all rows that have at least 3 values above 3.0 and 1 one values
+Produce all rows that have at least 3 values above 3.0 and 1 one value
 above 10.0:
 
 ```
-    bio-table test/data/input/table1.csv --num-filter "values.max >= 10.0 and values.count{|x| x>=3.0}"
+    bio-table test/data/input/table1.csv --num-filter "values.max >= 10.0 and values.count{|x| x>=3.0} > 3"
 ```
 
-How is that for expressiveness?
+How is that for expressiveness? Looks like Ruby to me.
 
 The --num-filter will convert fields lazily to numerical values (only
 valid numbers are converted). If there are NA (nil) values in the table, you
