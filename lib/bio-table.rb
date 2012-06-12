@@ -15,4 +15,6 @@ require 'bio-table/parser.rb'
 require 'bio-table/formatter.rb'
 require 'bio-table/tablerow.rb'
 require 'bio-table/table.rb'
+require 'bio-table/tablereader.rb'
+require 'bio-table/tablewriter.rb'
 

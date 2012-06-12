@@ -23,6 +23,8 @@ Note: this software is under active development!
 
 ## The command line interface (CLI)
 
+### Transforming a table
+
 Tables can be transformed through the command line. To transform a
 comma separated file to a tab delimited one
 
@@ -95,6 +97,8 @@ or use their index numbers
     bio-table test/data/input/table1.csv --columns 0,1,2,4,6,8 > test1a.tab
 ```
 
+### Sorting a table
+
 To sort a table on column 4 and 2
 
 ```
@@ -103,6 +107,14 @@ To sort a table on column 4 and 2
 ```
 
 Note: not all is implemented (just yet). Please check bio-table --help first.
+
+### Combining a table
+
+You can combine tables by passing in multiple file names
+
+    bio-table test/data/input/table1.csv test/data/input/table2.csv
+
+assuming they have the same headers (you can use the --columns switch!)
 
 ## Usage
 

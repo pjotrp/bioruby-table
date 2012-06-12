@@ -31,7 +31,7 @@ log = Bio::Log::LoggerPlus.new 'bio-table'
 Bio::Log::CLI.logger('stderr')
 Bio::Log::CLI.trace('info')
 
-options = {:show_help=>false}
+options = {show_help: false, write_header: true}
 opts = OptionParser.new do |o|
   o.banner = "Usage: #{File.basename($0)} [options] filename\n\n"
 
@@ -45,6 +45,10 @@ opts = OptionParser.new do |o|
   
   o.on('--num-filter func', 'Numeric filtering function') do |par|
     options[:num_filter] = par
+  end
+
+  o.on('--columns list', Array, 'List of column names or indices') do |par|
+    options[:columns] = par
   end
   
   o.separator ""
@@ -99,4 +103,5 @@ include BioTable
 ARGV.each do | fn |
   t = TableReader::read_file(fn, options)
   t.write(options)
+  options[:write_header] = false  # don't write the header for chained files
 end

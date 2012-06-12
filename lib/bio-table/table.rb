@@ -18,6 +18,7 @@ module BioTable
       num_filter = options[:num_filter]
       @logger.debug "Filtering on #{num_filter}" if num_filter 
       header = LineParser::parse(lines[0], options[:in_format])
+      Validator::valid_header?(header, @header)
       @header = header if not @header
 
       (lines[1..-1]).each do | line |
@@ -48,7 +49,7 @@ module BioTable
       format = options[:format]
       format = :tab if not format
       formatter = FormatFactory::create(format)
-      formatter.write(@header)
+      formatter.write(@header) if options[:write_header]
       each do | tablerow |
         # p tablerow
         formatter.write(tablerow.all_fields) if tablerow.valid?
@@ -67,14 +68,5 @@ module BioTable
 
   end
 
-  module TableReader
-    def TableReader::read_file filename, options = {}
-      logger = Bio::Log::LoggerPlus['bio-table']
-      logger.info("Parsing #{filename}")
-      t = Table.new
-      t.read_file(filename, options)
-      t
-    end
-  end
 
 end
