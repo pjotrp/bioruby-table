@@ -2,12 +2,16 @@
 
 [![Build Status](https://secure.travis-ci.org/pjotrp/bioruby-table.png)](http://travis-ci.org/pjotrp/bioruby-table)
 
-Tables of data are often used in bioinformatics. This biogem contains
-support for reading tables and manipulation of rows and columns, both
-using a command line interface and Ruby library. In time bio-table
-should be lazy, be good for big data, and support a functional style
-of programming. You don't need to know Ruby to use the command line
-interface (CLI).
+Tables of data are often used in bioinformatics, especially in
+conjunction with Excel spreadsheets and DB queries. This biogem
+contains support for reading tables and manipulation of rows and
+columns, both using a command line interface and through a Ruby
+library. If you don't like R dataframes, maybe you like this. Also
+bio-table fits in a pipe-line setup. 
+
+In time bio-table should be lazy, be good for big data, and
+support a functional style of programming. You don't need to know Ruby
+to use the command line interface (CLI).
 
 Note: this software is under active development!
 
@@ -26,7 +30,7 @@ comma separated file to a tab delimited one
     bio-table test/data/input/test1.csv --in-format csv --format tab > test1.tab
 ```
 
-Tab is actually the general default. Also, if the file name ends in
+Tab is actually the general default. Still, if the file name ends in
 csv, it will assume CSV. To convert the table back
 
 ```
@@ -88,7 +92,7 @@ To sort a table on column 4 and 2
 
 Note: not all is implemented (just yet). Please check bio-table --help first.
 
- ## Usage
+## Usage
 
 ```ruby
     require 'bio-table'

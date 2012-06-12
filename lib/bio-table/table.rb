@@ -2,11 +2,11 @@ module BioTable
 
   class Table
 
-    attr_reader :header, :table, :rowname
+    attr_reader :header, :rows, :rowname
 
     def initialize
       @logger = Bio::Log::LoggerPlus['bio-table']
-      @table = []
+      @rows = []
       @rowname = []
     end
 
@@ -18,14 +18,16 @@ module BioTable
       num_filter = options[:num_filter]
       @logger.debug "Filtering on #{num_filter}" if num_filter 
       header = LineParser::parse(lines[0], options[:in_format])
-
       @header = header if not @header
+
       (lines[1..-1]).each do | line |
         fields = LineParser::parse(line, options[:in_format])
-        # p fields
+        rowname = fields[0]
+        data_fields = fields[1..-1]
+        next if not Validator::valid_row?(data_fields,@header,@rows)
         next if not Filter::numeric(num_filter,fields)
-        @rowname << fields[0]
-        @table << fields[1..-1] 
+        @rowname << rowname
+        @rows << data_fields
       end
     end
 
@@ -54,11 +56,11 @@ module BioTable
     end
 
     def [] row
-      TableRow.new(@rowname[row],@table[row])
+      TableRow.new(@rowname[row],@rows[row])
     end
 
     def each 
-      @table.each_with_index do | row,i |
+      @rows.each_with_index do | row,i |
         yield TableRow.new(@rowname[i], row)
       end
     end

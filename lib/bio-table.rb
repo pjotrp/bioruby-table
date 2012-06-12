@@ -9,6 +9,7 @@
 # In this file only require other files. Avoid other source code.
 
 require 'bio-logger'
+require 'bio-table/validator.rb'
 require 'bio-table/filter.rb'
 require 'bio-table/parser.rb'
 require 'bio-table/formatter.rb'
