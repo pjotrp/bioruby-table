@@ -27,67 +27,77 @@ Tables can be transformed through the command line. To transform a
 comma separated file to a tab delimited one
 
 ```
-    bio-table test/data/input/test1.csv --in-format csv --format tab > test1.tab
+    bio-table test/data/input/table1.csv --in-format csv --format tab > test1.tab
 ```
 
 Tab is actually the general default. Still, if the file name ends in
 csv, it will assume CSV. To convert the table back
 
 ```
-    bio-table test1.tab --format csv > test1.csv
+    bio-table test1.tab --format csv > table1.csv
 ```
 
-To filter out rows that contain certain values
+To filter out rows that contain certain valuess
 
 ```
-    bio-table test/data/input/test1.csv --num-filter "value[3] <= 0.05" > test1a.tab
+    bio-table test/data/input/table1.csv --num-filter "values[3] <= 0.05" > test1a.tab
 ```
 
 and with math, list all rows 
 
 ```
-    bio-table test/data/input/test1.csv --num-filter "value[3]-value[6] >= 0.05" > test1a.tab
+    bio-table test/data/input/table1.csv --num-filter "values[3]-values[6] >= 0.05" > test1a.tab
 ```
 
-or, list all rows that have a least a field with value >= 1000.0
+or, list all rows that have a least a field with values >= 1000.0
 
 ```
-    bio-table test/data/input/test1.csv --num-filter "value.max >= 1000.0" > test1a.tab
+    bio-table test/data/input/table1.csv --num-filter "values.max >= 1000.0" > test1a.tab
 ```
 
-The --num-filter will convert fields lazily to numerical values (only
-valid numbers are converted). If there are NA values in the table, you
+Produce all rows that have at least 3 valuess above 3.0 and 1 one values
+above 10.0:
+
+```
+    bio-table test/data/input/table1.csv --num-filter "values.max >= 1000.0 and values.compact.count{|x|x>=3.0}" > test1a.tab
+```
+
+The --num-filter will convert fields lazily to numerical valuess (only
+valid numbers are converted). If there are NA valuess in the table, you
 may wish to do something like this
 
 ```
-    bio-table test/data/input/test1.csv --num-filter "value[0..12].compact.max >= 1000.0" > test1a.tab
+    bio-table test/data/input/table1.csv --num-filter "values[0..12].compact.max >= 1000.0" > test1a.tab
 ```
 
-which takes the first 13 fields and compact removes the nil values.
+which takes the first 13 fields and compact removes the nil valuess.
 
 Also string comparisons and regular expressions can be used. E.g.
 filter on rownames and field[1] both containing 'BGT'
 
 ```
-    bio-table test/data/input/test1.csv --filter "rowname =~ /BGT/ and field[1] =~ /BGT/" > test1a.tab
+    # not yet implemented
+    bio-table test/data/input/table1.csv --filter "rowname =~ /BGT/ and field[1] =~ /BGT/" > test1a.tab
 ```
 
 To reorder columns by name
 
 ```
-    bio-table test/data/input/test1.csv --columns AJ,B6,Axb1,Axb4,AXB13,Axb15,Axb19 > test1a.tab
+    bio-table test/data/input/table1.csv --columns AJ,B6,Axb1,Axb4,AXB13,Axb15,Axb19 > test1a.tab
 ```
 
 or use their index numbers
 
 ```
-    bio-table test/data/input/test1.csv --columns 0,1,2,4,6,8 > test1a.tab
+    # not yet implemented
+    bio-table test/data/input/table1.csv --columns 0,1,2,4,6,8 > test1a.tab
 ```
 
 To sort a table on column 4 and 2
 
 ```
-    bio-table test/data/input/test1.csv --sort 4,2 > test1a.tab
+    # not yet implemented
+    bio-table test/data/input/table1.csv --sort 4,2 > test1a.tab
 ```
 
 Note: not all is implemented (just yet). Please check bio-table --help first.
@@ -101,10 +111,12 @@ Note: not all is implemented (just yet). Please check bio-table --help first.
 
 ### Reading, transforming, and writing a table
 
+Note: the Ruby API below is a work in progress.
+
 Tables are two dimensional matrixes, which can be read from a file
 
 ```
-    t = Table.read_file('test/data/input/test1.csv')
+    t = Table.read_file('test/data/input/table1.csv')
     p t.header              # print the header array
     p t.name[0],t[0]        # print the row name and row row
     p t[0][0]               # print the top corner field
@@ -115,7 +127,7 @@ which column to use for names etc. More interestingly you can pass a
 function to limit the amount of row read into memory:
 
 ```
-    t = Table.read_file('test/data/input/test1.csv',
+    t = Table.read_file('test/data/input/table1.csv',
       :by_row => { | row | row[0..3] } )
 ```
 
@@ -124,7 +136,7 @@ the same idea to reformat and reorder table columns when reading data
 into the table. E.g.
 
 ```
-    t = Table.read_file('test/data/input/test1.csv',
+    t = Table.read_file('test/data/input/table1.csv',
       :by_row => { | row | [row.rowname, row[0..3], row[6].to_i].flatten } )
 ```
 
@@ -134,7 +146,7 @@ can pass in a :by_header, which will have :by_row only call on
 actual table rows.
 
 ```
-    t = Table.read_file('test/data/input/test1.csv',
+    t = Table.read_file('test/data/input/table1.csv',
       :by_header => { | header | ["Row name", header[0..3], header[6]].flatten } )
       :by_row => { | row | [row.rowname, row[0..3], row[6].to_i].flatten } )
 ```
@@ -144,7 +156,7 @@ transform a file, and not loading it in memory, is
 
 ```
     f = File.new('test.tab','w')
-    t = Table.read_file('test/data/input/test1.csv', 
+    t = Table.read_file('test/data/input/table1.csv', 
       :by_row => { | row | 
         TableRow::write(f,[row.rowname,row[0..3],row[6].to_i].flatten, :separator => "\t") 
         nil   # don't create a table in memory, effectively a filter

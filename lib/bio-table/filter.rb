@@ -10,7 +10,7 @@ module BioTable
       return true if code == nil
       range = fields[1..-1]
       if range 
-        value = range.map { |field| (valid_number?(field) ? field.to_f : nil ) } # FIXME: not so lazy
+        values = range.map { |field| (valid_number?(field) ? field.to_f : nil ) } # FIXME: not so lazy
         begin
           eval(code)
         rescue
