@@ -3,10 +3,15 @@ module BioTable
   module Filter
 
     # Create an index to the column headers, so header A,B,C,D with columns
-    # C,A returns [2,0]
+    # C,A returns [2,0]. It can be the column index is already indexed, return
+    # it in that case.
     #
-    def Filter::column_index columns, header
+    def Filter::create_column_index columns, header
       return nil if not columns 
+      numbers = columns.dup.delete_if { |v| not valid_int?(v) }
+      if numbers.size == columns.size
+        return columns.map { |v| v.to_i }
+      end
 
       index = []
       columns.each do | name |
@@ -23,6 +28,10 @@ module BioTable
       else
         fields
       end
+    end
+
+    def Filter::valid_int?(s)
+      s.to_i.to_s == s
     end
 
     def Filter::valid_number?(s)

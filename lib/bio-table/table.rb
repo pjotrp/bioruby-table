@@ -25,7 +25,7 @@ module BioTable
       Validator::valid_header?(header, @header)
       @header = header if not @header
 
-      column_index = Filter::column_index(use_columns,header)
+      column_index = Filter::create_column_index(use_columns,header)
       @header = Filter::apply_column_filter(header,column_index)
 
       (lines[1..-1]).each do | line |
