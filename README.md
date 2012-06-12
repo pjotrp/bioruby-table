@@ -93,7 +93,7 @@ To reorder/reduce table columns by name
 or use their index numbers
 
 ```
-    bio-table test/data/input/table1.csv --columns 0,1,2,4,6,8 > test1a.tab
+    bio-table test/data/input/table1.csv --columns 0,1,8,2,4,6 > test1a.tab
 ```
 
 ### Sorting a table
@@ -114,6 +114,17 @@ You can combine tables by passing in multiple file names
     bio-table test/data/input/table1.csv test/data/input/table2.csv
 
 assuming they have the same headers (you can use the --columns switch!)
+
+### Splitting a table
+
+Splitting a table by column is possible by named or indexed columns,
+see the --columns switch.
+
+more soon
+
+### Different parsers
+
+more soon
 
 ## Usage
 
