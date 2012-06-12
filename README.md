@@ -84,7 +84,7 @@ filter on rownames and a row field both containing 'BGT'
     bio-table test/data/input/table1.csv --filter "rowname =~ /BGT/ and field[1] =~ /BGT/" > test1a.tab
 ```
 
-To reorder columns by name
+To reorder/reduce table columns by name
 
 ```
     bio-table test/data/input/table1.csv --columns AJ,B6,Axb1,Axb4,AXB13,Axb15,Axb19 > test1a.tab
