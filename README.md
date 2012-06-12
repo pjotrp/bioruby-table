@@ -93,7 +93,6 @@ To reorder columns by name
 or use their index numbers
 
 ```
-    # not yet implemented
     bio-table test/data/input/table1.csv --columns 0,1,2,4,6,8 > test1a.tab
 ```
 
