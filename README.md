@@ -37,7 +37,7 @@ csv, it will assume CSV. To convert the table back
     bio-table test1.tab --format csv > table1.csv
 ```
 
-To filter out rows that contain certain valuess
+To filter out rows that contain certain values
 
 ```
     bio-table test/data/input/table1.csv --num-filter "values[3] <= 0.05" > test1a.tab
@@ -55,25 +55,27 @@ or, list all rows that have a least a field with values >= 1000.0
     bio-table test/data/input/table1.csv --num-filter "values.max >= 1000.0" > test1a.tab
 ```
 
-Produce all rows that have at least 3 valuess above 3.0 and 1 one values
+Produce all rows that have at least 3 values above 3.0 and 1 one values
 above 10.0:
 
 ```
-    bio-table test/data/input/table1.csv --num-filter "values.max >= 1000.0 and values.compact.count{|x|x>=3.0}" > test1a.tab
+    bio-table test/data/input/table1.csv --num-filter "values.max >= 10.0 and values.count{|x| x>=3.0}"
 ```
 
-The --num-filter will convert fields lazily to numerical valuess (only
-valid numbers are converted). If there are NA valuess in the table, you
-may wish to do something like this
+How is that for expressiveness?
+
+The --num-filter will convert fields lazily to numerical values (only
+valid numbers are converted). If there are NA (nil) values in the table, you
+may wish to remove them, like this
 
 ```
     bio-table test/data/input/table1.csv --num-filter "values[0..12].compact.max >= 1000.0" > test1a.tab
 ```
 
-which takes the first 13 fields and compact removes the nil valuess.
+which takes the first 13 fields and compact removes the nil values.
 
 Also string comparisons and regular expressions can be used. E.g.
-filter on rownames and field[1] both containing 'BGT'
+filter on rownames and a row field both containing 'BGT'
 
 ```
     # not yet implemented
