@@ -37,9 +37,12 @@ RSpec::Core::RakeTask.new(:rcov) do |spec|
 end
 
 require 'cucumber/rake/task'
-Cucumber::Rake::Task.new(:features)
+Cucumber::Rake::Task.new do |features|
+end
 
-task :default => :spec
+task :test => [ :cucumber ] 
+
+task :default => :test
 
 require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
