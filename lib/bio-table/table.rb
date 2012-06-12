@@ -15,14 +15,22 @@ module BioTable
     # header has been set.
 
     def read_lines lines, options = {}
-      num_filter = options[:num_filter]
+      num_filter  = options[:num_filter]
       @logger.debug "Filtering on #{num_filter}" if num_filter 
+      use_columns = options[:columns]
+      @logger.debug "Filtering on columns #{use_columns}" if use_columns 
+
+      # parse the header
       header = LineParser::parse(lines[0], options[:in_format])
       Validator::valid_header?(header, @header)
       @header = header if not @header
 
+      column_index = Filter::column_index(use_columns,header)
+      @header = Filter::apply_column_filter(header,column_index)
+
       (lines[1..-1]).each do | line |
         fields = LineParser::parse(line, options[:in_format])
+        fields = Filter::apply_column_filter(fields,column_index) 
         rowname = fields[0]
         data_fields = fields[1..-1]
         next if not Validator::valid_row?(data_fields,@header,@rows)
@@ -39,6 +47,7 @@ module BioTable
         options[:in_format] = :csv
       end
       @logger.debug(options)
+      # Read the file lines into an Array, not lazy FIXME 
       File.open(filename).each_line do | line |
         lines.push line
       end
