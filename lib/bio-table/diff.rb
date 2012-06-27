@@ -13,8 +13,14 @@ module BioTable
       l2 = t2.map { |row| columns.map { |i| row.all_fields[i] } }
       logger.warn "Not all selected keys are unique!" if l1.uniq.size != l1.size or l2.uniq.size != l2.size
       diff = l2 - l1
+      # create index for table 2
+      idx2 = {}
+      t2.each do | row |
+        key = columns.map { |i| row.all_fields[i] }
+        idx2[key] = row
+      end
       diff.each do |values|
-        t.push(t2.row_by_columns(columns.zip(values)))
+        t.push(t2.row_by_columns(columns.zip(values),idx2))
       end
       t
     end

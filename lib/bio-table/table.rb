@@ -93,13 +93,18 @@ module BioTable
       self[rownames.index(name)]
     end
 
-    def row_by_columns zip
+    def row_by_columns zip,idx=nil
       index = zip.first[0]
       value = zip.first[1]
-      each do | row | 
-        fields = row.all_fields
-        if fields[index] == value
-          return row if row.match_all_fields?(zip)
+      if idx 
+        row = idx[zip.transpose[1]]
+        return row if row.match_all_fields?(zip)
+      else
+        each do | row | 
+          fields = row.all_fields
+          if fields[index] == value
+            return row if row.match_all_fields?(zip)
+          end
         end
       end
       nil
