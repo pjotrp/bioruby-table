@@ -48,8 +48,8 @@ opts = OptionParser.new do |o|
     options[:num_filter] = par
   end
 
-  o.on('--columns list', Array, 'List of column names or indices') do |par|
-    options[:columns] = par
+  o.on('--columns list', Array, 'List of column names or indices') do |s|
+    options[:columns] = s
   end
 
   o.on('--diff','Diff two input files (rownames by default, otherwise --columns)') do
