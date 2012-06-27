@@ -48,16 +48,16 @@ opts = OptionParser.new do |o|
     options[:num_filter] = par
   end
 
-  o.on('--columns list', Array, 'List of column names or indices') do |s|
-    options[:columns] = s
+  o.on('--columns list', Array, 'List of column names or indices') do |l|
+    options[:columns] = l
   end
 
-  o.on('--diff','Diff two input files (rownames by default, otherwise --columns)') do
-    options[:diff] = true
+  o.on('--diff list',Array,'Diff two input files on columns') do |l|
+    options[:diff] = l
   end
 
-  o.on('--overlap','Find overlap of two input files (rownames by default, otherwise --columns)') do
-    options[:overlap] = true
+  o.on('--overlap list',Array,'Find overlap of two input files on columns)') do |l|
+    options[:overlap] = l
   end
   
   

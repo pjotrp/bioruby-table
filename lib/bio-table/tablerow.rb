@@ -14,6 +14,16 @@ module BioTable
     def valid?
       fields != nil and fields.size > 0
     end
+  
+    def match_all_fields? zip
+      row_fields = all_fields
+      zip.each do | a |
+        index = a[0]
+        value = a[1]
+        return false if row_fields[index] != value
+      end
+      true
+    end
   end
 
 end

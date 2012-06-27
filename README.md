@@ -138,24 +138,23 @@ overlap, based on shared columns. The bio-table diff command shows the
 difference between two tables using the row names (i.e. those rows
 with rownames that appear in table2, but not in table1)
 
-    bio-table --diff table1.csv table2.csv 
+    bio-table --diff 0 table1.csv table2.csv 
 
 To find it the other way, switch the file names
 
-    bio-table --diff table1.csv table2.csv 
+    bio-table --diff 0 table1.csv table2.csv 
 
 To diff on something else
 
-    bio-table --diff table2.csv table1.csv --columns 0,3
+    bio-table --diff 0,3 table2.csv table1.csv 
 
-where --columns creates a (hopefully unique) key using columns 0 and 3
-(0 is the rownames column).
+creates a (hopefully unique) key using columns 0 and 3 (0 is the rownames column).
 
 Similarly
 
-    bio-table --overlap table1.csv table2.csv --columns 1
+    bio-table --overlap 2 table1.csv table2.csv
 
-finds the overlapping rows, based on column 1 (NYI)
+finds the overlapping rows, based on column 2 (NYI)
 
 ### Different parsers
 

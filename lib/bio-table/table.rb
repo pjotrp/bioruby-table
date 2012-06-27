@@ -2,6 +2,8 @@ module BioTable
 
   class Table
 
+    include Enumerable
+
     attr_reader :header, :rows, :rownames
 
     def initialize header=nil
@@ -80,11 +82,27 @@ module BioTable
     end
 
     def [] row
-      TableRow.new(@rownames[row],@rows[row])
+      if row
+        TableRow.new(@rownames[row],@rows[row])
+      else
+        nil
+      end
     end
 
     def row_by_name name
       self[rownames.index(name)]
+    end
+
+    def row_by_columns zip
+      index = zip.first[0]
+      value = zip.first[1]
+      each do | row | 
+        fields = row.all_fields
+        if fields[index] == value
+          return row if row.match_all_fields?(zip)
+        end
+      end
+      nil
     end
 
     def each 
@@ -94,6 +112,5 @@ module BioTable
     end
 
   end
-
 
 end
