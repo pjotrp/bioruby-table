@@ -19,6 +19,9 @@ module BioTable
       @logger.debug "Filtering on #{num_filter}" if num_filter 
       use_columns = options[:columns]
       @logger.debug "Filtering on columns #{use_columns}" if use_columns 
+      include_rownames = options[:with_rownames]
+      @logger.debug "Include row names" if include_rownames
+      first_column = (include_rownames ? 0 : 1)
 
       # parse the header
       header = LineParser::parse(lines[0], options[:in_format])
@@ -32,10 +35,10 @@ module BioTable
         fields = LineParser::parse(line, options[:in_format])
         fields = Filter::apply_column_filter(fields,column_index) 
         rowname = fields[0]
-        data_fields = fields[1..-1]
+        data_fields = fields[first_column..-1]
         next if not Validator::valid_row?(data_fields,@header,@rows)
-        next if not Filter::numeric(num_filter,fields)
-        @rowname << rowname
+        next if not Filter::numeric(num_filter,data_fields)
+        @rowname << rowname if not include_rownames # otherwise doubled
         @rows << data_fields
       end
     end

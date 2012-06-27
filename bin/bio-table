@@ -32,6 +32,7 @@ Bio::Log::CLI.logger('stderr')
 Bio::Log::CLI.trace('info')
 
 options = {show_help: false, write_header: true}
+options[:show_help] = true if ARGV.size == 0
 opts = OptionParser.new do |o|
   o.banner = "Usage: #{File.basename($0)} [options] filename\n\n"
 
@@ -49,6 +50,18 @@ opts = OptionParser.new do |o|
 
   o.on('--columns list', Array, 'List of column names or indices') do |par|
     options[:columns] = par
+  end
+
+  o.on('--diff','Diff two input files') do
+    options[:diff] = true
+  end
+  
+  # o.on('--with-header','Include the header element in filtering etc.') do
+  #   options[:with_header] = true
+  # end
+  
+  o.on('--with-rownames','Include the rownames in filtering etc.') do
+    options[:with_rownames] = true
   end
   
   o.separator ""

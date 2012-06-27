@@ -4,12 +4,20 @@
 
 Tables of data are often used in bioinformatics, especially in
 conjunction with Excel spreadsheets and DB queries. This biogem
-contains support for reading tables and manipulation of rows and
-columns, both using a command line interface and through a Ruby
-library. If you don't like R dataframes, maybe you like this. Also
-bio-table fits in a pipe-line setup. 
+contains support for reading tables, writing tables, and manipulation
+of rows and columns, both using a command line interface and through a
+Ruby library. If you don't like R dataframes, maybe you like this.
+Also, because bio-table is command line driven, it easily fits in a
+pipe-line setup. 
 
-In time bio-table should be lazy, be good for big data, and
+Quick example, say we want to filter out rows that contain certain
+p-values listed in the 4th column:
+
+```
+    bio-table test/data/input/table1.csv --num-filter "values[3] <= 0.05"
+```
+
+bio-table should be lazy, be good for big data, and the library
 support a functional style of programming. You don't need to know Ruby
 to use the command line interface (CLI).
 
@@ -45,7 +53,8 @@ To filter out rows that contain certain values
     bio-table test/data/input/table1.csv --num-filter "values[3] <= 0.05" > test1a.tab
 ```
 
-and with math, list all rows 
+The filter ignores the header row, and the row names. If you need
+either, use the switches --with-header and --with-rownames. With math, list all rows 
 
 ```
     bio-table test/data/input/table1.csv --num-filter "values[3]-values[6] >= 0.05" > test1a.tab
@@ -109,7 +118,7 @@ Note: not all is implemented (just yet). Please check bio-table --help first.
 
 ### Combining a table
 
-You can combine tables by passing in multiple file names
+You can combine/concat tables by passing in multiple file names
 
     bio-table test/data/input/table1.csv test/data/input/table2.csv
 
@@ -121,6 +130,16 @@ Splitting a table by column is possible by named or indexed columns,
 see the --columns switch.
 
 more soon
+
+### Diffing tables
+
+With two tables it may be interesting to see the differences, or
+overlap, based on shared columns. The bio-table diff command shows
+the difference between two tables 
+
+    bio-table --diff table1.csv table2.csv --columns 1
+
+based on the values in column 1
 
 ### Different parsers
 

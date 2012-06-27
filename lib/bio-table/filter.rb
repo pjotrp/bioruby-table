@@ -40,9 +40,8 @@ module BioTable
 
     def Filter::numeric code, fields
       return true if code == nil
-      range = fields[1..-1]
-      if range 
-        values = range.map { |field| (valid_number?(field) ? field.to_f : nil ) } # FIXME: not so lazy
+      if fields
+        values = fields.map { |field| (valid_number?(field) ? field.to_f : nil ) } # FIXME: not so lazy
         begin
           eval(code)
         rescue
