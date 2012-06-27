@@ -22,7 +22,7 @@ And /^I should correctly parse the first line into$/ do |string|
 end
 
 And /^it should have the rowname "(.*?)"$/ do |arg1|
-  @t.rowname[0].should == "105853"
+  @t.rownames[0].should == "105853"
 end
 
 
