@@ -38,7 +38,7 @@ module BioTable
         data_fields = fields[first_column..-1]
         next if not Validator::valid_row?(data_fields,@header,@rows)
         next if not Filter::numeric(num_filter,data_fields)
-        @rowname << rowname if not include_rownames # otherwise doubled
+        @rowname << rowname if not include_rownames # otherwise doubles rownames
         @rows << data_fields
       end
     end

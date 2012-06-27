@@ -52,7 +52,7 @@ opts = OptionParser.new do |o|
     options[:columns] = par
   end
 
-  o.on('--diff','Diff two input files') do
+  o.on('--diff','Diff two input files (rownames by default, otherwise --columns)') do
     options[:diff] = true
   end
   
