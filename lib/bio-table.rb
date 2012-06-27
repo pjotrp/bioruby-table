@@ -17,4 +17,6 @@ require 'bio-table/tablerow.rb'
 require 'bio-table/table.rb'
 require 'bio-table/tablereader.rb'
 require 'bio-table/tablewriter.rb'
+require 'bio-table/diff.rb'
+require 'bio-table/overlap.rb'
 

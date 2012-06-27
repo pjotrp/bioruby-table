@@ -131,7 +131,7 @@ see the --columns switch.
 
 more soon
 
-### Diffing tables
+### Diffing and overlapping tables
 
 With two tables it may be interesting to see the differences, or
 overlap, based on shared columns. The bio-table diff command shows
@@ -139,7 +139,11 @@ the difference between two tables
 
     bio-table --diff table1.csv table2.csv --columns 1
 
-based on the values in column 1
+based on the values in column 1. Similarly
+
+    bio-table --overlap table1.csv table2.csv 
+
+finds the overlapping rownames.
 
 ### Different parsers
 

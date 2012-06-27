@@ -2,12 +2,13 @@ module BioTable
 
   class Table
 
-    attr_reader :header, :rows, :rowname
+    attr_reader :header, :rows, :rownames
 
-    def initialize
+    def initialize header=nil
+      @header = header if header
       @logger = Bio::Log::LoggerPlus['bio-table']
       @rows = []
-      @rowname = []
+      @rownames = []
     end
 
     # Read lines (list of string) and add them to the table, setting row names 
@@ -19,9 +20,9 @@ module BioTable
       @logger.debug "Filtering on #{num_filter}" if num_filter 
       use_columns = options[:columns]
       @logger.debug "Filtering on columns #{use_columns}" if use_columns 
-      include_rownames = options[:with_rownames]
-      @logger.debug "Include row names" if include_rownames
-      first_column = (include_rownames ? 0 : 1)
+      include_rownamess = options[:with_rownamess]
+      @logger.debug "Include row names" if include_rownamess
+      first_column = (include_rownamess ? 0 : 1)
 
       # parse the header
       header = LineParser::parse(lines[0], options[:in_format])
@@ -34,11 +35,11 @@ module BioTable
       (lines[1..-1]).each do | line |
         fields = LineParser::parse(line, options[:in_format])
         fields = Filter::apply_column_filter(fields,column_index) 
-        rowname = fields[0]
+        rownames = fields[0]
         data_fields = fields[first_column..-1]
         next if not Validator::valid_row?(data_fields,@header,@rows)
         next if not Filter::numeric(num_filter,data_fields)
-        @rowname << rowname if not include_rownames # otherwise doubles rownames
+        @rownames << rownames if not include_rownamess # otherwise doubles rownamess
         @rows << data_fields
       end
     end
@@ -68,13 +69,27 @@ module BioTable
       end
     end
 
+    def push rownames,fields = nil
+      if fields == nil and rownames.kind_of?(TableRow)
+        @rownames << rownames.rowname
+        @rows << rownames.fields
+      else
+        @rownames << rownames
+        @rows << fields
+      end
+    end
+
     def [] row
-      TableRow.new(@rowname[row],@rows[row])
+      TableRow.new(@rownames[row],@rows[row])
+    end
+
+    def row_by_name name
+      self[rownames.index(name)]
     end
 
     def each 
       @rows.each_with_index do | row,i |
-        yield TableRow.new(@rowname[i], row)
+        yield TableRow.new(@rownames[i], row)
       end
     end
 

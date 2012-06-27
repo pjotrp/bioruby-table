@@ -55,6 +55,11 @@ opts = OptionParser.new do |o|
   o.on('--diff','Diff two input files (rownames by default, otherwise --columns)') do
     options[:diff] = true
   end
+
+  o.on('--overlap','Find overlap of two input files (rownames by default, otherwise --columns)') do
+    options[:overlap] = true
+  end
+  
   
   # o.on('--with-header','Include the header element in filtering etc.') do
   #   options[:with_header] = true
@@ -112,6 +117,22 @@ logger = Bio::Log::LoggerPlus['bio-table']
 logger.info [options, ARGV]
 
 include BioTable
+
+if options[:diff]
+  logger.warn "Column settings are ignored for --diff" if options[:columns]
+  logger.warn "Ignoring extraneaousfiles" if ARGV.size>2
+  t1 = TableReader::read_file(ARGV[0], options)
+  t2 = TableReader::read_file(ARGV[1], options)
+  t = Diff::diff_tables(t1,t2, options)
+  t.write(options)
+  exit
+end
+
+if options[:overlap]
+  logger.warn "Column settings are ignored for --overlap" if options[:columns]
+  exit
+end
+
 
 ARGV.each do | fn |
   t = TableReader::read_file(fn, options)
