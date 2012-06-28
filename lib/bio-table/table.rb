@@ -94,8 +94,7 @@ module BioTable
       row = row_by_name(rowname)
       fields = (row ? row.fields : [])
       # fill fields with nil to match header length
-      fields += fields.fill(nil,fields.size,header.size-fields.size-1)
-      fields
+      fields.fill(nil,fields.size..header.size-fields.size-1)
     end
 
     def row_by_name name

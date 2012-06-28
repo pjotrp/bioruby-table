@@ -18,12 +18,10 @@ module BioTable
       all_rownames.each do | rowname |
         row = TableRow.new(rowname)
         fields = tables.map { |t|
-          p t.rows.first
           fields = t.find_fields(rowname) 
           row.append(fields)
         }
         t.push(row)
-        exit
       end
       t
 
