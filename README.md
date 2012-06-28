@@ -105,6 +105,15 @@ or use their index numbers
     bio-table test/data/input/table1.csv --columns 0,1,8,2,4,6 > test1a.tab
 ```
 
+To filter for columns using a regular expression
+
+```
+    bio-table table1.csv --column-filter "colname \!~ /infected/i"
+```
+
+will drop all columns with names containing 'infected', disregarding
+case.
+
 ### Sorting a table
 
 To sort a table on column 4 and 2
@@ -134,8 +143,6 @@ to be sorted). For non-matching rownames the fields will be filled
 with NA's, unless you add a filter, e.g.
 
     bio-table --merge table1.csv table2.csv --num-filter "values.count{|x| x==nil} > 0"
-
-Note that you may need to check/edit the column names after a merge.
 
 ### Splitting a table
 

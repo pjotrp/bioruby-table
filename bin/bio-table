@@ -44,12 +44,16 @@ opts = OptionParser.new do |o|
     options[:format] = par.to_sym
   end
   
-  o.on('--num-filter func', 'Numeric filtering function') do |par|
+  o.on('--num-filter expression', 'Numeric filtering function') do |par|
     options[:num_filter] = par
   end
 
   o.on('--columns list', Array, 'List of column names or indices') do |l|
     options[:columns] = l
+  end
+
+  o.on('--column-filter expression', 'Column name filtering function') do |par|
+    options[:column_filter] = par
   end
 
   o.on('--merge','Merge tables by rowname') do 

@@ -28,6 +28,8 @@ module BioTable
       @logger.debug "Filtering on #{num_filter}" if num_filter 
       use_columns = options[:columns]
       @logger.debug "Filtering on columns #{use_columns}" if use_columns 
+      column_filter = options[:column_filter]
+      @logger.debug "Filtering on column names #{column_filter}" if column_filter
       include_rownamess = options[:with_rownamess]
       @logger.debug "Include row names" if include_rownamess
       first_column = (include_rownamess ? 0 : 1)
@@ -38,6 +40,7 @@ module BioTable
       @header = header if not @header
 
       column_index = Filter::create_column_index(use_columns,header)
+      column_index = Filter::filter_column_index(column_index,header,column_filter)
       @header = Filter::apply_column_filter(header,column_index)
 
       (lines[1..-1]).each do | line |
