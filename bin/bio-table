@@ -142,6 +142,13 @@ if options[:overlap]
 end
 
 if options[:merge]
+  ts = []
+  ARGV.each do | fn |
+    ts << TableReader::read_file(fn, options)
+  end
+  t = Merge::merge_tables(ts, options)
+  t.write(options)
+  exit
 end
 
 ARGV.each do | fn |

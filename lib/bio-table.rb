@@ -9,6 +9,7 @@
 # In this file only require other files. Avoid other source code.
 
 require 'bio-logger'
+require 'bio-table/indexer.rb'
 require 'bio-table/columns.rb'
 require 'bio-table/validator.rb'
 require 'bio-table/filter.rb'
@@ -20,4 +21,5 @@ require 'bio-table/tablereader.rb'
 require 'bio-table/tablewriter.rb'
 require 'bio-table/diff.rb'
 require 'bio-table/overlap.rb'
+require 'bio-table/merge.rb'
 
