@@ -52,7 +52,15 @@ opts = OptionParser.new do |o|
     options[:columns] = l
   end
 
-  o.on('--diff list',Array,'Diff two input files on columns') do |l|
+  o.on('--merge','Merge tables by rowname') do 
+    options[:merge] = true
+  end
+
+  o.on('--diff list',Array,'Diff two input files on columns (default rownames)') do |l|
+    if l.size==1 and File.exist?(l.first)
+      ARGV.unshift l.first
+      l = ["0"]
+    end
     options[:diff] = l
   end
 
@@ -120,7 +128,7 @@ include BioTable
 
 if options[:diff]
   logger.warn "Column settings are ignored for --diff" if options[:columns]
-  logger.warn "Ignoring extraneaousfiles" if ARGV.size>2
+  logger.warn "Ignoring extraneaous files "+ARGV[2..-1].join(",") if ARGV.size>2
   t1 = TableReader::read_file(ARGV[0], options)
   t2 = TableReader::read_file(ARGV[1], options)
   t = Diff::diff_tables(t1,t2, options)
@@ -133,6 +141,8 @@ if options[:overlap]
   exit
 end
 
+if options[:merge]
+end
 
 ARGV.each do | fn |
   t = TableReader::read_file(fn, options)

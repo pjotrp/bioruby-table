@@ -116,20 +116,31 @@ To sort a table on column 4 and 2
 
 Note: not all is implemented (just yet). Please check bio-table --help first.
 
-### Combining a table
+### Combining/merging tables
 
-You can combine/concat tables by passing in multiple file names
+You can combine/concat two or more tables by passing in multiple file names
 
     bio-table test/data/input/table1.csv test/data/input/table2.csv
 
-assuming they have the same headers (you can use the --columns switch!)
+this will append table2 to table1, assuming they have the same headers
+(you can use the --columns switch!)
+
+To combine tables side by side use the --merge switch:
+
+    bio-table --merge table1.csv table2.csv
+
+all rownames will be matched (i.e. the input table order do not need
+to be sorted). For non-matching rownames the fields will be filled
+with NA's, unless you add a filter, e.g.
+
+    bio-table --merge table1.csv table2.csv --num-filter "values.count{|x| x==nil} > 0"
+
+Note that you may need to check/edit the column names after a merge.
 
 ### Splitting a table
 
 Splitting a table by column is possible by named or indexed columns,
 see the --columns switch.
-
-more soon
 
 ### Diffing and overlapping tables
 
