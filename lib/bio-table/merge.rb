@@ -13,18 +13,15 @@ module BioTable
       end
       # create a full list of rownames
       all_rownames = idxs.map { |idx| idx.keys }.flatten.uniq
-      p all_rownames
-      exit
       
-      # walk the tables
-      l1 = t1.map { |row| columns.map { |i| row.all_fields[i] } }
-      l2 = t2.map { |row| columns.map { |i| row.all_fields[i] } }
-      logger.warn "Not all selected keys are unique!" if l1.uniq.size != l1.size or l2.uniq.size != l2.size
-      diff = l2 - l1
-      # create index for table 2
-      idx2 = Indexer::create_index(t2,columns)
-      diff.each do |values|
-        t.push(t2.row_by_columns(columns.zip(values),idx2))
+      # walk the tables and merge fields
+      all_rownames.each do | rowname |
+        row = TableRow.new(rowname)
+        fields = tables.map { |t| 
+          fields = t.find_fields(rowname) 
+          row.append(fields)
+        }
+        t.push(row)
       end
       t
 
