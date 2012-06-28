@@ -4,7 +4,9 @@ module BioTable
 
     def self.merge_tables(tables, options)
       logger = Bio::Log::LoggerPlus['bio-table']
-      headers = tables.first.header[0..0] + tables.map { |t| t.header[1..-1] }.flatten
+      logger.info("Merging tables")
+      headers = tables.first.header[0..0] + 
+        tables.map { |t| t.header[1..-1].map{|n| t.name+'-'+n} }.flatten
       t = Table.new(headers)
       # index tables on rownames
       idxs = []

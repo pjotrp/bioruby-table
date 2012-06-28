@@ -4,6 +4,7 @@ module BioTable
 
     include Enumerable
 
+    attr_reader :filename, :name
     attr_reader :header, :rows, :rownames
 
     def initialize header=nil
@@ -11,6 +12,11 @@ module BioTable
       @logger = Bio::Log::LoggerPlus['bio-table']
       @rows = []
       @rownames = []
+    end
+
+    def set_name fn
+      @filename = fn
+      @name = File.basename(fn,File.extname(fn))
     end
 
     # Read lines (list of string) and add them to the table, setting row names 

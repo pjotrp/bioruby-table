@@ -5,6 +5,7 @@ module BioTable
       logger = Bio::Log::LoggerPlus['bio-table']
       logger.info("Parsing #{filename}")
       t = Table.new
+      t.set_name(filename)
       t.read_file(filename, options)
       t
     end
