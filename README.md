@@ -118,7 +118,7 @@ Finally we can rewrite the content of a table using rowname and fields
 again
 
 ```
-    bio-table table1.csv --rewrite 'rowname.upcase!; field[1]=nil if field[2]<0.25'
+    bio-table table1.csv --rewrite 'rowname.upcase!; field[1]=nil if field[2].to_f<0.25'
 ```
 
 where we rewrite the rowname in capitals, and set the second field to

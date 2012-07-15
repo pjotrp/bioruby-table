@@ -50,12 +50,13 @@ module BioTable
       (lines[1..-1]).each do | line |
         fields = LineParser::parse(line, options[:in_format])
         fields = Filter::apply_column_filter(fields,column_index) 
-        rownames = fields[0]
+        rowname = fields[0]
         data_fields = fields[first_column..-1]
         next if not Validator::valid_row?(data_fields,@header,@rows)
         next if not Filter::numeric(num_filter,data_fields)
+        (rowname, data_fields) = Rewrite::rewrite(rewrite,rowname,data_fields)
 
-        @rownames << rownames if not include_rownames # otherwise doubles rownames
+        @rownames << rowname if not include_rownames # otherwise doubles rownames
         @rows << data_fields
       end
     end
