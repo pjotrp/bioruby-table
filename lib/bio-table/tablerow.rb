@@ -15,6 +15,10 @@ module BioTable
       ([@rowname] << @fields).flatten
     end
 
+    def all_valid?
+      all_fields != nil and all_fields.size > 0
+    end
+  
     def valid?
       fields != nil and fields.size > 0
     end

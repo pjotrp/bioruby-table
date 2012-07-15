@@ -52,10 +52,11 @@ module BioTable
         fields = Filter::apply_column_filter(fields,column_index) 
         rowname = fields[0]
         data_fields = fields[first_column..-1]
-        next if not Validator::valid_row?(data_fields,@header,@rows)
-        next if not Filter::numeric(num_filter,data_fields)
-        (rowname, data_fields) = Rewrite::rewrite(rewrite,rowname,data_fields)
-
+        if data_fields.size > 0
+          next if not Validator::valid_row?(data_fields,@header,@rows)
+          next if not Filter::numeric(num_filter,data_fields)
+          (rowname, data_fields) = Rewrite::rewrite(rewrite,rowname,data_fields)
+        end
         @rownames << rowname if not include_rownames # otherwise doubles rownames
         @rows << data_fields
       end
@@ -82,7 +83,7 @@ module BioTable
       formatter.write(@header) if options[:write_header]
       each do | tablerow |
         # p tablerow
-        formatter.write(tablerow.all_fields) if tablerow.valid?
+        formatter.write(tablerow.all_fields) if tablerow.all_valid?
       end
     end
 
