@@ -27,13 +27,15 @@ module BioTable
       # get all the options
       num_filter  = options[:num_filter]
       @logger.debug "Filtering on #{num_filter}" if num_filter 
+      rewrite  = options[:rewrite]
+      @logger.debug "Rewrite #{rewrite}" if rewrite
       use_columns = options[:columns]
       @logger.debug "Filtering on columns #{use_columns}" if use_columns 
       column_filter = options[:column_filter]
       @logger.debug "Filtering on column names #{column_filter}" if column_filter
-      include_rownamess = options[:with_rownamess]
-      @logger.debug "Include row names" if include_rownamess
-      first_column = (include_rownamess ? 0 : 1)
+      include_rownames = options[:with_rownames]
+      @logger.debug "Include row names" if include_rownames
+      first_column = (include_rownames ? 0 : 1)
 
       # parse the header
       header = LineParser::parse(lines[0], options[:in_format])
@@ -52,7 +54,8 @@ module BioTable
         data_fields = fields[first_column..-1]
         next if not Validator::valid_row?(data_fields,@header,@rows)
         next if not Filter::numeric(num_filter,data_fields)
-        @rownames << rownames if not include_rownamess # otherwise doubles rownamess
+
+        @rownames << rownames if not include_rownames # otherwise doubles rownames
         @rows << data_fields
       end
     end

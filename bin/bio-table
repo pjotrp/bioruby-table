@@ -48,6 +48,10 @@ opts = OptionParser.new do |o|
     options[:num_filter] = par
   end
 
+  o.on('--rewrite expression', 'Rewrite function') do |par|
+    options[:rewrite] = par
+  end
+
   o.on('--columns list', Array, 'List of column names or indices') do |l|
     options[:columns] = l
   end

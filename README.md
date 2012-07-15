@@ -114,6 +114,16 @@ To filter for columns using a regular expression
 will drop all columns with names containing 'infected', ignoring
 case.
 
+Finally we can rewrite the content of a table using rowname and fields
+again
+
+```
+    bio-table table1.csv --rewrite 'rowname.upcase!; field[1]=nil if field[2]<0.25'
+```
+
+where we rewrite the rowname in capitals, and set the second field to
+empty if the third field is below 0.25. 
+
 ### Sorting a table
 
 To sort a table on column 4 and 2
