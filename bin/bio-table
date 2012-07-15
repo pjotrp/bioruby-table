@@ -73,6 +73,10 @@ opts = OptionParser.new do |o|
   end
 
   o.on('--overlap list',Array,'Find overlap of two input files on columns)') do |l|
+    if l.size==1 and File.exist?(l.first)
+      ARGV.unshift l.first
+      l = ["0"]
+    end
     options[:overlap] = l
   end
   
@@ -146,6 +150,11 @@ end
 
 if options[:overlap]
   logger.warn "Column settings are ignored for --overlap" if options[:columns]
+  logger.warn "Ignoring extraneaous files "+ARGV[2..-1].join(",") if ARGV.size>2
+  t1 = TableReader::read_file(ARGV[0], options)
+  t2 = TableReader::read_file(ARGV[1], options)
+  t = Overlap::overlap_tables(t1,t2, options)
+  t.write(options)
   exit
 end
 

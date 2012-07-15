@@ -100,11 +100,12 @@ To reorder/reduce table columns by name
     bio-table test/data/input/table1.csv --columns AJ,B6,Axb1,Axb4,AXB13,Axb15,Axb19 > test1a.tab
 ```
 
-or use their index numbers
+or use their index numbers (the first column is zero)
 
 ```
     bio-table test/data/input/table1.csv --columns 0,1,8,2,4,6 > test1a.tab
 ```
+
 
 To filter for columns using a regular expression
 
@@ -177,13 +178,13 @@ To diff on something else
 
     bio-table --diff 0,3 table2.csv table1.csv 
 
-creates a (hopefully unique) key using columns 0 and 3 (0 is the rownames column).
+creates a key using columns 0 and 3 (0 is the rownames column).
 
 Similarly
 
     bio-table --overlap 2 table1.csv table2.csv
 
-finds the overlapping rows, based on column 2 (NYI)
+finds the overlapping rows, based on the content of column 2 
 
 ### Different parsers
 
