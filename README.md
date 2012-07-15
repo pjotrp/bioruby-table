@@ -2,6 +2,7 @@
 
 [![Build Status](https://secure.travis-ci.org/pjotrp/bioruby-table.png)](http://travis-ci.org/pjotrp/bioruby-table)
 
+bio-table is the swiss knife of tabular data.
 Tables of data are often used in bioinformatics, especially in
 conjunction with Excel spreadsheets and DB queries. This biogem
 contains support for reading tables, writing tables, and manipulation

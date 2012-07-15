@@ -17,7 +17,7 @@ Jeweler::Tasks.new do |gem|
   gem.name = "bio-table"
   gem.homepage = "http://github.com/pjotrp/bioruby-table"
   gem.license = "MIT"
-  gem.summary = %Q{Transforming/filtering tab/csv files}
+  gem.summary = %Q{Swiss knife of tabulated data; transforming/filtering tab/csv files}
   gem.description = %Q{Functions and tools for tranforming and changing tab delimited and comma separated table files - useful for Excel sheets and SQL/RDF output}
   gem.email = "pjotr.public01@thebird.nl"
   gem.authors = ["Pjotr Prins"]
