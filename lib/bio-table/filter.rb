@@ -57,7 +57,7 @@ module BioTable
         values = fields.map { |field| (valid_number?(field) ? field.to_f : nil ) } # FIXME: not so lazy
         begin
           eval(code)
-        rescue
+        rescue Exception
           $stderr.print "Failed to evaluate ",fields," with ",code,"\n"
           raise 
         end

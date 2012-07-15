@@ -24,6 +24,7 @@ module BioTable
     # header has been set.
 
     def read_lines lines, options = {}
+      # get all the options
       num_filter  = options[:num_filter]
       @logger.debug "Filtering on #{num_filter}" if num_filter 
       use_columns = options[:columns]
@@ -43,6 +44,7 @@ module BioTable
       column_index = Filter::filter_column_index(column_index,header,column_filter)
       @header = Filter::apply_column_filter(header,column_index)
 
+      # parse the rest
       (lines[1..-1]).each do | line |
         fields = LineParser::parse(line, options[:in_format])
         fields = Filter::apply_column_filter(fields,column_index) 
