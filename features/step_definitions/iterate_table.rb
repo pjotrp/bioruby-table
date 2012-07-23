@@ -3,7 +3,9 @@ Given /^I want to iterate a comma separated table$/ do |string|
 end
 
 When /^I iterate through the table$/ do
-  BioTable::TableLoader.emit(@lines)
+  res = []
+  BioTable::TableLoader.emit(@lines, :in_format => :csv).each { |row| res << row }
+  res[3][5].should == "0.07"
 end
 
 

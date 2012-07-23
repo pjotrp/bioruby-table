@@ -2,16 +2,13 @@ module BioTable
 
   module TableLoader
 
-    def TableLoader::emit generator
-      generator.each do |line|
-        p line
-      end
-    end
-
-    def TableLoader::load by_line
-      by_line.call do | line |
-        p line
-      end
+    def TableLoader::emit generator, options 
+      Enumerator.new { |yielder|
+        generator.each do |line|
+          fields = LineParser::parse(line,options[:in_format])
+          yielder.yield fields
+        end
+      }
     end
 
   end
