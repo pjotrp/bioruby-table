@@ -23,7 +23,7 @@ module BioTable
             if data_fields
               list = []
               list << rowname if not options[:with_rownames] # otherwise doubles rownames
-              list << data_fields if data_fields
+              list += data_fields if data_fields
               yielder.yield list
               prev_line = data_fields
             end
