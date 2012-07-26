@@ -12,11 +12,12 @@ module BioTable
       Enumerator.new { |yielder|
         # fields = LineParser::parse(line,options[:in_format])
         generator.each_with_index do |line, line_num|
+          # p [line_num, line]
           if line_num == 0
             header = table_apply.parse_header(line, options)
             # Validator::valid_header?(header, @header)  # compare against older header when merging
             column_index,header = table_apply.column_index(header) # we may rewrite the header
-            yielder.yield header
+            yielder.yield header if options[:write_header]
             prev_line = header[1..-1]
           else
             rowname, data_fields = table_apply.parse_row(line_num, line, column_index, prev_line, options)

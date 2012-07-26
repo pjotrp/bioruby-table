@@ -9,6 +9,8 @@ $: << File.join(rootpath,'lib')
 
 _VERSION = File.new(File.join(rootpath,'VERSION')).read.chomp
 
+INPUT_ON_STDIN = !$stdin.tty?
+
 $stderr.print "bio-table "+_VERSION+" Copyright (C) 2012 Pjotr Prins <pjotr.prins@thebird.nl>\n\n"
 
 USAGE =<<EOU
@@ -17,7 +19,7 @@ bio-table transforms, filters and reorders table files (CSV, tab-delimited).
 
 EOU
 
-if ARGV.size == 0
+if ARGV.size == 0 and not INPUT_ON_STDIN
   print USAGE
 end
 
@@ -32,7 +34,7 @@ Bio::Log::CLI.logger('stderr')
 Bio::Log::CLI.trace('info')
 
 options = {show_help: false, write_header: true}
-options[:show_help] = true if ARGV.size == 0
+options[:show_help] = true if ARGV.size == 0 and not INPUT_ON_STDIN
 opts = OptionParser.new do |o|
   o.banner = "Usage: #{File.basename($0)} [options] filename\n\n"
 
@@ -168,9 +170,25 @@ if options[:merge]
   exit
 end
 
+#
+# We also support STDIN for the first 'file'. A non-blocking idea can
+# be found here:
+#
+# http://eric.lubow.org/2010/ruby/multiple-input-locations-from-bash-into-ruby/
+#
+
+writer = BioTable::TableWriter::Writer.new(options[:format])
+
+if INPUT_ON_STDIN
+  opts = options.dup # so we can modify options
+  BioTable::TableLoader.emit(STDIN, opts).each do |row| 
+    writer.write(TableRow.new(row[0],row[1..-1]))
+  end
+  options[:write_header] = false  # don't write the header for chained files
+end
+
 ARGV.each do | fn |
   opts = options.dup # so we can modify options
-  writer = BioTable::TableWriter::Writer.new(opts[:format])
   f = File.open(fn,"r")
   if not opts[:in_format] and fn =~ /\.csv$/
     logger.debug "Autodetected CSV file"
