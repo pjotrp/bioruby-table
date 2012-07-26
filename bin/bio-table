@@ -174,7 +174,6 @@ ARGV.each do | fn |
   writer = BioTable::TableWriter::Writer.new(options[:format])
   f = File.open(fn,"r")
   BioTable::TableLoader.emit(f, options).each do |row| 
-    @@ introduce filters
     writer.write(TableRow.new(row[0],row[1..-1]))
   end
   options[:write_header] = false  # don't write the header for chained files

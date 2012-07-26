@@ -19,46 +19,27 @@ module BioTable
       @name = File.basename(fn,File.extname(fn))
     end
 
-    # Read lines (list of string) and add them to the table, setting row names 
-    # and row fields. The first row is assumed to be the header and ignored if the
-    # header has been set.
+    # Read lines (list/array of string) and add them to the table, setting row
+    # names and row fields. The first row is assumed to be the header and
+    # ignored if the header has been set.
 
     def read_lines lines, options = {}
-      # get all the options
-      num_filter  = options[:num_filter]
-      @logger.debug "Filtering on #{num_filter}" if num_filter 
-      rewrite  = options[:rewrite]
-      @logger.debug "Rewrite #{rewrite}" if rewrite
-      use_columns = options[:columns]
-      @logger.debug "Filtering on columns #{use_columns}" if use_columns 
-      column_filter = options[:column_filter]
-      @logger.debug "Filtering on column names #{column_filter}" if column_filter
-      include_rownames = options[:with_rownames]
-      @logger.debug "Include row names" if include_rownames
-      first_column = (include_rownames ? 0 : 1)
+      table_apply = TableApply.new(options)
 
-      # parse the header
-      header = LineParser::parse(lines[0], options[:in_format])
-      Validator::valid_header?(header, @header)
+      header = table_apply.parse_header(lines[0], options)
+      Validator::valid_header?(header, @header)  # compare against older header when merging
+      column_index,header = table_apply.column_index(header) # we may rewrite the header
       @header = header if not @header
 
-      column_index = Filter::create_column_index(use_columns,header)
-      column_index = Filter::filter_column_index(column_index,header,column_filter)
-      @header = Filter::apply_column_filter(header,column_index)
-
       # parse the rest
-      (lines[1..-1]).each do | line |
-        fields = LineParser::parse(line, options[:in_format])
-        fields = Filter::apply_column_filter(fields,column_index) 
-        rowname = fields[0]
-        data_fields = fields[first_column..-1]
-        if data_fields.size > 0
-          next if not Validator::valid_row?(data_fields,@header,@rows)
-          next if not Filter::numeric(num_filter,data_fields)
-          (rowname, data_fields) = Rewrite::rewrite(rewrite,rowname,data_fields)
+      prev_line = @header[1..-1]
+      (lines[1..-1]).each_with_index do | line, line_num |
+        rowname, data_fields = table_apply.parse_row(line_num, line, column_index, prev_line, options)
+        if data_fields
+          @rownames << rowname if not options[:include_rownames] # otherwise doubles rownames
+          @rows << data_fields if data_fields
         end
-        @rownames << rowname if not include_rownames # otherwise doubles rownames
-        @rows << data_fields
+        prev_line = data_fields
       end
     end
 

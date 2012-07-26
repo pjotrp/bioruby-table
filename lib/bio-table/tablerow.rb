@@ -1,5 +1,6 @@
 module BioTable
 
+  # Abstraction of a parsed table row
   class TableRow
     attr_reader :rowname, :fields
     def initialize rowname, fields = []
