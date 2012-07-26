@@ -191,7 +191,19 @@ finds the overlapping rows, based on the content of column 2
 
 more soon
 
-## Usage
+### Using STDIN
+
+bio-table can read data from STDIN, by simply assuming that the data
+piped in is the first input file
+
+```
+    cat test1.tab | bio-table table1.csv --num-filter "values[3] <= 0.05" > test1a.tab
+```
+
+will filter both files test1.tab and test1.csv and output to
+test1a.tab.
+
+## bio-table API (for Ruby programming)
 
 ```ruby
     require 'bio-table'
