@@ -20,7 +20,10 @@ module BioTable
           else
             rowname, data_fields = table_apply.parse_row(line_num, line, column_index, prev_line, options)
             if data_fields
-              yielder.yield data_fields 
+              list = []
+              list << rowname if not options[:with_rownames] # otherwise doubles rownames
+              list << data_fields if data_fields
+              yielder.yield list
               prev_line = data_fields
             end
           end
