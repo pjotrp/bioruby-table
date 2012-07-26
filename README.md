@@ -183,7 +183,10 @@ with rownames that appear in table2, but not in table1)
 
     bio-table --diff 0 table1.csv table2.csv 
 
-To find it the other way, switch the file names
+bio-table --diff is different from the standard Unix diff tool. The
+latter shows insertions and deletions. bio-table --diff shows what is
+in one file, and not in the other (insertions). To see deletions,
+reverse the file order, i.e. switch the file names
 
     bio-table --diff 0 table1.csv table2.csv 
 
@@ -197,7 +200,8 @@ Similarly
 
     bio-table --overlap 2 table1.csv table2.csv
 
-finds the overlapping rows, based on the content of column 2 
+finds the overlapping rows, based on the content of column 2.
+
 
 ### Different parsers
 
