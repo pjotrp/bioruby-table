@@ -36,7 +36,7 @@ module BioTable
       (lines[1..-1]).each_with_index do | line, line_num |
         rowname, data_fields = table_apply.parse_row(line_num, line, column_index, prev_line, options)
         if data_fields
-          @rownames << rowname if not options[:include_rownames] # otherwise doubles rownames
+          @rownames << rowname if not options[:with_rownames] # otherwise doubles rownames
           @rows << data_fields if data_fields
         end
         prev_line = data_fields
