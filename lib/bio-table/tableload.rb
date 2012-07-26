@@ -5,6 +5,7 @@ module BioTable
     # Emit a row at a time, using generator as input (the generator should have
     # an 'each' method) and apply the filters etc. defined in options
     #
+    # Note that this class does not hold data in memory(!)
     def TableLoader::emit generator, options 
       table_apply = TableApply.new(options)
       column_index = nil, prev_line = nil
