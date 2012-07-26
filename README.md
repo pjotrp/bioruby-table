@@ -2,14 +2,14 @@
 
 [![Build Status](https://secure.travis-ci.org/pjotrp/bioruby-table.png)](http://travis-ci.org/pjotrp/bioruby-table)
 
-bio-table is the swiss knife of tabular data.
-Tables of data are often used in bioinformatics, especially in
-conjunction with Excel spreadsheets and DB queries. This biogem
-contains support for reading tables, writing tables, and manipulation
-of rows and columns, both using a command line interface and through a
-Ruby library. If you don't like R dataframes, maybe you like this.
-Also, because bio-table is command line driven, it easily fits in a
-pipe-line setup. 
+bio-table is the swiss knife of tabular data.  Tables of data are
+often used in bioinformatics, especially in conjunction with Excel
+spreadsheets and DB queries. This biogem contains support for reading
+tables, writing tables, and manipulation of rows and columns, both
+using a command line interface and through a Ruby library. If you
+don't like R dataframes, maybe you like this.  Also, because bio-table
+is command line driven, and can use STDIN and STDOUT, it easily fits
+in a pipe-line setup. 
 
 Quick example, say we want to filter out rows that contain certain
 p-values listed in the 4th column:
@@ -23,7 +23,19 @@ designed so that most important functions do not load the data in
 memory. The library supports a functional style of programming, but
 you don't need to know Ruby to use the command line interface (CLI).
 
-Note: this software is under active development!
+Features:
+
+* Support for TAB and CSV files
+* Filter on data
+* Transform table and data by column
+* Recalculate data
+* Diff between tables, selecting on specific column values
+* Merge tables side by side
+* Split tables by column
+* Read from STDIN, write to STDOUT
+
+Note: this software is under active development, though it should just
+work.
 
 ## Installation
 
