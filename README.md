@@ -18,9 +18,9 @@ p-values listed in the 4th column:
     bio-table test/data/input/table1.csv --num-filter "values[3] <= 0.05"
 ```
 
-bio-table should be lazy, be good for big data, and the library
-support a functional style of programming. You don't need to know Ruby
-to use the command line interface (CLI).
+bio-table should be lazy. And be good for big data. The library
+supports a functional style of programming, but you don't need to know
+Ruby to use the command line interface (CLI).
 
 Note: this software is under active development!
 
