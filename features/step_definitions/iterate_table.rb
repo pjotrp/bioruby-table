@@ -5,7 +5,7 @@ end
 When /^I iterate through the table$/ do
   res = []
   BioTable::TableLoader.emit(@lines, :in_format => :csv).each { |row| res << row }
-  res[2][5].should == "0.07"
+  res[3][5].should == "0.07"
 end
 
 
