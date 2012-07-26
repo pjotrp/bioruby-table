@@ -1,5 +1,20 @@
 module BioTable
 
+  class LazyValues
+    def initialize fields
+      @fields = fields
+      @values = []  # cache values
+    end
+
+    def [] index
+      if not @values[index]
+        field = @fields[index]
+        @values[index] = (Filter::valid_number?(field) ? field.to_f : nil )
+      end
+      @values[index]
+    end
+  end
+
   module Filter
 
     # Create an index to the column headers, so header A,B,C,D with columns
@@ -54,7 +69,8 @@ module BioTable
     def Filter::numeric code, fields
       return true if code == nil
       if fields
-        values = fields.map { |field| (valid_number?(field) ? field.to_f : nil ) } # FIXME: not so lazy
+        # values = fields.map { |field| (valid_number?(field) ? field.to_f : nil ) } # FIXME: not so lazy
+        values = LazyValues.new(fields)
         begin
           eval(code)
         rescue Exception
