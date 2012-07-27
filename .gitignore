@@ -52,3 +52,4 @@ Gemfile.lock
 *.gemspec
 
 *.tab
+*.new

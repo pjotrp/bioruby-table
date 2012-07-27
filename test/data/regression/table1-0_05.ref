@@ -1,0 +1,96 @@
+#Gene	AJ	B6	Axb1	Axb2	Axb4	Axb12	AXB13	Axb15	Axb19	Axb23	Axb24	Bxa1	Bxa2	Bxa4	Bxa7	Bxa8	Bxa12	Bxa11	Bxa13	Bxa15	Bxa16	Axb5	Axb6	Axb8	Axb1	Bxa24	Bxa25	Bxa26	gene_symbol	gene_desc
+105853	0.06	0	0	0	0	0	0.11	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Mal2	MAL2 proteolipid protein
+105859	0	0.14	0	0	0.07	0.04	0	0	0	0	NA	NA	0.02	0	0	0	0	0	0.06	0	0	0	0.02	0	NA	0	NA	NA	Csdc2	RNA-binding protein pippin
+105866	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Krt72	keratin 72
+105887	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Ugt3a1	UDP glycosyltransferases 3 family, polypeptide
+105892	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0.05	0.06	0	0	0	0	0	0	0	NA	0	NA	NA	9030619P08Rik	RIKEN cDNA 9030619P08
+106042	0	0.07	0	0	0	0	0	0	0.05	0.01	NA	NA	0	0.03	0	0	0.02	0.02	0.02	0	0.05	0.05	0.01	0.04	NA	0	NA	NA	Prickle1	prickle like 1,prickle like 1,
+106347	0.06	0	0	0	0.08	0	0	0	0	0	NA	NA	0	0	0	0.08	0	0	0	0.02	0	0	0	0	NA	0	NA	NA	Ildr1	immunoglobulin-like domain containing receptor
+106407	0	0	0	0	0	0.04	0	0.07	0	0	NA	NA	0	0.11	0	0	0	0	0.05	0	0	0	0.09	0	NA	0	NA	NA	Osta	organic solute transporter alpha
+106565	0.11	0	0	0	0	0	0.18	0.06	0	0	NA	NA	0	0	0	0	0	0.04	0.09	0	0	0	0	0	NA	0	NA	NA	Dlk2	EGF-like-domain, multiple 9,EGF-like-domain, multiple 9,EGF-like-domain, multiple 9,
+106648	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0.02	0	0	0	0	0	NA	0	NA	NA	Cyp4f15	cytochrome P450, family 4, subfamily f,,cytochrome P450, family 4, subfamily f,,
+106722	0	0	0.32	0	0	0	0	0	0.04	0	NA	NA	0.07	0	0	0.07	0	0.03	0	0	0	0	0	0	NA	0	NA	NA	AU023871	hypothetical protein LOC106722
+106766	0	0.33	0.51	0.04	0.4	0.1	0.1	0.12	0.18	0.03	NA	NA	0.05	0.03	0.11	0.44	0.04	0.12	0.03	0.08	0.03	0.19	0.16	0.05	NA	0	NA	NA	Stap2	signal transducing adaptor family member 2
+107065	0	0	0	0	0	0	0	0.03	0	0.02	NA	NA	0	0.03	0	0.01	0.03	0	0	0.04	0.03	0	0.02	0	NA	0	NA	NA	Lrrtm2	leucine rich repeat transmembrane neuronal 2
+107141	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Cyp2c50	cytochrome P450, family 2, subfamily c,,cytochrome P450, family 2, subfamily c,,
+107146	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Glyat	glycine-N-acyltransferase
+107221	0	0.14	0	0	0.23	0.22	0.48	0.19	0.07	0.05	NA	NA	0.06	0.04	0.2	0.11	0	0	0.26	0.17	0.05	0.18	0.08	0	NA	0.21	NA	NA	Gpr120	G protein-coupled receptor 120
+107526	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Gimap4	GTPase, IMAP family member 4 isoform b
+107581	0	0	0	0	0	0	0	0.02	0	0	NA	NA	0	0	0	0	0	0	0	0.01	0	0	0	0	NA	0	NA	NA	Col16a1	procollagen, type XVI, alpha 1,procollagen, type XVI, alpha 1,
+107585	0	0	0.23	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Dio3	deiodinase, iodothyronine type III
+107586	0	0	0.24	0	0	0	0	0.08	0	0	NA	NA	0.05	0	0	0	0	0.06	0	0	0	0	0	0	NA	0	NA	NA	Ovol2	ovo-like 2 isoform A
+107587	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Osr2	odd-skipped related 2
+107589	0.3	0.12	0.25	0.03	0	0.18	0.01	0.16	0.22	0.11	NA	NA	0.15	0.07	0.36	0.04	0.17	0.1	0.11	0.16	0.35	0.09	0.08	0.02	NA	0.1	NA	NA	Mylk	myosin, light polypeptide kinase,myosin, light polypeptide kinase,
+107605	0	0.09	0.02	0	0	0.03	0	0	0.03	0	NA	NA	0.03	0.01	0	0	0.02	0.05	0.03	0.01	0.03	0	0.01	0	NA	0	NA	NA	Rdh1	retinol dehydrogenase 1 (all trans)
+107656	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Krt9	keratin complex 1, acidic, gene 9
+107751	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Prrxl1	paired related homeobox protein-like 1
+107753	0	0	0	0	0	0	0	0.18	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Lgals2	lectin, galactose-binding, soluble 2
+107765	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0.13	0	0	0.04	0	0	0	0	0	0	NA	0	NA	NA	Ankrd1	ankyrin repeat domain 1 (cardiac muscle)
+107831	0	0	0	0	0	0	0.1	0	0	0	NA	NA	0	0	0.01	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Bai1	brain-specific angiogenesis inhibitor 1,brain-specific angiogenesis inhibitor 1,brain-specific angiogenesis inhibitor 1,brain-specific angiogenesis inhibitor 1,brain-specific angiogenesis inhibitor 1,
+107849	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Prl2c5	prolactin family 2, subfamily c, member 5
+107868	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0.01	0	0	0	0	0	0	0	NA	0	NA	NA	Usp9y	ubiquitin specific peptidase 9, Y chromosome
+107889	0	0	0	0.03	0	0	0	0.48	0	0.16	NA	NA	0	0.06	0	0	0	0	0.13	0	0.42	0	0	0	NA	0.04	NA	NA	Gcm2	glial cells missing homolog 2,glial cells missing homolog 2,
+107970	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0.1	NA	0	NA	NA	Hist1h1t	histone 1, H1t
+107993	0	0	0	0	0	0.15	0	0	0	0	NA	NA	0	0	0	0	0.07	0	0.09	0	0	0	0	0	NA	0	NA	NA	Bfsp2	beaded filament structural protein 2, phakinin,beaded filament structural protein 2, phakinin,
+108013	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Brunol4	bruno-like 4, RNA binding protein,bruno-like 4, RNA binding protein,bruno-like 4, RNA binding protein,bruno-like 4, RNA binding protein,
+108015	0	0.02	0	0	0	0.03	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0.02	0	0	0	NA	0	NA	NA	Chrnb4	cholinergic receptor, nicotinic, beta,cholinergic receptor, nicotinic, beta,
+108030	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0.01	0	0	0	0	0	NA	0	NA	NA	Lin7a	lin 7 homolog a isoform 1
+108043	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Chrnb3	cholinergic receptor, nicotinic, beta
+108052	0.09	0	0	0	0	0.03	0	0	0	0.02	NA	NA	0.08	0.02	0.22	0	0.11	0.03	0	0.02	0.02	0.06	0	0	NA	0.03	NA	NA	Slc14a1	solute carrier family 14 (urea transporter),,solute carrier family 14 (urea transporter),,
+108069	0	0	0.09	0	0	0	0	0	0	0	NA	NA	0	0.02	0.02	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Grm3	glutamate receptor, metabotropic 3
+108071	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Grm5	glutamate receptor, metabotropic 5,glutamate receptor, metabotropic 5,
+108072	0	0	0	0	0	0	0.07	0	0	0	NA	NA	0	0	0.04	0	0	0.01	0	0	0	0	0	0	NA	0	NA	NA	Grm6	glutamate receptor, metabotropic 6,glutamate receptor, metabotropic 6,
+108073	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Grm7	glutamate receptor, metabotropic 7
+108075	0	0	0.14	0	0	0.03	0	0.03	0.02	0	NA	NA	0	0.01	0	0	0.03	0	0.07	0.06	0.02	0.01	0	0	NA	0	NA	NA	Ltbp4	latent transforming growth factor beta binding,latent transforming growth factor beta binding,latent transforming growth factor beta binding,
+108078	0.11	0	0	0.05	0.06	0	0.04	0.02	0.03	0.11	NA	NA	0	0.03	0.05	0	0	0.04	0	0	0	0.01	0	0.19	NA	0.18	NA	NA	Olr1	oxidized low density lipoprotein (lectin-like)
+108079	0	0.02	0	0.03	0	0.05	0	0.04	0.02	0	NA	NA	0.02	0.01	0.05	0	0.02	0.01	0.02	0	0	0.1	0.03	0	NA	0	NA	NA	Prkaa2	AMP-activated protein kinase alpha 2 catalytic
+108096	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Slco1a5	solute carrier organic anion transporter family,,solute carrier organic anion transporter family,,
+108105	0	0	0	0.03	0.05	0	0	0.07	0	0.03	NA	NA	0.04	0.01	0	0	0.01	0	0.02	0.02	0	0.01	0.01	0.01	NA	0	NA	NA	B3gnt5	UDP-GlcNAc:betaGal,UDP-GlcNAc:betaGal,
+108114	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Slc22a7	solute carrier family 22 member 7
+108151	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Sema3d	semaphorin 3D,semaphorin 3D,semaphorin 3D,
+108153	0.02	0	0	0	0	0	0	0	0	0.01	NA	NA	0	0.01	0.03	0	0.01	0	0	0	0.03	0	0.01	0	NA	0	NA	NA	Adamts7	a disintegrin-like and metalloprotease,a disintegrin-like and metalloprotease,
+108154	0.3	0.03	0	0.02	0.23	0.02	0.11	0.11	0.12	0.05	NA	NA	0.03	0.09	0.05	0.01	0.1	0.02	0.02	0.06	0.23	0.01	0.03	0.05	NA	0	NA	NA	Adamts6	a disintegrin-like and metalloprotease
+108653	0	0	0.09	0	0	0	0	0.04	0	0	NA	NA	0	0	0.01	0	0	0.02	0	0	0	0	0	0	NA	0	NA	NA	4933426K21Rik	hypothetical protein LOC108653,hypothetical protein LOC108653,
+108699	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0.09	0	0.16	0.28	0	0	0	NA	0	NA	NA	Chn1	chimerin (chimaerin) 1 isoform 1,chimerin (chimaerin) 1 isoform 1,
+108760	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0.01	0	0	0	0	0	0	NA	0	NA	NA	Galntl1	UDP-N-acetyl-alpha-D-galactosamine:polypeptide,UDP-N-acetyl-alpha-D-galactosamine:polypeptide,UDP-N-acetyl-alpha-D-galactosamine:polypeptide,
+108802	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0.09	0	0	0	0	0	0	NA	0	NA	NA	Calr4	calreticulin 4,calreticulin 4,
+108803	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	4933402P03Rik	hypothetical protein LOC108803
+108812	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0.06	0	0	0	0	0	0	NA	0	NA	NA	Als2cr12	amyotrophic lateral sclerosis 2 (juvenile)
+108816	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	n/a	n/a
+108897	0	0	0.18	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0.02	0	NA	0	NA	NA	2810003C17Rik	ionized calcium binding adapter molecule 2
+108899	0.42	0.2	0.1	0.05	0.11	0.23	0.08	0.2	0.14	0.1	NA	NA	0.44	0.12	0.07	0.01	0.18	0.01	0.18	0.18	0.13	0.05	0.2	0.2	NA	0.19	NA	NA	2700081O15Rik	hypothetical protein LOC108899,hypothetical protein LOC108899,
+108909	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	2610208M17Rik	axin interaction partner and dorsalization,axin interaction partner and dorsalization,axin interaction partner and dorsalization,
+108954	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Ppp1r15b	protein phosphatase 1, regulatory subunit 15B
+108956	0	0.03	0	0	0.26	0	0	1.28	0.02	0.2	NA	NA	0	0	0	0.38	0.09	0.16	0.44	0	0.44	0.27	0.06	0	NA	0	NA	NA	2210421G13Rik	hypothetical protein LOC108956
+108978	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	4930555G01Rik	hypothetical protein LOC108978
+108995	0.05	0.04	0	0.03	0.74	0.17	0	0.26	0.03	0.13	NA	NA	0.13	0.26	0.05	0.21	0.15	0.13	0.15	0.06	0.05	0.2	0.23	0.13	NA	0.24	NA	NA	Tbc1d10c	TBC1 domain family, member 10c,TBC1 domain family, member 10c,
+109050	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	6530418L21Rik	hypothetical protein LOC109050,hypothetical protein LOC109050,
+109052	0.01	0	0	0	0	0.02	0	0	0	0.01	NA	NA	0	0.01	0	0.01	0.04	0.01	0.03	0.01	0.01	0.01	0.02	0.02	NA	0.02	NA	NA	Krt75	keratin 75
+109205	0	0.06	0	0.02	0.04	0	0	0.03	0	0.04	NA	NA	0.03	0	0.02	0	0.01	0.01	0	0	0.09	0.01	0.02	0.08	NA	0	NA	NA	Sobp	sine oculis-binding protein homolog,sine oculis-binding protein homolog,
+109254	0	0	0.04	0	0	0	0	0	0	0	NA	NA	0	0.07	0	0	0.04	0	0	0	0	0	0	0	NA	0	NA	NA	9530008L14Rik	hypothetical protein LOC109254,hypothetical protein LOC109254,
+109264	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Me3	malic enzyme 3, NADP(+)-dependent,,malic enzyme 3, NADP(+)-dependent,,malic enzyme 3, NADP(+)-dependent,,
+109272	0	0	0	0	0.03	0	0	0	0	0	NA	NA	0.07	0	0	0	0.02	0	0	0	0	0	0	0	NA	0	NA	NA	8030451F13Rik	myosin binding protein C, slow type,myosin binding protein C, slow type,
+109280	0	0	0	0	0	0	0	0	0	0.03	NA	NA	0	0	0	0	0.08	0	0.03	0	0	0.04	0	0	NA	0	NA	NA	9330176C04Rik	hypothetical protein LOC109280
+109294	0.01	0	0	0	0.01	0.04	0.01	0	0.03	0	NA	NA	0.04	0	0.01	0.03	0.01	0.03	0	0	0.01	0	0	0	NA	0.01	NA	NA	C030045D06Rik	hypothetical protein LOC109294
+109314	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	A030004J04Rik	hypothetical protein LOC109314
+109323	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	C1qtnf7	C1q and tumor necrosis factor related protein 7,C1q and tumor necrosis factor related protein 7,
+109332	0.14	0.08	0	0.05	0.14	0.08	0.22	0.6	0.05	0.06	NA	NA	0.14	0.05	0.12	0	0.05	0.13	0.05	0.11	0.05	0.09	0.06	0.08	NA	0.09	NA	NA	Cdcp1	CUB domain-containing protein 1,CUB domain-containing protein 1,
+109342	0	0	0	0	0	0	0	0	0.05	0	NA	NA	0	0.03	0.05	0	0	0	0	0	0	0	0.02	0.08	NA	0.17	NA	NA	Slc5a10	solute carrier family 5 (sodium/glucose,solute carrier family 5 (sodium/glucose,
+109349	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	C630035N08Rik	hypothetical protein LOC109349
+109593	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Lmo3	LIM domain only 3,LIM domain only 3,
+109652	0.6	0.88	0.85	0.05	1.56	0.56	1.71	0.94	0.52	0.63	NA	NA	0.43	1.39	1.61	2.68	1.17	2.15	0.25	1.98	1.5	0.96	1.63	1.89	NA	2.33	NA	NA	Acy1	aminoacylase 1
+109660	0	0.1	0	0	0	0	0	0.13	0.14	0	NA	NA	0.21	0.13	0	0	0.07	0	0	0.04	0.1	0.04	0	0.52	NA	0.13	NA	NA	Ctrl	chymotrypsin-like
+109697	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Cpa1	carboxypeptidase A1
+109791	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Clps	colipase, pancreatic
+109820	0	0	0	0	0	0	0	0	0	0.06	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Pgc	progastricsin (pepsinogen C)
+109821	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	F11	coagulation factor XI
+109889	0.22	0.07	0	0.04	0.09	0.01	0.07	0.12	0.16	0.08	NA	NA	0.04	0.03	0.06	0	0.07	0.1	0.12	0.07	0.03	0.04	0.07	0.03	NA	0.07	NA	NA	Mzf1	myeloid zinc finger 1,myeloid zinc finger 1,myeloid zinc finger 1,
+109904	0	0	0	0	0	0	0.04	0.02	0.1	0.01	NA	NA	0	0	0	0	0	0	0.02	0	0	0	0	0	NA	0	NA	NA	Mcf2	mcf.2 transforming,mcf.2 transforming,
+109978	0	0.06	0	0	0	0	0	0	0	0	NA	NA	0.02	0	0.05	0	0	0.04	0	0.01	0	0	0	0	NA	0	NA	NA	Art4	ADP-ribosyltransferase 4
+109979	0	0	0	0	0	0.08	0	0.13	0	0	NA	NA	0	0.11	0	0	0	0.12	0.1	0	0	0	0.04	0.15	NA	0.05	NA	NA	Art3	ADP-ribosyltransferase 3,ADP-ribosyltransferase 3,ADP-ribosyltransferase 3,ADP-ribosyltransferase 3,ADP-ribosyltransferase 3,
+110058	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Syt17	synaptotagmin XVII,synaptotagmin XVII,synaptotagmin XVII,synaptotagmin XVII,
+110075	0	0	0	0	0	0	0	0	0	0.01	NA	NA	0	0	0.24	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Bmp3	bone morphogenetic protein 3,bone morphogenetic protein 3,
+110082	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Dnahc5	dynein, axonemal, heavy chain 5
+110115	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Cyp11b1	cytochrome P450, family 11, subfamily b,
+110135	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Fgb	fibrinogen, B beta polypeptide
+110187	0	0	0	0	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0.31	0	0	0	NA	0	NA	NA	Abpg	androgen binding protein gamma
