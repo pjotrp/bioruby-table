@@ -7,6 +7,10 @@ rescue Bundler::BundlerError => e
   exit e.status_code
 end
 
+rootdir = File.dirname(__FILE__) + '/../..'
+$LOAD_PATH.unshift(rootdir+'/lib',rootdir+'/../regressiontest/lib')
+require 'regressiontest'
+
 $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../../lib')
 require 'bio-table'
 

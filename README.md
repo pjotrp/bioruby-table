@@ -25,7 +25,7 @@ you don't need to know Ruby to use the command line interface (CLI).
 
 Features:
 
-* Support for TAB and CSV files
+* Support for converting TAB and CSV files
 * Filter on data
 * Transform table and data by column or row
 * Recalculate data
@@ -36,6 +36,10 @@ Features:
 * Convert table to JSON (nyi)
 * Convert table to RDF (nyi)
 * etc. etc.
+
+and bio-table is pretty fast. To convert a 3Mb file of 18670 rows
+takes 0.96 second.  Adding a filter makes it parse at 1.01 second on
+my 3.2 GHz desktop.
 
 Note: this software is under active development, though what is
 documented here should just work.
