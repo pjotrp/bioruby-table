@@ -27,15 +27,18 @@ Features:
 
 * Support for TAB and CSV files
 * Filter on data
-* Transform table and data by column
+* Transform table and data by column or row
 * Recalculate data
 * Diff between tables, selecting on specific column values
-* Merge tables side by side
-* Split tables by column
+* Merge tables side by side on column value/rowname
+* Split/reduce tables by column
 * Read from STDIN, write to STDOUT
+* Convert table to JSON (nyi)
+* Convert table to RDF (nyi)
+* etc. etc.
 
-Note: this software is under active development, though it should just
-work.
+Note: this software is under active development, though what is
+documented here should just work.
 
 ## Installation
 
@@ -232,7 +235,7 @@ Note: the Ruby API below is a work in progress.
 
 Tables are two dimensional matrixes, which can be read from a file
 
-```
+```ruby
     t = Table.read_file('test/data/input/table1.csv')
     p t.header              # print the header array
     p t.name[0],t[0]        # print the row name and row row
@@ -243,7 +246,7 @@ The table reader has quite a few options for defining field separator,
 which column to use for names etc. More interestingly you can pass a
 function to limit the amount of row read into memory:
 
-```
+```ruby
     t = Table.read_file('test/data/input/table1.csv',
       :by_row => { | row | row[0..3] } )
 ```
@@ -252,7 +255,7 @@ will create a table of the column name +row[0]+ and 2 table fields. You can use
 the same idea to reformat and reorder table columns when reading data
 into the table. E.g.
 
-```
+```ruby
     t = Table.read_file('test/data/input/table1.csv',
       :by_row => { | row | [row.rowname, row[0..3], row[6].to_i].flatten } )
 ```
@@ -262,7 +265,7 @@ the header with row.header?, but in this case you
 can pass in a :by_header, which will have :by_row only call on
 actual table rows.
 
-```
+```ruby
     t = Table.read_file('test/data/input/table1.csv',
       :by_header => { | header | ["Row name", header[0..3], header[6]].flatten } )
       :by_row => { | row | [row.rowname, row[0..3], row[6].to_i].flatten } )
@@ -271,7 +274,7 @@ actual table rows.
 When by_row returns nil or false, the table row is skipped. One way to
 transform a file, and not loading it in memory, is
 
-```
+```ruby
     f = File.new('test.tab','w')
     t = Table.read_file('test/data/input/table1.csv', 
       :by_row => { | row | 
@@ -285,7 +288,7 @@ transform them.
 
 To write a full table from memory to file use
 
-```
+```ruby
     t.write_file('test1a.csv')
 ```
 
@@ -293,7 +296,7 @@ again columns can be reordered/transformed using a function. Another
 option is by passing in an list of column numbers or header names, so
 only those get written, e.g.
 
-```
+```ruby
     t.write_file('test1a.csv', columns: [0,1,2,4,6,8])
     t.write_file('test1b.csv', columns: ["AJ","B6","Axb1","Axb4","AXB13","Axb15","Axb19"] )
 ```
@@ -305,6 +308,19 @@ memory and sort according to table columns. In the near future we aim
 to have a low-memory version, by reading only the sorting columns in
 memory, and indexing them before writing output. That means reading a
 file twice, but being able to handle much larger data.
+
+In above examples we loaded the whole table in memory. It is also
+possible to execute functions without using RAM by using the emit
+function. This is what the bio-table CLI does:
+
+```ruby
+ARGV.each do | fn |
+  BioTable::TableLoader.emit(f, options).each do |row| 
+    writer.write(TableRow.new(row[0],row[1..-1]))
+  end
+end
+
+```
 
 ### Loading a numerical matrix
 
