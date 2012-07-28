@@ -38,8 +38,8 @@ Features:
 * etc. etc.
 
 and bio-table is pretty fast. To convert a 3Mb file of 18670 rows
-takes 0.96 second.  Adding a filter makes it parse at 1.01 second on
-my 3.2 GHz desktop.
+takes 0.87 second. Adding a filter makes it parse at 0.95 second on
+my 3.2 GHz desktop (with preloaded disk cache).
 
 Note: this software is under active development, though what is
 documented here should just work.
@@ -319,12 +319,17 @@ function. This is what the bio-table CLI does:
 
 ```ruby
 ARGV.each do | fn |
-  BioTable::TableLoader.emit(f, options).each do |row| 
+  f = File.open(fn)
+  BioTable::TableLoader.emit(f, in_format: :csv).each do |row| 
     writer.write(TableRow.new(row[0],row[1..-1]))
   end
 end
-
 ```
+
+Essentially you can pass in any object that has the *each* method to
+iterate through rows as String (f's each method reads in a line at a
+time). The emit function yields the parsed row object as a simple
+array of fields (each field a String).
 
 ### Loading a numerical matrix
 

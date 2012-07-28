@@ -8,7 +8,7 @@ module BioTable
     # Note that this class does not hold data in memory(!)
     #
     # Note that you need to pass in :with_header to get the header row
-    def TableLoader::emit generator, options 
+    def TableLoader::emit generator, options = {}
       table_apply = TableApply.new(options)
       column_index = nil, prev_line = nil
       Enumerator.new { |yielder|
