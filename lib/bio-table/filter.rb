@@ -63,7 +63,8 @@ module BioTable
     end
 
     def Filter::valid_number?(s)
-      s.to_s.match(/\A[+-]?\d+?(\.\d+)?\Z/) == nil ? false : true
+      # s.to_s.match(/\A[+-]?\d+?(\.\d+)?\Z/) == nil ? false : true
+      begin Float(s) ; true end rescue false
     end
 
     def Filter::numeric code, fields
