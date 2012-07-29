@@ -11,7 +11,7 @@ module BioTable
     def RDF::header(row)
       list = []
       row.each_with_index do | field,i |
-        s = "biotable:#{field} rdf:label \"#{field}\"; a biotable:colname; biotable:index #{i}."
+        s = ":#{field} rdf:label \"#{field}\" ; a :colname; :index #{i} ."
         list << s
       end
       list
@@ -28,11 +28,11 @@ module BioTable
     def RDF::row(row, header)
       list = []
       rowname = row[0]
-      list << "biotable:#{rowname} rdf:label \"#{rowname}\"; a biotable:colname;"
+      list << ":#{rowname} rdf:label \"#{rowname}\" ; a :colname ;"
       row.each_with_index do | field,i |
-        list << ":#{header[i]} \"#{field}\";"
+        list << ":#{header[i]} \"#{field}\""
       end
-      list.join(" ")
+      list.join(" ; ")+" ."
     end
   end
 end
