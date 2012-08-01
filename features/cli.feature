@@ -1,7 +1,7 @@
 @cli
 Feature: Command-line interface (CLI)
 
-  bio-table has a powerful comman line interface. Here we regression test features.
+  bio-table has a powerful command line interface. Here we regression test features.
 
   Scenario: Test the numerical filter by column values
     Given I have input file(s) named "test/data/input/table1.csv"
@@ -27,5 +27,10 @@ Feature: Command-line interface (CLI)
     Given I have input file(s) named "test/data/input/table1.csv"
     When I execute "./bin/bio-table test/data/input/table1.csv --rewrite 'rowname = field[2]; field[1]=nil if field[2].to_f<0.25'"
     Then I expect the named output to match "table1-rewrite-rownames"
+
+  Scenario: Read from STDIN
+    Given I have input file(s) named "test/data/input/table1.csv"
+    When I execute "cat test/data/input/table1.csv|./bin/bio-table test/data/input/table1.csv --rewrite 'rowname = field[2]; field[1]=nil if field[2].to_f<0.25'"
+    Then I expect the named output to match "table1-STDIN"
 
 
