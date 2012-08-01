@@ -25,4 +25,5 @@ require 'bio-table/table_apply.rb'
 require 'bio-table/diff.rb'
 require 'bio-table/overlap.rb'
 require 'bio-table/merge.rb'
+require 'bio-table/rdf.rb'
 

@@ -34,5 +34,11 @@ module BioTable
       end
       list.join(" ; ")+" ."
     end
+
+    # Convenience class for writing RDF
+    class Writer
+    
+    end
   end
+
 end

@@ -38,14 +38,7 @@ options[:show_help] = true if ARGV.size == 0 and not INPUT_ON_STDIN
 opts = OptionParser.new do |o|
   o.banner = "Usage: #{File.basename($0)} [options] filename\n\n"
 
-  o.on('--in-format [tab,csv]', [:tab, :csv], 'Input format (default tab)') do |par|
-    options[:in_format] = par.to_sym
-  end
-
-  o.on('--format [tab,csv]', [:tab, :csv], 'Output format (default tab)') do |par|
-    options[:format] = par.to_sym
-  end
-  
+ 
   o.on('--num-filter expression', 'Numeric filtering function') do |par|
     options[:num_filter] = par
   end
@@ -82,21 +75,37 @@ opts = OptionParser.new do |o|
     options[:overlap] = l
   end
   
-  
+  o.on('--merge','Merge tables by rowname') do 
+    options[:merge] = true
+  end
+
+  o.separator "\n\tOverrides:\n\n"
+
   # o.on('--with-header','Include the header element in filtering etc.') do
   #   options[:with_header] = true
   # end
-  
+
   o.on('--with-rownames','Include the rownames in filtering etc.') do
     options[:with_rownames] = true
   end
-  
-  o.separator ""
 
+
+  o.separator "\n\tFormat:\n\n"
+  
+  o.on('--in-format [tab,csv]', [:tab, :csv], 'Input format (default tab)') do |par|
+    options[:in_format] = par.to_sym
+  end
+
+  o.on('--format [tab,csv,rdf]', [:tab, :csv, :rdf], 'Output format (default tab)') do |par|
+    options[:format] = par.to_sym
+  end
+
+  o.separator "\n\tVerbosity:\n\n"
+  
   o.on("--logger filename",String,"Log to file (default stderr)") do | name |
     Bio::Log::CLI.logger(name)
   end
-  
+
   o.on("--trace options",String,"Set log level (default INFO, see bio-logger)") do | s |
     Bio::Log::CLI.trace(s)
   end
@@ -177,12 +186,17 @@ end
 # http://eric.lubow.org/2010/ruby/multiple-input-locations-from-bash-into-ruby/
 #
 
-writer = BioTable::TableWriter::Writer.new(options[:format])
+writer = 
+  if options[:format] == :rdf
+    BioTable::RDF::Writer.new
+  else
+    BioTable::TableWriter::Writer.new(options[:format])
+  end
 
 if INPUT_ON_STDIN
   opts = options.dup # so we can modify options
-  BioTable::TableLoader.emit(STDIN, opts).each do |row| 
-    writer.write(TableRow.new(row[0],row[1..-1]))
+  BioTable::TableLoader.emit(STDIN, opts).each do |row, type| 
+    writer.write(TableRow.new(row[0],row[1..-1]),type)
   end
   options[:write_header] = false  # don't write the header for chained files
 end
@@ -194,8 +208,8 @@ ARGV.each do | fn |
     logger.debug "Autodetected CSV file"
     opts[:in_format] = :csv
   end
-  BioTable::TableLoader.emit(f, opts).each do |row| 
-    writer.write(TableRow.new(row[0],row[1..-1]))
+  BioTable::TableLoader.emit(f, opts).each do |row,type| 
+    writer.write(TableRow.new(row[0],row[1..-1]),type)
   end
   options[:write_header] = false  # don't write the header for chained files
 end

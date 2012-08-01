@@ -246,7 +246,7 @@ bio-table can write a table into turtle RDF triples (part of the semantic
 web!), so you can put the data directly into a triple-store. 
 
 ```sh
-    bio-table --rdf table1.csv
+    bio-table --format rdf table1.csv
 ```
 
 The table header is stored with predicate :colname using the header

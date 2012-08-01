@@ -19,7 +19,7 @@ module BioTable
             header = table_apply.parse_header(line, options)
             # Validator::valid_header?(header, @header)  # compare against older header when merging
             column_index,header = table_apply.column_index(header) # we may rewrite the header
-            yielder.yield header if options[:write_header] != false
+            yielder.yield header,:header if options[:write_header] != false
             prev_line = header[1..-1]
           else
             rowname, data_fields = table_apply.parse_row(line_num, line, column_index, prev_line, options)
@@ -27,7 +27,7 @@ module BioTable
               list = []
               list << rowname if not options[:with_rownames] # otherwise doubles rownames
               list += data_fields if data_fields
-              yielder.yield list
+              yielder.yield list,:row
               prev_line = data_fields
             end
           end
