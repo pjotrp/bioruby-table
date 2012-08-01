@@ -33,8 +33,8 @@ Features:
 * Merge tables side by side on column value/rowname
 * Split/reduce tables by column
 * Read from STDIN, write to STDOUT
+* Convert table to RDF 
 * Convert table to JSON (nyi)
-* Convert table to RDF (nyi)
 * etc. etc.
 
 and bio-table is pretty fast. To convert a 3Mb file of 18670 rows
@@ -57,40 +57,40 @@ documented here should just work.
 Tables can be transformed through the command line. To transform a
 comma separated file to a tab delimited one
 
-```
+```sh
     bio-table test/data/input/table1.csv --in-format csv --format tab > test1.tab
 ```
 
 Tab is actually the general default. Still, if the file name ends in
 csv, it will assume CSV. To convert the table back
 
-```
+```sh
     bio-table test1.tab --format csv > table1.csv
 ```
 
 To filter out rows that contain certain values
 
-```
+```sh
     bio-table test/data/input/table1.csv --num-filter "values[3] <= 0.05" > test1a.tab
 ```
 
 The filter ignores the header row, and the row names. If you need
 either, use the switches --with-header and --with-rownames. With math, list all rows 
 
-```
+```sh
     bio-table test/data/input/table1.csv --num-filter "values[3]-values[6] >= 0.05" > test1a.tab
 ```
 
 or, list all rows that have a least a field with values >= 1000.0
 
-```
+```sh
     bio-table test/data/input/table1.csv --num-filter "values.max >= 1000.0" > test1a.tab
 ```
 
 Produce all rows that have at least 3 values above 3.0 and 1 one value
 above 10.0:
 
-```
+```sh
     bio-table test/data/input/table1.csv --num-filter "values.max >= 10.0 and values.count{|x| x>=3.0} > 3"
 ```
 
@@ -100,7 +100,7 @@ The --num-filter will convert fields lazily to numerical values (only
 valid numbers are converted). If there are NA (nil) values in the table, you
 may wish to remove them, like this
 
-```
+```sh
     bio-table test/data/input/table1.csv --num-filter "values[0..12].compact.max >= 1000.0" > test1a.tab
 ```
 
@@ -109,27 +109,27 @@ which takes the first 13 fields and compact removes the nil values.
 Also string comparisons and regular expressions can be used. E.g.
 filter on rownames and a row field both containing 'BGT'
 
-```
+```sh
     # not yet implemented
     bio-table test/data/input/table1.csv --filter "rowname =~ /BGT/ and field[1] =~ /BGT/" > test1a.tab
 ```
 
 To reorder/reduce table columns by name
 
-```
+```sh
     bio-table test/data/input/table1.csv --columns AJ,B6,Axb1,Axb4,AXB13,Axb15,Axb19 > test1a.tab
 ```
 
 or use their index numbers (the first column is zero)
 
-```
+```sh
     bio-table test/data/input/table1.csv --columns 0,1,8,2,4,6 > test1a.tab
 ```
 
 
 To filter for columns using a regular expression
 
-```
+```sh
     bio-table table1.csv --column-filter 'colname !~ /infected/i'
 ```
 
@@ -139,7 +139,7 @@ case.
 Finally we can rewrite the content of a table using rowname and fields
 again
 
-```
+```sh
     bio-table table1.csv --rewrite 'rowname.upcase!; field[1]=nil if field[2].to_f<0.25'
 ```
 
@@ -150,7 +150,7 @@ empty if the third field is below 0.25.
 
 To sort a table on column 4 and 2
 
-```
+```sh
     # not yet implemented
     bio-table test/data/input/table1.csv --sort 4,2 > test1a.tab
 ```
@@ -161,20 +161,26 @@ Note: not all is implemented (just yet). Please check bio-table --help first.
 
 You can combine/concat two or more tables by passing in multiple file names
 
+```sh
     bio-table test/data/input/table1.csv test/data/input/table2.csv
+```
 
 this will append table2 to table1, assuming they have the same headers
 (you can use the --columns switch!)
 
 To combine tables side by side use the --merge switch:
 
+```sh
     bio-table --merge table1.csv table2.csv
+```
 
 all rownames will be matched (i.e. the input table order do not need
 to be sorted). For non-matching rownames the fields will be filled
 with NA's, unless you add a filter, e.g.
 
+```sh
     bio-table --merge table1.csv table2.csv --num-filter "values.compact.size == values.size"
+```
 
 ### Splitting a table
 
@@ -188,24 +194,32 @@ overlap, based on shared columns. The bio-table diff command shows the
 difference between two tables using the row names (i.e. those rows
 with rownames that appear in table2, but not in table1)
 
+```sh
     bio-table --diff 0 table1.csv table2.csv 
+```
 
 bio-table --diff is different from the standard Unix diff tool. The
 latter shows insertions and deletions. bio-table --diff shows what is
 in one file, and not in the other (insertions). To see deletions,
 reverse the file order, i.e. switch the file names
 
+```sh
     bio-table --diff 0 table1.csv table2.csv 
+```
 
 To diff on something else
 
+```sh
     bio-table --diff 0,3 table2.csv table1.csv 
+```
 
 creates a key using columns 0 and 3 (0 is the rownames column).
 
 Similarly
 
+```sh
     bio-table --overlap 2 table1.csv table2.csv
+```
 
 finds the overlapping rows, based on the content of column 2.
 
@@ -219,14 +233,43 @@ more soon
 bio-table can read data from STDIN, by simply assuming that the data
 piped in is the first input file
 
-```
+```sh
     cat test1.tab | bio-table table1.csv --num-filter "values[3] <= 0.05" > test1a.tab
 ```
 
 will filter both files test1.tab and test1.csv and output to
 test1a.tab.
 
-## bio-table API (for Ruby programming)
+### Output table to RDF
+
+bio-table can write a table into turtle RDF triples (part of the semantic
+web!), so you can put the data directly into a triple-store. 
+
+```sh
+    bio-table --rdf table1.csv
+```
+
+The table header is stored with predicate :colname using the header
+values both as subject and label, with the :index:
+
+```rdf
+  :header3 rdf:label "Header3" ; a :colname; :index 4 .
+```
+
+Rows are stored with rowname as subject and label, followed by the
+columns referring to the header triples, and the values. E.g.
+
+```rdf
+   :row13475701 rdf:label "row13475701" ; a :rowname ; ; :Id "row13475701" ; :header1 "1" ; :header2 "0" ; :header3 "3" .
+```
+
+The bio-rdf gem can actually uses bio-table to parse data into a
+triple store and query the data through SPARQL. For examples see the
+features, e.g. the
+[genotype to RDF feature](https://github.com/pjotrp/bioruby-rdf/blob/master/features/genotype-table-to-rdf.feature).
+
+
+## bio-table API (for Ruby programmers)
 
 ```ruby
     require 'bio-table'
