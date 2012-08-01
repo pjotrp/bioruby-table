@@ -1,5 +1,14 @@
+require 'uri'
+
 module BioTable
   module RDF
+
+    def RDF::namespaces
+      """
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix : <http://biobeat.org/rdf/biotable/ns#>  .
+      """
+    end
 
     # Write a table header as Turtle RDF. 
     #
@@ -11,7 +20,7 @@ module BioTable
     def RDF::header(row)
       list = []
       row.each_with_index do | field,i |
-        s = ":#{field} rdf:label \"#{field}\" ; a :colname; :index #{i} ."
+        s = ":#{make_identifier(field)} rdf:label \"#{field}\" ; a :colname; :index #{i} ."
         list << s
       end
       list
@@ -27,10 +36,16 @@ module BioTable
 
     def RDF::row(row, header)
       list = []
-      rowname = row[0]
+      rowname = make_identifier(row[0])
       list << ":#{rowname} rdf:label \"#{rowname}\" ; a :colname ;"
       row.each_with_index do | field,i |
-        list << ":#{header[i]} \"#{field}\""
+        s = ":#{make_identifier(header[i])} "
+        if BioTable::Filter.valid_number?(field)
+          s += field.to_s
+        else
+          s += "\"#{field}\""
+        end
+        list << s
       end
       list.join(" ; ")+" ."
     end
@@ -39,6 +54,7 @@ module BioTable
     class Writer
       def write row, type
         if type == :header
+          print RDF.namespaces
           @header = row.all_fields
           rdf = RDF.header(@header)
           print "# Table\n"
@@ -47,6 +63,17 @@ module BioTable
           rdf = RDF.row(row.all_fields,@header)
           print rdf,"\n"
         end
+      end
+    end
+
+private
+
+    def RDF::make_identifier(s)
+      clean_s = s.gsub(/[^[:print:]]/, '').gsub(/[#]/,"").downcase
+      if clean_s =~ /^\d/
+        'r' + clean_s
+      else
+        clean_s
       end
     end
   end
