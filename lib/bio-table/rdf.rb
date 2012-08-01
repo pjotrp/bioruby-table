@@ -35,9 +35,19 @@ module BioTable
       list.join(" ; ")+" ."
     end
 
-    # Convenience class for writing RDF
+    # Convenience class for writing RDF - tracks header values
     class Writer
-    
+      def write row, type
+        if type == :header
+          @header = row.all_fields
+          rdf = RDF.header(@header)
+          print "# Table\n"
+          print rdf.join(' '),"\n\n"
+        else
+          rdf = RDF.row(row.all_fields,@header)
+          print rdf,"\n"
+        end
+      end
     end
   end
 

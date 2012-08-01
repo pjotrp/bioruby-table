@@ -28,6 +28,11 @@ Feature: Command-line interface (CLI)
     When I execute "./bin/bio-table test/data/input/table1.csv --rewrite 'rowname = field[2]; field[1]=nil if field[2].to_f<0.25'"
     Then I expect the named output to match "table1-rewrite-rownames"
 
+  Scenario: Write RDF format
+    Given I have input file(s) named "test/data/input/table1.csv"
+    When I execute "./bin/bio-table test/data/input/table1.csv --format rdf"
+    Then I expect the named output to match "table1-rdf1"
+
   Scenario: Read from STDIN
     Given I have input file(s) named "test/data/input/table1.csv"
     When I execute "cat test/data/input/table1.csv|./bin/bio-table test/data/input/table1.csv --rewrite 'rowname = field[2]; field[1]=nil if field[2].to_f<0.25'"
