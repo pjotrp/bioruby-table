@@ -11,16 +11,19 @@ module BioTable
     def TableLoader::emit generator, options = {}
       table_apply = TableApply.new(options)
       column_index = nil, prev_line = nil
+      skip = options[:skip]
       Enumerator.new { |yielder|
         # fields = LineParser::parse(line,options[:in_format])
         generator.each_with_index do |line, line_num|
           # p [line_num, line]
-          if line_num == 0
+          if line_num-skip == 0
             header = table_apply.parse_header(line, options)
             # Validator::valid_header?(header, @header)  # compare against older header when merging
             column_index,header = table_apply.column_index(header) # we may rewrite the header
             yielder.yield header,:header if options[:write_header] != false
             prev_line = header[1..-1]
+          elsif line_num-skip < 0
+            # do nothing
           else
             rowname, data_fields = table_apply.parse_row(line_num, line, column_index, prev_line, options)
             if data_fields

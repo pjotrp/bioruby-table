@@ -37,7 +37,7 @@ module BioTable
     def RDF::row(row, header)
       list = []
       rowname = make_identifier(row[0])
-      list << ":#{rowname} rdf:label \"#{row[0]}\" ; a :colname ;"
+      list << ":#{rowname} rdf:label \"#{row[0]}\" ; a :rowname"
       row.each_with_index do | field,i |
         s = ":#{make_identifier(header[i])} "
         if BioTable::Filter.valid_number?(field)

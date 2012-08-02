@@ -7,6 +7,8 @@ module BioTable
     def initialize options
       @logger = Bio::Log::LoggerPlus['bio-table']
 
+      # @skip  = options[:skip]
+      # @logger.debug "Skipping #{@skip} lines" if @skip
       @num_filter  = options[:num_filter]
       @logger.debug "Filtering on #{@num_filter}" if @num_filter 
       @rewrite  = options[:rewrite]

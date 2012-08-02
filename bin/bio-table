@@ -85,6 +85,10 @@ opts = OptionParser.new do |o|
   #   options[:with_header] = true
   # end
 
+  o.on('--skip lines',Integer,'Skip the first lines before parsing') do |skip|
+    options[:skip] = skip
+  end
+
   o.on('--with-rownames','Include the rownames in filtering etc.') do
     options[:with_rownames] = true
   end
