@@ -33,7 +33,7 @@ log = Bio::Log::LoggerPlus.new 'bio-table'
 Bio::Log::CLI.logger('stderr')
 Bio::Log::CLI.trace('info')
 
-options = {show_help: false, write_header: true}
+options = {show_help: false, write_header: true, skip: 0}
 options[:show_help] = true if ARGV.size == 0 and not INPUT_ON_STDIN
 opts = OptionParser.new do |o|
   o.banner = "Usage: #{File.basename($0)} [options] filename\n\n"
