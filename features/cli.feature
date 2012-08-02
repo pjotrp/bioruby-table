@@ -30,7 +30,7 @@ Feature: Command-line interface (CLI)
 
   Scenario: Write RDF format
     Given I have input file(s) named "test/data/input/table1.csv"
-    When I execute "./bin/bio-table test/data/input/table1.csv --format rdf"
+    When I execute "./bin/bio-table test/data/input/table1.csv --format rdf --transform-ids downcase"
     Then I expect the named output to match "table1-rdf1"
 
   Scenario: Read from STDIN

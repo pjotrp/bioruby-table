@@ -17,10 +17,10 @@ module BioTable
     # [:AXB1 rdf:label "AXB1"; a :colname; :index 3 ].
     #
     # This method returns a list of these.
-    def RDF::header(row, transform = nil)
+    def RDF::header(row)
       list = []
       row.each_with_index do | field,i |
-        s = ":#{make_identifier(field,transform)} rdf:label \"#{field}\" ; a :colname; :index #{i} ."
+        s = ":#{make_identifier(field)} rdf:label \"#{field}\" ; a :colname; :index #{i} ."
         list << s
       end
       list
@@ -34,12 +34,12 @@ module BioTable
     #
     # The method returns a String.
 
-    def RDF::row(row, header, transform = nil)
+    def RDF::row(row, header)
       list = []
       rowname = make_identifier(row[0])
       list << ":#{rowname} rdf:label \"#{row[0]}\" ; a :colname ;"
       row.each_with_index do | field,i |
-        s = ":#{make_identifier(header[i],transform)} "
+        s = ":#{make_identifier(header[i])} "
         if BioTable::Filter.valid_number?(field)
           s += field.to_s
         else

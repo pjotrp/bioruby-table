@@ -37,9 +37,10 @@ module BioTable
 
     def parse_row(line_num, line, column_idx, last_fields, options)
       fields = LineParser::parse(line, options[:in_format])
+      return nil,nil if fields.compact == []
       fields = Formatter::transform_row_ids(@transform_ids, fields) if @transform_ids
       fields = Filter::apply_column_filter(fields,column_idx) 
-      return nil,nil if fields == []
+      return nil,nil if fields.compact == []
       rowname = fields[0]
       data_fields = fields[@first_column..-1]
       if data_fields.size > 0

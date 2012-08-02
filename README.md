@@ -263,7 +263,13 @@ columns referring to the header triples, and the values. E.g.
    :row13475701 rdf:label "row13475701" ; a :rowname ; ; :Id "row13475701" ; :header1 "1" ; :header2 "0" ; :header3 "3" .
 ```
 
-The bio-rdf gem can actually uses bio-table to parse data into a
+To unify identifier names you may want to transform ids:
+
+```sh
+    bio-table --format rdf --transform-ids "downcase" table1.csv
+```
+
+The bio-rdf gem actually uses bio-table to parse data into a
 triple store and query the data through SPARQL. For examples see the
 features, e.g. the
 [genotype to RDF feature](https://github.com/pjotrp/bioruby-rdf/blob/master/features/genotype-table-to-rdf.feature).
