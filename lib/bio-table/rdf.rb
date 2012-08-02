@@ -17,10 +17,10 @@ module BioTable
     # [:AXB1 rdf:label "AXB1"; a :colname; :index 3 ].
     #
     # This method returns a list of these.
-    def RDF::header(row)
+    def RDF::header(row, transform = nil)
       list = []
       row.each_with_index do | field,i |
-        s = ":#{make_identifier(field)} rdf:label \"#{field}\" ; a :colname; :index #{i} ."
+        s = ":#{make_identifier(field,transform)} rdf:label \"#{field}\" ; a :colname; :index #{i} ."
         list << s
       end
       list
@@ -34,12 +34,12 @@ module BioTable
     #
     # The method returns a String.
 
-    def RDF::row(row, header)
+    def RDF::row(row, header, transform = nil)
       list = []
       rowname = make_identifier(row[0])
       list << ":#{rowname} rdf:label \"#{row[0]}\" ; a :colname ;"
       row.each_with_index do | field,i |
-        s = ":#{make_identifier(header[i])} "
+        s = ":#{make_identifier(header[i],transform)} "
         if BioTable::Filter.valid_number?(field)
           s += field.to_s
         else
@@ -52,6 +52,7 @@ module BioTable
 
     # Convenience class for writing RDF - tracks header values
     class Writer
+
       def write row, type
         if type == :header
           print RDF.namespaces
@@ -68,13 +69,18 @@ module BioTable
 
 private
 
+    # An identifier is used for the subject and predicate in RDF. This is a case-sensitive
+    # (shortened) URI. You can change default behaviour for identifiers using the options 
+    # --transform-ids (i.e. in the input side, rather than the output side)
+    #
     def RDF::make_identifier(s)
-      clean_s = s.gsub(/[^[:print:]]/, '').gsub(/[#]/,"").downcase
-      if clean_s =~ /^\d/
-        'r' + clean_s
-      else
-        clean_s
-      end
+      clean_s = s.gsub(/[^[:print:]]/, '').gsub(/[#]/,"")
+      valid_id = if clean_s =~ /^\d/
+                   'r' + clean_s
+                 else
+                   clean_s
+                 end
+      valid_id
     end
   end
 

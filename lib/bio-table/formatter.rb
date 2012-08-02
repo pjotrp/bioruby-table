@@ -1,5 +1,24 @@
 module BioTable
 
+  module Formatter
+    def Formatter::transform_header_ids modify, list
+      l = list.dup
+      case modify
+        when :downcase then l.map { |h| h.downcase }
+        when :upcase   then l.map { |h| h.upcase }
+        else                l
+      end
+    end
+    def Formatter::transform_row_ids modify, list
+      l = list.dup
+      case modify
+        when :downcase then l[0].downcase!
+        when :upcase   then l[0].upcase!
+      end
+      l
+    end
+  end
+
   class TabFormatter
     def write list
       print list.map{|field| (field==nil ? "NA" : field)}.join("\t"),"\n"
@@ -8,7 +27,6 @@ module BioTable
   end
 
   class CsvFormatter
-
     def write list
       csv_string = CSV.generate do |csv|
         csv << list

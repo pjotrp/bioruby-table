@@ -15,13 +15,17 @@ module BioTable
       @logger.debug "Filtering on columns #{@use_columns}" if @use_columns 
       @column_filter = options[:column_filter]
       @logger.debug "Filtering on column names #{@column_filter}" if @column_filter
+      @transform_ids = options[:transform_ids]
+      @logger.debug "Transform ids #{@transform_ids}" if @transform_ids
       @include_rownames = options[:with_rownames]
       @logger.debug "Include row names" if @include_rownames
       @first_column = (@include_rownames ? 0 : 1)
     end
 
     def parse_header(line, options)  
-      LineParser::parse(line, options[:in_format])
+      header = LineParser::parse(line, options[:in_format])
+      return Formatter::transform_header_ids(@transform_ids, header) if @transform_ids
+      header
     end
 
     def column_index(header)
@@ -33,6 +37,7 @@ module BioTable
 
     def parse_row(line_num, line, column_idx, last_fields, options)
       fields = LineParser::parse(line, options[:in_format])
+      fields = Formatter::transform_row_ids(@transform_ids, fields) if @transform_ids
       fields = Filter::apply_column_filter(fields,column_idx) 
       return nil,nil if fields == []
       rowname = fields[0]

@@ -89,6 +89,11 @@ opts = OptionParser.new do |o|
     options[:with_rownames] = true
   end
 
+  o.separator "\n\tTransform:\n\n"
+
+  o.on('--transform-ids [downcase,upcase]',[:downcase,:upcase],'Transform column and row identifiers') do |par|
+    options[:transform_ids] = par.to_sym
+  end
 
   o.separator "\n\tFormat:\n\n"
   
