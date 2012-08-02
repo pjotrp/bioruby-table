@@ -19,6 +19,7 @@ module BioTable
     # This method returns a list of these.
     def RDF::header(row)
       list = []
+      raise "RDF expects unique column names!" if row != row.uniq
       row.each_with_index do | field,i |
         s = ":#{make_identifier(field)} rdf:label \"#{field}\" ; a :colname; :index #{i} ."
         list << s
@@ -53,6 +54,10 @@ module BioTable
     # Convenience class for writing RDF - tracks header values
     class Writer
 
+      def initialize
+        @rownames = {}
+      end
+
       def write row, type
         if type == :header
           print RDF.namespaces
@@ -61,6 +66,11 @@ module BioTable
           print "# Table\n"
           print rdf.join("\n"),"\n\n"
         else
+          if @rownames[row.rowname]
+            raise "RDF expects unique row names! Duplicate #{row.rowname} found"
+          else
+            @rownames[row.rowname] = true
+          end
           rdf = RDF.row(row.all_fields,@header)
           print rdf,"\n"
         end
@@ -74,7 +84,7 @@ private
     # --transform-ids (i.e. in the input side, rather than the output side)
     #
     def RDF::make_identifier(s)
-      clean_s = s.gsub(/[^[:print:]]/, '').gsub(/[#]/,"")
+      clean_s = s.gsub(/[^[:print:]]/, '').gsub(/[#)(]/,"").gsub(/[%]/,"perc").gsub(/(\s|\.)+/,"_")
       valid_id = if clean_s =~ /^\d/
                    'r' + clean_s
                  else
