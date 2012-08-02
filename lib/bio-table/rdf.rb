@@ -67,7 +67,7 @@ module BioTable
           print rdf.join("\n"),"\n\n"
         else
           if @rownames[row.rowname]
-            raise "RDF expects unique row names! Duplicate #{row.rowname} found"
+            raise "RDF expects unique row names! Duplicate <#{row.rowname}> found"
           else
             @rownames[row.rowname] = true
           end
@@ -84,7 +84,7 @@ private
     # --transform-ids (i.e. in the input side, rather than the output side)
     #
     def RDF::make_identifier(s)
-      clean_s = s.gsub(/[^[:print:]]/, '').gsub(/[#)(]/,"").gsub(/[%]/,"perc").gsub(/(\s|\.)+/,"_")
+      clean_s = s.gsub(/[^[:print:]]/, '').gsub(/[#)(,]/,"").gsub(/[%]/,"perc").gsub(/(\s|\.|\$)+/,"_")
       valid_id = if clean_s =~ /^\d/
                    'r' + clean_s
                  else
