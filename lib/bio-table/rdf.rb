@@ -59,7 +59,7 @@ module BioTable
           @header = row.all_fields
           rdf = RDF.header(@header)
           print "# Table\n"
-          print rdf.join(' '),"\n\n"
+          print rdf.join("\n"),"\n\n"
         else
           rdf = RDF.row(row.all_fields,@header)
           print rdf,"\n"
