@@ -12,6 +12,7 @@ module BioTable
       table_apply = TableApply.new(options)
       column_index = nil, prev_line = nil
       skip = options[:skip]
+      skip = 0 if skip == nil
       Enumerator.new { |yielder|
         # fields = LineParser::parse(line,options[:in_format])
         generator.each_with_index do |line, line_num|

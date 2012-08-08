@@ -19,7 +19,10 @@ module BioTable
     # This method returns a list of these.
     def RDF::header(row)
       list = []
-      raise "RDF expects unique column names!" if row != row.uniq
+      if row - row.uniq != []
+        $stderr.print row - row.uniq
+        raise "RDF expects unique column names!" 
+      end
       row.each_with_index do | field,i |
         s = ":#{make_identifier(field)} rdf:label \"#{field}\" ; a :colname; :index #{i} ."
         list << s
