@@ -38,10 +38,10 @@ module BioTable
     #
     # The method returns a String.
 
-    def RDF::row(row, header)
+    def RDF::row(row, header, use_blank_nodes)
       list = []
       rowname = make_identifier(row[0])
-      list << ":#{rowname} rdf:label \"#{row[0]}\" ; a :rowname"
+      list << ":#{rowname}"+(use_blank_nodes ? " :row [ " : " ") + "rdf:label \"#{row[0]}\" ; a :rowname" 
       row.each_with_index do | field,i |
         s = ":#{make_identifier(header[i])} "
         if BioTable::Filter.valid_number?(field)
@@ -51,13 +51,14 @@ module BioTable
         end
         list << s
       end
-      list.join(" ; ")+" ."
+      list.join(" ; ")+(use_blank_nodes ? " ] ." : " .")
     end
 
     # Convenience class for writing RDF - tracks header values
     class Writer
 
-      def initialize
+      def initialize use_blank_nodes
+        @use_blank_nodes = use_blank_nodes
         @rownames = {}
       end
 
@@ -70,11 +71,16 @@ module BioTable
           print rdf.join("\n"),"\n\n"
         else
           if @rownames[row.rowname]
-            raise "RDF expects unique row names! Duplicate <#{row.rowname}> found"
+            if @use_blank_nodes
+              logger = Bio::Log::LoggerPlus['bio-table']
+              logger.warn "Duplicate row name <#{row.rowname}>"
+            else
+              raise "RDF expects unique row names! Duplicate <#{row.rowname}> found"
+            end
           else
             @rownames[row.rowname] = true
           end
-          rdf = RDF.row(row.all_fields,@header)
+          rdf = RDF.row(row.all_fields,@header,@use_blank_nodes)
           print rdf,"\n"
         end
       end

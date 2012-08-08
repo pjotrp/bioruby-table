@@ -99,7 +99,7 @@ opts = OptionParser.new do |o|
     options[:transform_ids] = par.to_sym
   end
 
-  o.separator "\n\tFormat:\n\n"
+  o.separator "\n\tFormat and options:\n\n"
   
   o.on('--in-format [tab,csv]', [:tab, :csv], 'Input format (default tab)') do |par|
     options[:in_format] = par.to_sym
@@ -107,6 +107,10 @@ opts = OptionParser.new do |o|
 
   o.on('--format [tab,csv,rdf]', [:tab, :csv, :rdf], 'Output format (default tab)') do |par|
     options[:format] = par.to_sym
+  end
+
+  o.on('--blank-nodes','Output (RDF) blank nodes - allowing for duplicate row names') do 
+    options[:blank_nodes] = true
   end
 
   o.separator "\n\tVerbosity:\n\n"
@@ -197,7 +201,7 @@ end
 
 writer = 
   if options[:format] == :rdf
-    BioTable::RDF::Writer.new
+    BioTable::RDF::Writer.new(options[:blank_nodes])
   else
     BioTable::TableWriter::Writer.new(options[:format])
   end

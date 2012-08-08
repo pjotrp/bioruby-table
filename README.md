@@ -269,7 +269,13 @@ To unify identifier names you may want to transform ids:
     bio-table --format rdf --transform-ids "downcase" table1.csv
 ```
 
-The bio-rdf gem actually uses bio-table to parse data into a
+Another interesting option is --blank-nodes. This causes rows to be
+written as blank nodes, and allows for duplicate row names. E.g.
+
+```rdf
+   :row13475701 [ rdf:label "row13475701" ; a :rowname ; ; :Id "row13475701" ; :header1 "1" ; :header2 "0" ; :header3 "3" ] .
+```
+The bio-rdf gem actually uses this bio-table biogem to parse data into a
 triple store and query the data through SPARQL. For examples see the
 features, e.g. the
 [genotype to RDF feature](https://github.com/pjotrp/bioruby-rdf/blob/master/features/genotype-table-to-rdf.feature).
