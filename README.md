@@ -370,11 +370,13 @@ file twice, but being able to handle much larger data.
 
 In above examples we loaded the whole table in memory. It is also
 possible to execute functions without using RAM by using the emit
-function. This is what the bio-table CLI does:
+function. This is what the bio-table CLI does to convert a CSV table
+to tab delimited:
 
 ```ruby
 ARGV.each do | fn |
   f = File.open(fn)
+  writer = BioTable::TableWriter::Writer.new(format: tab)
   BioTable::TableLoader.emit(f, in_format: :csv).each do |row| 
     writer.write(TableRow.new(row[0],row[1..-1]))
   end
