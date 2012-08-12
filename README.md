@@ -376,9 +376,9 @@ to tab delimited:
 ```ruby
 ARGV.each do | fn |
   f = File.open(fn)
-  writer = BioTable::TableWriter::Writer.new(format: tab)
-  BioTable::TableLoader.emit(f, in_format: :csv).each do |row| 
-    writer.write(TableRow.new(row[0],row[1..-1]))
+  writer = BioTable::TableWriter::Writer.new(format: :tab)
+  BioTable::TableLoader.emit(f, in_format: :csv).each do |row,type| 
+    writer.write(TableRow.new(row[0],row[1..-1]),type)
   end
 end
 ```
@@ -386,7 +386,8 @@ end
 Essentially you can pass in any object that has the *each* method to
 iterate through rows as String (f's each method reads in a line at a
 time). The emit function yields the parsed row object as a simple
-array of fields (each field a String).
+array of fields (each field a String). The type is used to distinguish 
+the header row.
 
 ### Loading a numerical matrix
 
