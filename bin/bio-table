@@ -97,6 +97,10 @@ opts = OptionParser.new do |o|
     options[:with_rownames] = true
   end
 
+  o.on('--strip-quotes','Strip quotes from table fields') do
+    options[:strip_quotes] = true
+  end
+
   o.separator "\n\tTransform:\n\n"
 
   o.on('--transform-ids [downcase,upcase]',[:downcase,:upcase],'Transform column and row identifiers') do |par|

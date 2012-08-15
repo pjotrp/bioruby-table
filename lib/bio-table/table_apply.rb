@@ -19,6 +19,8 @@ module BioTable
       @logger.debug "Filtering on columns #{@use_columns}" if @use_columns 
       @column_filter = options[:column_filter]
       @logger.debug "Filtering on column names #{@column_filter}" if @column_filter
+      @strip_quotes = options[:strip_quotes]
+      @logger.debug "Strip quotes #{@strip_quotes}" if @strip_quotes
       @transform_ids = options[:transform_ids]
       @logger.debug "Transform ids #{@transform_ids}" if @transform_ids
       @include_rownames = options[:with_rownames]
@@ -28,6 +30,7 @@ module BioTable
 
     def parse_header(line, options)  
       header = LineParser::parse(line, options[:in_format])
+      header = Formatter::strip_quotes(header) if @strip_quotes
       return Formatter::transform_header_ids(@transform_ids, header) if @transform_ids
       header
     end
@@ -42,6 +45,7 @@ module BioTable
     def parse_row(line_num, line, column_idx, last_fields, options)
       fields = LineParser::parse(line, options[:in_format])
       return nil,nil if fields.compact == []
+      fields = Formatter::strip_quotes(fields) if @strip_quotes
       fields = Formatter::transform_row_ids(@transform_ids, fields) if @transform_ids
       fields = Filter::apply_column_filter(fields,column_idx) 
       return nil,nil if fields.compact == []

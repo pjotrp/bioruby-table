@@ -17,6 +17,18 @@ module BioTable
       end
       l
     end
+    def Formatter::strip_quotes list
+      list.map { |field| 
+        first = field[0,1]
+        if first == "\"" or first == "'"
+          last = field[-1,1]
+          if first == last
+            field = field[1..-2]
+          end
+        end
+        field 
+      }
+    end
   end
 
   class TabFormatter
