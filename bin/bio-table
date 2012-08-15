@@ -43,6 +43,10 @@ opts = OptionParser.new do |o|
     options[:num_filter] = par
   end
 
+  o.on('--filter expression', 'Generic filtering function') do |par|
+    options[:filter] = par
+  end
+
   o.on('--rewrite expression', 'Rewrite function') do |par|
     options[:rewrite] = par
   end

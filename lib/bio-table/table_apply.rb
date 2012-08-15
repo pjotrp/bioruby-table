@@ -11,6 +11,8 @@ module BioTable
       # @logger.debug "Skipping #{@skip} lines" if @skip
       @num_filter  = options[:num_filter]
       @logger.debug "Filtering on #{@num_filter}" if @num_filter 
+      @filter  = options[:filter]
+      @logger.debug "Filtering on #{@filter}" if @filter 
       @rewrite  = options[:rewrite]
       @logger.debug "Rewrite #{@rewrite}" if @rewrite
       @use_columns = options[:columns]
@@ -48,6 +50,7 @@ module BioTable
       if data_fields.size > 0
         return nil,nil if not Validator::valid_row?(line_num, data_fields, last_fields)
         return nil,nil if not Filter::numeric(@num_filter,data_fields)
+        return nil,nil if not Filter::generic(@filter,data_fields)
         (rowname, data_fields) = Rewrite::rewrite(@rewrite,rowname,data_fields)
       end
       return rowname, data_fields

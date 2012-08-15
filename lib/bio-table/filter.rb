@@ -70,8 +70,23 @@ module BioTable
     def Filter::numeric code, fields
       return true if code == nil
       if fields
-        # values = fields.map { |field| (valid_number?(field) ? field.to_f : nil ) } # FIXME: not so lazy
+        # values = fields.map { |field| (valid_number?(field) ? field.to_f : nil ) } 
         values = LazyValues.new(fields)
+        begin
+          eval(code)
+        rescue Exception
+          $stderr.print "Failed to evaluate ",fields," with ",code,"\n"
+          raise 
+        end
+      else
+        false
+      end
+    end
+
+    def Filter::generic code, tablefields
+      return true if code == nil
+      if tablefields
+        field = tablefields.dup
         begin
           eval(code)
         rescue Exception
