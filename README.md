@@ -25,16 +25,17 @@ you don't need to know Ruby to use the command line interface (CLI).
 
 Features:
 
-* Support for converting TAB and CSV files
+* Support for reading and writing TAB and CSV files
 * Filter on data
 * Transform table and data by column or row
 * Recalculate data
 * Diff between tables, selecting on specific column values
 * Merge tables side by side on column value/rowname
 * Split/reduce tables by column
+* Write formatted tables, e.g. HTML, LaTeX
 * Read from STDIN, write to STDOUT
 * Convert table to RDF 
-* Convert table to JSON (nyi)
+* Convert table to JSON/YAML/XML (nyi)
 * etc. etc.
 
 and bio-table is pretty fast. To convert a 3Mb file of 18670 rows
@@ -226,7 +227,10 @@ finds the overlapping rows, based on the content of column 2.
 
 ### Different parsers
 
-more soon
+bio-table currently reads comma separated files and tab delimited
+files.
+
+(more soon)
 
 ### Using STDIN
 
@@ -239,6 +243,38 @@ piped in is the first input file
 
 will filter both files test1.tab and test1.csv and output to
 test1a.tab.
+
+### Formatted output
+
+bio-table has built-in formatters - for CSV and TAB, and for RDF
+(and soon for JSON/YAML and perhaps even XML). The RDF format is
+discussed in 'Output table to RDF'.
+
+Another flexible option for formatting a table is to create programmatic output
+through a formatter.  If you set the --format switch to *eval*, you
+can add the -e 'command' that is evaluated to print to STDOUT. For
+example, bio-table does not support HTML output directly, but if we
+were to create an HTML table, we could run
+
+```sh
+    bio-table --format eval -e '"<tr><td>"+field.join("</td><td>")+"</td></tr>"' table1.csv 
+```
+
+likewise to create a LaTeX table we could
+
+```sh
+    bio-table --columns gene_symbol,gene_desc --format eval -e 'field.join(" & ")+" \\\\"' table1.csv
+```
+
+Since fields can be accessed independently, you can add any markup for
+fields, e.g.
+
+```sh
+    bio-table --columns ID,Description,Date --format eval -e'"\\emph{"+field[0]+"} & "+ field[1..-1].join(" & ")+"\\\\"' table1.csv
+```
+
+Because of the evaluation formatter bio-table does not need to implement the machinery for
+every output format on the planet!
 
 ### Output table to RDF
 

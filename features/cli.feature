@@ -33,6 +33,17 @@ Feature: Command-line interface (CLI)
     When I execute "./bin/bio-table --format rdf --transform-ids downcase"
     Then I expect the named output to match "table1-rdf1"
 
+  Scenario: Write HTML format
+    Given I have input file(s) named "test/data/input/table1.csv"
+    When I execute "./bin/bio-table --format eval -e '"<tr><td>"+field.join("</td><td>")+"</td></tr>"'"
+    Then I expect the named output to match "table1-html"
+
+  Scenario: Write LaTeX format
+    Given I have input file(s) named "test/data/input/table1.csv"
+    When I execute "./bin/bio-table --columns gene_symbol,gene_desc --format eval -e 'field.join(" & ")+" \\\\"'"
+    Then I expect the named output to match "table1-latex"
+
+
   Scenario: Read from STDIN
     Given I have input file(s) named "test/data/input/table1.csv"
     When I execute "cat test/data/input/table1.csv|./bin/bio-table test/data/input/table1.csv --rewrite 'rowname = field[2]; field[1]=nil if field[2].to_f<0.25'"

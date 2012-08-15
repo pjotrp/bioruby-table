@@ -105,8 +105,12 @@ opts = OptionParser.new do |o|
     options[:in_format] = par.to_sym
   end
 
-  o.on('--format [tab,csv,rdf]', [:tab, :csv, :rdf], 'Output format (default tab)') do |par|
+  o.on('--format [tab,csv,rdf,eval]', [:tab, :csv, :rdf, :eval], 'Output format (default tab)') do |par|
     options[:format] = par.to_sym
+  end
+
+  o.on("-e command",String,"Evaluate command (use with --format eval)") do | s |
+    options[:evaluate] = s
   end
 
   o.on('--blank-nodes','Output (RDF) blank nodes - allowing for duplicate row names') do 
@@ -203,7 +207,7 @@ writer =
   if options[:format] == :rdf
     BioTable::RDF::Writer.new(options[:blank_nodes])
   else
-    BioTable::TableWriter::Writer.new(options[:format])
+    BioTable::TableWriter::Writer.new(options[:format],options[:evaluate])
   end
 
 if INPUT_ON_STDIN

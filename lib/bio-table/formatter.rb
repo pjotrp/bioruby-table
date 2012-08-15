@@ -23,7 +23,6 @@ module BioTable
     def write list
       print list.map{|field| (field==nil ? "NA" : field)}.join("\t"),"\n"
     end
-
   end
 
   class CsvFormatter
@@ -35,9 +34,22 @@ module BioTable
     end
   end
 
+  class EvalFormatter
+    def initialize evaluate
+      @evaluate = evaluate
+    end
+    def write list
+      field = list.dup
+      print eval(@evaluate)
+      print "\n"
+    end
+  end
+
+
   module FormatFactory
-    def self.create format
+    def self.create format, evaluate
       # @logger.info("Formatting to #{format}")
+      return EvalFormatter.new(evaluate) if evaluate
       return CsvFormatter.new if format == :csv
       return TabFormatter.new
     end
