@@ -23,7 +23,7 @@ module BioTable
 
     # Read lines (list/array of string) and add them to the table, setting row
     # names and row fields. The first row is assumed to be the header and
-    # ignored if the header has been set.
+    # ignored if the header has been set (the case with merge/concat tables).
 
     def read_lines lines, options = {}
       table_apply = TableApply.new(options)

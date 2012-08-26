@@ -23,6 +23,11 @@ module BioTable
             column_index,header = table_apply.column_index(header) # we may rewrite the header
             yielder.yield header,:header if options[:write_header] != false
             prev_line = header[1..-1]
+            # When a header filter is defined, rewind the generator, note that skip won't work
+            # properly (FIXME)
+            if options[:with_headers]
+              generator.rewind
+            end
           elsif line_num-skip < 0
             # do nothing
           else

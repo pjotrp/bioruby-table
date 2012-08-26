@@ -85,12 +85,13 @@ opts = OptionParser.new do |o|
 
   o.separator "\n\tOverrides:\n\n"
 
-  # o.on('--with-header','Include the header element in filtering etc.') do
-  #   options[:with_header] = true
-  # end
-
   o.on('--skip lines',Integer,'Skip the first lines before parsing') do |skip|
     options[:skip] = skip
+  end
+
+  o.on('--with-headers','Include the header element in filtering etc.') do
+    options[:with_headers] = true
+    options[:write_header] = false
   end
 
   o.on('--with-rownames','Include the rownames in filtering etc.') do

@@ -73,3 +73,9 @@ Feature: Command-line interface (CLI)
     When I execute "./bin/bio-table test/data/input/table_split_on.txt --in-format regex --split-on '\s*,'"
     Then I expect the named output to match "table_split_on_regex"
 
+  Scenario: Use header in filter
+    Given I have input file(s) named "test/data/input/table_no_headers.txt"
+    When I execute "./bin/bio-table --in-format split --split-on ',' --num-filter 'values[1]!=0' --with-headers" 
+    Then I expect the named output to match "table_filter_headers"
+
+
