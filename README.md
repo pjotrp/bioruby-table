@@ -25,7 +25,7 @@ you don't need to know Ruby to use the command line interface (CLI).
 
 Features:
 
-* Support for reading and writing TAB and CSV files
+* Support for reading and writing TAB and CSV files, as well as regex splitters
 * Filter on data
 * Transform table and data by column or row
 * Recalculate data
@@ -69,14 +69,21 @@ csv, it will assume CSV. To convert the table back
     bio-table test1.tab --format csv > table1.csv
 ```
 
+It is also possible to use a string or regex splitter, e.g.
+
+```sh
+    bio-table --in-format split --split-on ',' test/data/input/table_split_on.txt
+    bio-table --in-format regex --split-on '\s*,\s*' test/data/input/table_split_on.txt
+```
+
 To filter out rows that contain certain values
 
 ```sh
     bio-table test/data/input/table1.csv --num-filter "values[3] <= 0.05" > test1a.tab
 ```
 
-The filter ignores the header row, and the row names. If you need
-either, use the switches --with-header and --with-rownames. With math, list all rows 
+The filter ignores the header row, and the row names, by default. If you need
+either, use the switches --with-headers and --with-rownames. With math, list all rows 
 
 ```sh
     bio-table test/data/input/table1.csv --num-filter "values[3]-values[6] >= 0.05" > test1a.tab
