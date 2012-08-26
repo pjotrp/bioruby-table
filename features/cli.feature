@@ -63,4 +63,13 @@ Feature: Command-line interface (CLI)
     When I execute "cat test/data/input/table1.csv|./bin/bio-table test/data/input/table1.csv --rewrite 'rowname = field[2]; field[1]=nil if field[2].to_f<0.25'"
     Then I expect the named output to match "table1-STDIN"
 
+  Scenario: Use special string splitter
+    Given I have input file(s) named "test/data/input/table_split_on.txt"
+    When I execute "./bin/bio-table test/data/input/table_split_on.txt --in-format split --split-on ','"
+    Then I expect the named output to match "table_split_on_string"
+
+  Scenario: Use special regex splitter
+    Given I have input file(s) named "test/data/input/table_split_on.txt"
+    When I execute "./bin/bio-table test/data/input/table_split_on.txt --in-format regex --split-on '\s*,'"
+    Then I expect the named output to match "table_split_on_regex"
 
