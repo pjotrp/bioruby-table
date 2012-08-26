@@ -78,4 +78,7 @@ Feature: Command-line interface (CLI)
     When I execute "./bin/bio-table --in-format split --split-on ',' --num-filter 'values[1]!=0' --with-headers" 
     Then I expect the named output to match "table_filter_headers"
 
-
+  Scenario: Use count in filter
+    Given I have input file(s) named "test/data/input/table1.csv"
+    When I execute "./bin/bio-table --num-filter 'values.max >= 10.0 and values.count{|x| x>=3.0} > 3'"
+    Then I expect the named output to match "table_counter_filter"
