@@ -15,5 +15,5 @@ group :development do
   gem "jeweler", "~> 1.8.3"
   gem "bio", ">= 1.4.2"
   gem "rdoc", "~> 3.12"
-  gem "regressiontest"
+  gem "regressiontest", ">= 0.0.2"
 end
