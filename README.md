@@ -29,6 +29,7 @@ Features:
 * Filter on data
 * Transform table and data by column or row
 * Recalculate data
+* Calculate new values
 * Diff between tables, selecting on specific column values
 * Merge tables side by side on column value/rowname
 * Split/reduce tables by column
@@ -113,6 +114,12 @@ may wish to remove them, like this
 ```
 
 which takes the first 13 fields and compact removes the nil values.
+
+To filter out all rows with more than 3 NA values:
+
+```sh
+  bio-table table.csv --num-filter 'values.to_a.size - values.compact.size > 3'
+```
 
 Also string comparisons and regular expressions can be used. E.g.
 filter on rownames and a row field both containing 'BGT'
