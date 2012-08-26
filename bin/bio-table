@@ -109,7 +109,7 @@ opts = OptionParser.new do |o|
 
   o.separator "\n\tFormat and options:\n\n"
   
-  o.on('--in-format [tab,csv]', [:tab, :csv], 'Input format (default tab)') do |par|
+  o.on('--in-format [tab,csv,split,regex]', [:tab, :csv, :split, :regex], 'Input format (default tab)') do |par|
     options[:in_format] = par.to_sym
   end
 
@@ -117,7 +117,11 @@ opts = OptionParser.new do |o|
     options[:format] = par.to_sym
   end
 
-  o.on("-e command",String,"Evaluate command (use with --format eval)") do | s |
+  o.on("--split-on command",String,"Split on string or regex (use with --in-format)") do | s |
+    options[:split_on] = s
+  end
+
+  o.on("-e command",String,"Evaluate output command (use with --format eval)") do | s |
     options[:evaluate] = s
   end
 

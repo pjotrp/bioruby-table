@@ -29,7 +29,7 @@ module BioTable
     end
 
     def parse_header(line, options)  
-      header = LineParser::parse(line, options[:in_format])
+      header = LineParser::parse(line, options[:in_format], options[:split_on])
       header = Formatter::strip_quotes(header) if @strip_quotes
       return Formatter::transform_header_ids(@transform_ids, header) if @transform_ids
       header
@@ -43,7 +43,7 @@ module BioTable
     end
 
     def parse_row(line_num, line, column_idx, last_fields, options)
-      fields = LineParser::parse(line, options[:in_format])
+      fields = LineParser::parse(line, options[:in_format], options[:split_on])
       return nil,nil if fields.compact == []
       fields = Formatter::strip_quotes(fields) if @strip_quotes
       fields = Formatter::transform_row_ids(@transform_ids, fields) if @transform_ids
