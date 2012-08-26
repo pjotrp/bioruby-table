@@ -1,6 +1,8 @@
 module BioTable
 
   class LazyValues
+    include Enumerable
+
     def initialize fields
       @fields = fields
       @values = []  # cache values
@@ -12,6 +14,20 @@ module BioTable
         @values[index] = (Filter::valid_number?(field) ? field.to_f : nil )
       end
       @values[index]
+    end
+
+    def each
+      @fields.each_with_index do | field, i |
+        yield self[i]
+      end
+    end
+
+    def compact
+      a = []
+      each do | e |
+        a << e if e != nil
+      end
+      a
     end
   end
 
