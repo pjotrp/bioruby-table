@@ -175,7 +175,7 @@ To combine tables side by side use the --merge switch:
     bio-table --merge table1.csv table2.csv
 ```
 
-all rownames will be matched (i.e. the input table order do not need
+all rownames will be matched (i.e. the input table does not need
 to be sorted). For non-matching rownames the fields will be filled
 with NA's, unless you add a filter, e.g.
 

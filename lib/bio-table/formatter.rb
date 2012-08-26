@@ -19,14 +19,18 @@ module BioTable
     end
     def Formatter::strip_quotes list
       list.map { |field| 
-        first = field[0,1]
-        if first == "\"" or first == "'"
-          last = field[-1,1]
-          if first == last
-            field = field[1..-2]
+        if field == nil
+          nil
+        else
+          first = field[0,1]
+          if first == "\"" or first == "'"
+            last = field[-1,1]
+            if first == last
+              field = field[1..-2]
+            end
           end
+          field 
         end
-        field 
       }
     end
   end
@@ -51,7 +55,7 @@ module BioTable
       @evaluate = evaluate
     end
     def write list
-      field = list.dup
+      field = list.dup.map { |e| (e==nil ? "" : e) }
       print eval(@evaluate)
       print "\n"
     end

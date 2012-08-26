@@ -62,9 +62,13 @@ module BioTable
     def write options = {}
       format = options[:format]
       format = :tab if not format
-      formatter = FormatFactory::create(format)
+      evaluate = nil
+      if format == :eval
+        evaluate = options[:evaluate]
+      end
+      formatter = FormatFactory::create(format,evaluate)
       formatter.write(@header) if options[:write_header]
-      each do | tablerow |
+      each do | tablerow,num |
         # p tablerow
         formatter.write(tablerow.all_fields) if tablerow.all_valid?
       end

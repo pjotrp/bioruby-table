@@ -38,7 +38,7 @@ module BioTable
     #
     # The method returns a String.
 
-    def RDF::row(row, header, use_blank_nodes)
+    def RDF::row(row, header, use_blank_nodes = false)
       list = []
       rowname = make_identifier(row[0])
       list << ":#{rowname}"+(use_blank_nodes ? " :row [ " : " ") + "rdf:label \"#{row[0]}\" ; a :rowname" 

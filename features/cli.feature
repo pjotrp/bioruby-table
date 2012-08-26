@@ -43,6 +43,20 @@ Feature: Command-line interface (CLI)
     When I execute "./bin/bio-table --columns gene_symbol,gene_desc --format eval -e 'field.join(" & ")+" \\\\"'"
     Then I expect the named output to match "table1-latex"
 
+  Scenario: Merge tables horizontally
+    Given I have input file(s) named "test/data/input/table1.csv"
+    When I execute "./bin/bio-table --merge test/data/input/table2.csv"
+    Then I expect the named output to match "table1-merge"
+
+  Scenario: Merge tables vertically
+    Given I have input file(s) named "test/data/input/table1.csv"
+    When I execute "./bin/bio-table test/data/input/table2.csv"
+    Then I expect the named output to match "table1-append"
+
+  Scenario: Diff tables
+    Given I have input file(s) named "test/data/input/table1.csv"
+    When I execute "./bin/bio-table --diff test/data/input/table2.csv"
+    Then I expect the named output to match "table1-diff"
 
   Scenario: Read from STDIN
     Given I have input file(s) named "test/data/input/table1.csv"
