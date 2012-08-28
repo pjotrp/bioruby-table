@@ -31,9 +31,9 @@ require 'statsample'
         
         sizes = @columns.map { |c| c.size }
         writer.write(TableRow.new("size",sizes),:row)
+        writer.write(TableRow.new("median",vectors.map { |v| v.median }),:row)
         writer.write(TableRow.new("mean",vectors.map { |v| v.mean }),:row)
         writer.write(TableRow.new("sd",vectors.map { |v| v.sd }),:row)
-        writer.write(TableRow.new("median",vectors.map { |v| v.median }),:row)
         writer.write(TableRow.new("cv",vectors.map { |v| v.coefficient_of_variation }),:row)
       end
 

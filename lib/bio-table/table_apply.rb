@@ -32,6 +32,7 @@ module BioTable
       header = LineParser::parse(line, options[:in_format], options[:split_on])
       header = Formatter::strip_quotes(header) if @strip_quotes
       return Formatter::transform_header_ids(@transform_ids, header) if @transform_ids
+      @logger.info(header)
       header
     end
 
