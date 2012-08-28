@@ -27,3 +27,7 @@ require 'bio-table/overlap.rb'
 require 'bio-table/merge.rb'
 require 'bio-table/rdf.rb'
 
+module BioTable
+  autoload :Statistics,'bio-table/statistics'
+end
+

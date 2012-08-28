@@ -30,6 +30,7 @@ Features:
 * Transform table and data by column or row
 * Recalculate data
 * Calculate new values
+* Calculate column statistics (mean, standard deviation)
 * Diff between tables, selecting on specific column values
 * Merge tables side by side on column value/rowname
 * Split/reduce tables by column
@@ -37,6 +38,7 @@ Features:
 * Read from STDIN, write to STDOUT
 * Convert table to RDF 
 * Convert table to JSON/YAML/XML (nyi)
+* Transpose matrix (nyi)
 * etc. etc.
 
 and bio-table is pretty fast. To convert a 3Mb file of 18670 rows
@@ -160,6 +162,22 @@ again
 
 where we rewrite the rowname in capitals, and set the second field to
 empty if the third field is below 0.25. 
+
+### Statistics
+
+bio-table can handle some column statistics. To calculate the stats
+for columns 1 and 2 (rowname is column 0), first install the
+statsample gem
+
+```sh
+    gem install statsample
+```
+
+and run
+
+```sh
+    bio-table --statistics --columns 1,2 table1.csv
+```
 
 ### Sorting a table
 

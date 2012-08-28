@@ -130,6 +130,10 @@ opts = OptionParser.new do |o|
     options[:blank_nodes] = true
   end
 
+  o.on('--statistics','Output column statistics') do 
+    options[:statistics] = true
+  end
+
   o.separator "\n\tVerbosity:\n\n"
   
   o.on("--logger filename",String,"Log to file (default stderr)") do | name |
@@ -231,6 +235,12 @@ if INPUT_ON_STDIN
   options[:write_header] = false  # don't write the header for chained files
 end
 
+statistics = if options[:statistics]
+               BioTable::Statistics::Accumulate.new
+             else
+               nil
+             end
+
 ARGV.each do | fn |
   opts = options.dup # so we can modify options
   f = File.open(fn,"r")
@@ -239,7 +249,13 @@ ARGV.each do | fn |
     opts[:in_format] = :csv
   end
   BioTable::TableLoader.emit(f, opts).each do |row,type| 
-    writer.write(TableRow.new(row[0],row[1..-1]),type)
+    if statistics 
+      statistics.add(row,type)
+    else
+      writer.write(TableRow.new(row[0],row[1..-1]),type)
+    end
   end
   options[:write_header] = false  # don't write the header for chained files
 end
+
+statistics.write(writer) if statistics
