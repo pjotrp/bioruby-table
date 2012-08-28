@@ -165,18 +165,23 @@ empty if the third field is below 0.25.
 
 ### Statistics
 
-bio-table can handle some column statistics. To calculate the stats
-for columns 1 and 2 (rowname is column 0), first install the
-statsample gem
+bio-table can handle some column statistics using the Ruby statsample
+gem
 
 ```sh
     gem install statsample
 ```
 
-and run
+To calculate the stats for columns 1 and 2 (rowname is column 0)
 
 ```sh
     bio-table --statistics --columns 1,2 table1.csv
+      stat    AJ                   B6
+      size    379                  379
+      mean    23.49952506596308    24.851108179419523
+      sd      79.4384873820721     84.43330500777459
+      median  6.26                 7.45
+      cv      3.3804294835358824   3.3975669977445166
 ```
 
 ### Sorting a table
