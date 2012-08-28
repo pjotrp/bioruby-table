@@ -172,15 +172,20 @@ gem
     gem install statsample
 ```
 
-To calculate the stats for columns 1 and 2 (rowname is column 0)
+(statsample is not loaded by default, as it has a host of
+dependencies)
+
+Thereafter, to calculate the stats for columns 1 and 2 (rowname is column 0)
 
 ```sh
     bio-table --statistics --columns 1,2 table1.csv
       stat    AJ                   B6
       size    379                  379
+      min     0.0                  0.0
+      max     1171.23              1309.25
+      median  6.26                 7.45
       mean    23.49952506596308    24.851108179419523
       sd      79.4384873820721     84.43330500777459
-      median  6.26                 7.45
       cv      3.3804294835358824   3.3975669977445166
 ```
 
