@@ -14,13 +14,13 @@ Feature: Filter input table
         2,d,5626,4
         3,e,18451,8
         """
-    When I filter the table for "values[1]>6000"
-    Then I should have [12060,18451]
-    # value is an alias for values
-    When I filter the table for "value[1]>6000"
-    Then I should have [12060,18451]
+    When I numerically filter the table for 
+      | num_filter       | result        |
+      | values[1] > 6000 | [12060,18451] |
+      | value[1] > 6000  | [12060,18451] |
+    Then I should have result
     # we can use column names
-    When I filter the table for "length>6000"
-    Then I should have [12060,18451]
-    When I filter the table for "num==4"
-    Then I should have [4658,5626]
+    # When I filter the table for "length>6000"
+    # Then I should have [12060,18451]
+    # When I filter the table for "num==4"
+    # Then I should have [4658,5626]
