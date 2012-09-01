@@ -22,7 +22,7 @@ module BioTable
             # Validator::valid_header?(header, @header)  # compare against older header when merging
             column_index,header = table_apply.column_index(header) # we may rewrite the header
             yielder.yield header,:header if options[:write_header] != false
-            prev_line = header[1..-1]
+            prev_line = header[table_apply.first_column..-1]
             # When a header filter is defined, rewind the generator, note that skip won't work
             # properly (FIXME)
             if options[:with_headers]

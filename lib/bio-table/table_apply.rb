@@ -3,6 +3,7 @@ module BioTable
   # Apply filters/rewrite etc. to a table, visiting a row at a time. For optimization
   # this class contains some state
   class TableApply
+    attr_reader :first_column
 
     def initialize options
       @logger = Bio::Log::LoggerPlus['bio-table']

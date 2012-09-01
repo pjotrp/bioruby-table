@@ -1,7 +1,7 @@
 module BioTable
 
   # In memory table representation - note that the default parser/emitter does not
-  # use this class as it expects all data to be in memory.
+  # use this class as this class expects all data to be in memory.
   class Table
 
     include Enumerable
