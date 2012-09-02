@@ -20,6 +20,8 @@ Feature: Filter input table
       | value[1] > 6000  | [12060,18451]       | value is alias for values   |
       | num==4           | [4658,5626]         | column names as variables   |
       | num==4 or num==6 | [4658,12060,5626]   | column names as variables   |
+      | num==6           | [12060]             | column names as variables   |
+      | length<5000      | [4658]              | column names as variables   |
     Then I should have result
     # we can use column names
     # When I filter the table for "length>6000"

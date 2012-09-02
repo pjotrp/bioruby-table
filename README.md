@@ -15,7 +15,13 @@ Quick example, say we want to filter out rows that contain certain
 p-values listed in the 4th column:
 
 ```
-    bio-table test/data/input/table1.csv --num-filter "values[3] <= 0.05"
+    bio-table test/data/input/table1.csv --num-filter "value[3] <= 0.05"
+```
+
+even better, you can use the actual column name
+
+```
+    bio-table test/data/input/table1.csv --num-filter "fdr <= 0.05"
 ```
 
 bio-table should be lazy. And be good for big data, bio-table is
@@ -26,7 +32,7 @@ you don't need to know Ruby to use the command line interface (CLI).
 Features:
 
 * Support for reading and writing TAB and CSV files, as well as regex splitters
-* Filter on data
+* Filter on (numerical) data and rownames
 * Transform table and data by column or row
 * Recalculate data
 * Calculate new values
@@ -42,7 +48,7 @@ Features:
 * etc. etc.
 
 and bio-table is pretty fast. To convert a 3Mb file of 18670 rows
-takes 0.87 second. Adding a filter makes it parse at 0.95 second on
+takes 0.87 second with Ruby 1.9. Adding a filter makes it parse at 0.95 second on
 my 3.2 GHz desktop (with preloaded disk cache).
 
 Note: this software is under active development, though what is

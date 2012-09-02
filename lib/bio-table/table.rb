@@ -43,6 +43,7 @@ module BioTable
         end
         prev_line = data_fields
       end
+      return @rownames,@rows
     end
 
     def read_file filename, options = {}

@@ -83,17 +83,11 @@ module BioTable
       begin Float(s) ; true end rescue false
     end
 
-    def Filter::numeric code, fields
+    def Filter::numeric code, fields, column_name_index
       return true if code == nil
       if fields
-        # values = fields.map { |field| (valid_number?(field) ? field.to_f : nil ) } 
-        values = LazyValues.new(fields)
-        begin
-          eval(code)
-        rescue Exception
-          $stderr.print "Failed to evaluate ",fields," with ",code,"\n"
-          raise 
-        end
+        filter = NumericFilter.new
+        filter.numeric code, fields
       else
         false
       end
@@ -103,6 +97,7 @@ module BioTable
       return true if code == nil
       if tablefields
         field = tablefields.dup
+        fields = field # alias
         begin
           eval(code)
         rescue Exception
@@ -115,4 +110,33 @@ module BioTable
     end
   end
 
+  # FIXME: we should have a faster version too
+  class NumericFilter
+    def initialize column_name_index = { :num => 2 }
+      @column_name_index = column_name_index
+    end
+
+    def numeric code, fields
+      values = LazyValues.new(fields)
+      value = values  # alias
+      @values = values
+      begin
+        eval(code)
+      rescue Exception
+        $stderr.print "Failed to evaluate ",fields," with ",code,"\n"
+        raise 
+      end
+    end
+    def method_missing m, *args, &block
+      # p @column_name_index
+      # p m
+      if @column_name_index[m]
+        # p @values[@column_name_index[m]] 
+        @values[@column_name_index[m]] 
+      else
+        raise "Unknown value (can not find column name '#{m}')"
+      end
+    end
+
+  end
 end

@@ -17,8 +17,9 @@ Then /^I should have result$/ do
     p options
     p result
     @t = BioTable::Table.new
-    p @t.read_lines(@lines, options)
-     
+    rownames,lines = @t.read_lines(@lines, options)
+    p lines
+    lines.map {|r| r[1].to_i }.should == result
   end
 end
 
