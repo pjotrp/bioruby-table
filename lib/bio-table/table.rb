@@ -51,7 +51,6 @@ module BioTable
         @logger.debug "Autodetected CSV file"
         options[:in_format] = :csv
       end
-      @logger.debug(options)
       # Read the file lines into an Array, not lazy FIXME 
       File.open(filename).each_line do | line |
         lines.push line

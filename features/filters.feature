@@ -15,9 +15,11 @@ Feature: Filter input table
         3,e,18451,8
         """
     When I numerically filter the table for 
-      | num_filter       | result        |
-      | values[1] > 6000 | [12060,18451] |
-      | value[1] > 6000  | [12060,18451] |
+      | num_filter       | result              | description                 |
+      | values[1] > 6000 | [12060,18451]       | basic filter                |
+      | value[1] > 6000  | [12060,18451]       | value is alias for values   |
+      | num==4           | [4658,5626]         | column names as variables   |
+      | num==4 or num==6 | [4658,12060,5626]   | column names as variables   |
     Then I should have result
     # we can use column names
     # When I filter the table for "length>6000"

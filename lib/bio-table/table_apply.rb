@@ -1,3 +1,5 @@
+require 'bio-logger'
+
 module BioTable
 
   # Apply filters/rewrite etc. to a table, visiting a row at a time. For optimization

@@ -1,5 +1,5 @@
 Given /^I load a CSV table containing$/ do |string|
-  # pending # express the regexp above with the code you wish you had
+  @lines = string.split(/\n/)
 end
 
 When /^I numerically filter the table for$/ do |table|
@@ -11,11 +11,14 @@ Then /^I should have result$/ do
   @table.hashes.each do |h|
     p h
     result = eval(h['result'])
-    options = {}
+    options = { :in_format => :split, :split_on => ',' }
     options[:num_filter] = h['num_filter']
   
     p options
     p result
+    @t = BioTable::Table.new
+    p @t.read_lines(@lines, options)
+     
   end
 end
 
