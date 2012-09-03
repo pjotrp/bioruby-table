@@ -58,7 +58,7 @@ module BioTable
       if data_fields.size > 0
         return nil,nil if not Validator::valid_row?(line_num, data_fields, prev_fields)
         return nil,nil if not Filter::numeric(@num_filter,data_fields,header)
-        return nil,nil if not Filter::generic(@filter,data_fields)
+        return nil,nil if not Filter::generic(@filter,data_fields,header)
         (rowname, data_fields) = Rewrite::rewrite(@rewrite,rowname,data_fields)
       end
       return rowname, data_fields

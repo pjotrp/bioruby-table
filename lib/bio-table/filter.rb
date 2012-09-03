@@ -93,21 +93,46 @@ module BioTable
       end
     end
 
-    def Filter::generic code, tablefields
+    def Filter::generic code, fields, header
       return true if code == nil
-      if tablefields
-        field = tablefields.dup
-        fields = field # alias
-        begin
-          eval(code)
-        rescue Exception
-          $stderr.print "Failed to evaluate ",fields," with ",code,"\n"
-          raise 
-        end
+      if fields
+        filter = TextualFilter.new(header)
+        filter.textual(code, fields)
       else
         false
       end
     end
+  end
+
+  # FIXME: we should have a faster version too
+  class TextualFilter
+    def initialize header
+      @header = header.map { |name| name.downcase }
+    end
+
+    def textual code, tablefields
+      field = tablefields.dup
+      fields = field # alias
+      @fields = fields
+      begin
+        eval(code)
+      rescue Exception
+        $stderr.print "Failed to evaluate ",fields," with ",code,"\n"
+        raise 
+      end
+    end
+    def method_missing m, *args, &block
+      if @header 
+        i = @header.index(m.to_s)
+        if i != nil
+          # p @header,i
+          return @fields[i] 
+        end
+        raise "Unknown field (can not find column name '#{m}') in list '#{@header}'"
+      end
+      raise "Unknown method '#{m}'"
+    end
+
   end
 
   # FIXME: we should have a faster version too

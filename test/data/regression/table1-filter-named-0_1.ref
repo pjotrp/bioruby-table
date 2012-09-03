@@ -1,0 +1,13 @@
+#Gene	AJ	B6	Axb1	Axb2	Axb4	Axb12	AXB13	Axb15	Axb19	Axb23	Axb24	Bxa1	Bxa2	Bxa4	Bxa7	Bxa8	Bxa12	Bxa11	Bxa13	Bxa15	Bxa16	Axb5	Axb6	Axb8	Axb1	Bxa24	Bxa25	Bxa26	gene_symbol	gene_desc
+107351	0.28	0	0	0.18	0	0	0.06	0.02	0	0.04	NA	NA	0.01	0.39	0.06	0.04	0.25	0.02	0.31	0.04	0.4	0	0.46	0	NA	0.03	NA	NA	Ankrd15	ankyrin repeat domain 15,ankyrin repeat domain 15,ankyrin repeat domain 15,
+107515	0.16	0.17	0	0.15	0.29	0.04	0	0.19	0.1	0.17	NA	NA	0.22	0.18	0.17	0.07	0.13	0.25	0.11	0.07	0.22	0.08	0.05	0.17	NA	0.05	NA	NA	Lgr4	G protein-coupled receptor 48
+107934	0.09	0.22	0	0.16	0.09	0.24	0.15	0.13	0.34	0.31	NA	NA	0.08	0.12	0.07	0.11	0.17	0.06	0.4	0.2	0.15	0.15	0.11	0.21	NA	0.17	NA	NA	Celsr3	cadherin EGF LAG seven-pass G-type receptor 3,cadherin EGF LAG seven-pass G-type receptor 3,
+107971	0.19	0.52	0.04	0.14	0.13	0.18	0.36	0.32	0.42	0.38	NA	NA	0.36	0.25	0.18	0.32	0.37	0.34	0.56	0.51	0.29	0.23	0.44	0.36	NA	0.12	NA	NA	Frs3	fibroblast growth factor receptor substrate 3
+108017	0	0	0	0.19	0	0	0	0	0	0	NA	NA	0	0.23	0	0	0	0	0	0	0	0.21	0.36	0	NA	0	NA	NA	Fxyd4	corticosteroid-induced protein,corticosteroid-induced protein,
+108089	0.2	0.15	0.11	0.12	0.16	0.22	0.26	0.36	0.11	0.14	NA	NA	0.3	0.2	0.16	0.07	0.28	0.18	0.13	0.12	0.24	0.39	0.21	0.13	NA	0.06	NA	NA	Rnf144a	ring finger protein 144
+109270	0.14	0.4	0	0.19	0.13	1.18	0.6	0.08	0	0.04	NA	NA	0.8	0.47	0.2	0.07	0.11	0.08	0.31	0.14	0.1	0.35	0.07	0.71	NA	0.04	NA	NA	Arhgap8	Rho GTPase activating protein 8,Rho GTPase activating protein 8,Rho GTPase activating protein 8,
+109575	0	0	0	0.15	0	0	0	0.14	0	0.03	NA	NA	0	0	0.1	0	0	0	0	0.02	0	0	0	0.16	NA	0	NA	NA	Tbx10	T-box 10 isoform 1
+109624	0.24	0.06	0.35	0.13	0.3	0.21	0.16	0.36	0.07	0.27	NA	NA	0.38	0.23	0.22	0.2	0.13	0.15	0.13	0.16	0.2	0.35	0.1	0.08	NA	0.03	NA	NA	Cald1	caldesmon 1
+109663	0	0	0	0.1	0	0	0	0	0	0	NA	NA	0	0	0	0	0	0	0	0	0	0	0	0	NA	0	NA	NA	Hoxc11	homeobox C11
+109685	0.34	0.14	0	0.1	0.06	0.06	0.11	0	0.23	0.15	NA	NA	0.08	0.09	0.18	0.3	0.15	0	0.46	0.24	0.15	0.17	0.16	0.38	NA	0.13	NA	NA	Hyal3	hyaluronoglucosaminidase 3
+109731	0	0	0	0.14	0	0.1	0.05	0.02	0.26	0	NA	NA	0	0	0	0	0	0	0.07	0	0	0.05	0	0	NA	0	NA	NA	Maob	amine oxidase (flavin-containing)
