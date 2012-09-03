@@ -23,8 +23,21 @@ Feature: Filter input table
       | num==6           | [12060]             | column names as variables   |
       | length<5000      | [4658]              | column names as variables   |
     Then I should have result
-    # we can use column names
-    # When I filter the table for "length>6000"
-    # Then I should have [12060,18451]
-    # When I filter the table for "num==4"
-    # Then I should have [4658,5626]
+
+  Scenario: Filter a table by string
+    Given I load a CSV table containing
+        """
+        bid,cid,length,num
+        1,a,4658,4
+        1,b,12060,6
+        2,c,5858,7
+        2,d,5626,4
+        3,e,18451,8
+        """
+    When I filter the table for 
+      | filter              | result              | description      |
+      | field[1] =~ /4/     | [4658,18451]        | regex filter     |
+      | fields[1] =~ /4/    | [4658,18451]        | alias fields     |
+      | length =~ /4/       | [4658,18451]        | use column names |
+    Then I should have filter result
+

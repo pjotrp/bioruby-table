@@ -3,7 +3,7 @@ Feature: Command-line interface (CLI)
 
   bio-table has a powerful command line interface. Here we regression test features.
 
-  Scenario: Test the numerical filter by column values
+  Scenario: Test the numerical filter by indexed column values
     Given I have input file(s) named "test/data/input/table1.csv"
     When I execute "./bin/bio-table --num-filter 'values[3] > 0.05'"
     Then I expect the named output to match "table1-0_05"
@@ -12,6 +12,16 @@ Feature: Command-line interface (CLI)
     Given I have input file(s) named "test/data/input/table1.csv"
     When I execute "./bin/bio-table --num-filter 'axb2 > 0.05'"
     Then I expect the named output to match "table1-named-0_05"
+
+  Scenario: Test the filter by indexed column values
+    Given I have input file(s) named "test/data/input/table1.csv"
+    When I execute "./bin/bio-table --filter 'fields[3] =~ 0.1'"
+    Then I expect the named output to match "table1-filter-0_1"
+
+  Scenario: Test the filter by column names
+    Given I have input file(s) named "test/data/input/table1.csv"
+    When I execute "./bin/bio-table --filter 'axb1 =~ /0.1/'"
+    Then I expect the named output to match "table1-filter-named-0_1"
 
   Scenario: Reduce columns
     Given I have input file(s) named "test/data/input/table1.csv"

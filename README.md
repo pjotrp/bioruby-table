@@ -43,6 +43,7 @@ Features:
 * Write formatted tables, e.g. HTML, LaTeX
 * Read from STDIN, write to STDOUT
 * Convert table to RDF 
+* Convert key-value (attributes) to RDF (nyi)
 * Convert table to JSON/YAML/XML (nyi)
 * Transpose matrix (nyi)
 * etc. etc.
@@ -141,8 +142,15 @@ Also string comparisons and regular expressions can be used. E.g.
 filter on rownames and a row field both containing 'BGT'
 
 ```sh
-    # not yet implemented
+    # non-numeric --filter not yet implemented
     bio-table test/data/input/table1.csv --filter "rowname =~ /BGT/ and field[1] =~ /BGT/" > test1a.tab
+```
+
+or use the column name, rather than the indexed column field:
+
+```sh
+    # non-numeric --filter not yet implemented
+    bio-table test/data/input/table1.csv --filter "rowname =~ /BGT/ and genename =~ /BGT/" > test1a.tab
 ```
 
 To reorder/reduce table columns by name

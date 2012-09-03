@@ -16,8 +16,29 @@ Then /^I should have result$/ do
   
     p options
     p result
-    @t = BioTable::Table.new
-    rownames,lines = @t.read_lines(@lines, options)
+    t = BioTable::Table.new
+    rownames,lines = t.read_lines(@lines, options)
+    p lines
+    lines.map {|r| r[1].to_i }.should == result
+  end
+end
+
+When /^I filter the table for$/ do |table|
+  # table is a Cucumber::Ast::Table
+  @table1 = table
+end
+
+Then /^I should have filter result$/ do
+  @table1.hashes.each do |h|
+    p h
+    result = eval(h['result'])
+    options = { :in_format => :split, :split_on => ',' }
+    options[:filter] = h['filter']
+  
+    p options
+    p result
+    t = BioTable::Table.new
+    rownames,lines = t.read_lines(@lines, options)
     p lines
     lines.map {|r| r[1].to_i }.should == result
   end
