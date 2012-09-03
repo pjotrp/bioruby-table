@@ -32,11 +32,12 @@ module BioTable
       Validator::valid_header?(header, @header)  # compare against older header when merging
       column_index,header = table_apply.column_index(header) # we may rewrite the header
       @header = header if not @header
-
+ 
+      newheader = @header[1..-1]
       # parse the rest
-      prev_line = @header[1..-1]
+      prev_line = newheader
       (lines[1..-1]).each_with_index do | line, line_num |
-        rowname, data_fields = table_apply.parse_row(line_num, line, column_index, prev_line, options)
+        rowname, data_fields = table_apply.parse_row(line_num, line, newheader, column_index, prev_line, options)
         if data_fields
           @rownames << rowname if not options[:with_rownames] # otherwise doubles rownames
           @rows << data_fields if data_fields

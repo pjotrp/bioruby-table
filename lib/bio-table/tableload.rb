@@ -13,6 +13,7 @@ module BioTable
       column_index = nil, prev_line = nil
       skip = options[:skip]
       skip = 0 if skip == nil
+      header = nil
       Enumerator.new { |yielder|
         # fields = LineParser::parse(line,options[:in_format])
         generator.each_with_index do |line, line_num|
@@ -31,7 +32,7 @@ module BioTable
           elsif line_num-skip < 0
             # do nothing
           else
-            rowname, data_fields = table_apply.parse_row(line_num, line, column_index, prev_line, options)
+            rowname, data_fields = table_apply.parse_row(line_num, line, header, column_index, prev_line, options)
             if data_fields
               list = []
               list << rowname if not options[:with_rownames] # otherwise doubles rownames

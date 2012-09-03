@@ -46,7 +46,7 @@ module BioTable
       return column_idx, new_header
     end
 
-    def parse_row(line_num, line, column_idx, last_fields, options)
+    def parse_row(line_num, line, header, column_idx, prev_fields, options)
       fields = LineParser::parse(line, options[:in_format], options[:split_on])
       return nil,nil if fields.compact == []
       fields = Formatter::strip_quotes(fields) if @strip_quotes
@@ -56,8 +56,8 @@ module BioTable
       rowname = fields[0]
       data_fields = fields[@first_column..-1]
       if data_fields.size > 0
-        return nil,nil if not Validator::valid_row?(line_num, data_fields, last_fields)
-        return nil,nil if not Filter::numeric(@num_filter,data_fields,column_idx)
+        return nil,nil if not Validator::valid_row?(line_num, data_fields, prev_fields)
+        return nil,nil if not Filter::numeric(@num_filter,data_fields,header)
         return nil,nil if not Filter::generic(@filter,data_fields)
         (rowname, data_fields) = Rewrite::rewrite(@rewrite,rowname,data_fields)
       end

@@ -83,11 +83,11 @@ module BioTable
       begin Float(s) ; true end rescue false
     end
 
-    def Filter::numeric code, fields, column_name_index
+    def Filter::numeric code, fields, header
       return true if code == nil
       if fields
-        filter = NumericFilter.new
-        filter.numeric code, fields
+        filter = NumericFilter.new(header)
+        filter.numeric(code, fields)
       else
         false
       end
@@ -112,8 +112,8 @@ module BioTable
 
   # FIXME: we should have a faster version too
   class NumericFilter
-    def initialize column_name_index = { :num => 2 }
-      @column_name_index = column_name_index
+    def initialize header
+      @header = header.map { |name| name.downcase }
     end
 
     def numeric code, fields
@@ -128,14 +128,15 @@ module BioTable
       end
     end
     def method_missing m, *args, &block
-      # p @column_name_index
-      # p m
-      if @column_name_index[m]
-        # p @values[@column_name_index[m]] 
-        @values[@column_name_index[m]] 
-      else
-        raise "Unknown value (can not find column name '#{m}')"
+      if @header 
+        i = @header.index(m.to_s)
+        if i != nil
+          # p @header,i
+          return @values[i] 
+        end
+        raise "Unknown value (can not find column name '#{m}') in list '#{@header}'"
       end
+      raise "Unknown method '#{m}'"
     end
 
   end

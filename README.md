@@ -91,6 +91,14 @@ To filter out rows that contain certain values
     bio-table test/data/input/table1.csv --num-filter "values[3] <= 0.05" > test1a.tab
 ```
 
+or, rather than using an index value (which can change between
+different tables), you can use the column name
+(lower case), say for FDR
+
+```sh
+    bio-table test/data/input/table1.csv --num-filter "fdr <= 0.05" > test1a.tab
+```
+
 The filter ignores the header row, and the row names, by default. If you need
 either, use the switches --with-headers and --with-rownames. With math, list all rows 
 
