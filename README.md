@@ -15,13 +15,13 @@ Quick example, say we want to filter out rows that contain certain
 p-values listed in the 4th column:
 
 ```
-    bio-table test/data/input/table1.csv --num-filter "value[3] <= 0.05"
+    bio-table table1.csv --num-filter "value[3] <= 0.05"
 ```
 
 even better, you can use the actual column name
 
 ```
-    bio-table test/data/input/table1.csv --num-filter "fdr <= 0.05"
+    bio-table table1.csv --num-filter "fdr <= 0.05"
 ```
 
 bio-table should be lazy. And be good for big data, bio-table is
@@ -69,27 +69,27 @@ Tables can be transformed through the command line. To transform a
 comma separated file to a tab delimited one
 
 ```sh
-    bio-table test/data/input/table1.csv --in-format csv --format tab > test1.tab
+    bio-table table1.csv --in-format csv --format tab > test1.tab
 ```
 
 Tab is actually the general default. Still, if the file name ends in
 csv, it will assume CSV. To convert the table back
 
 ```sh
-    bio-table test1.tab --format csv > table1.csv
+    bio-table test1.tab --format csv > table1a.csv
 ```
 
-It is also possible to use a string or regex splitter, e.g.
+When you have a special file format, it is also possible to use a string or regex splitter, e.g.
 
 ```sh
-    bio-table --in-format split --split-on ',' test/data/input/table_split_on.txt
-    bio-table --in-format regex --split-on '\s*,\s*' test/data/input/table_split_on.txt
+    bio-table --in-format split --split-on ',' file
+    bio-table --in-format regex --split-on '\s*,\s*' file
 ```
 
 To filter out rows that contain certain values
 
 ```sh
-    bio-table test/data/input/table1.csv --num-filter "values[3] <= 0.05" > test1a.tab
+    bio-table table1.csv --num-filter "values[3] <= 0.05" 
 ```
 
 or, rather than using an index value (which can change between
@@ -97,27 +97,27 @@ different tables), you can use the column name
 (lower case), say for FDR
 
 ```sh
-    bio-table test/data/input/table1.csv --num-filter "fdr <= 0.05" > test1a.tab
+    bio-table table1.csv --num-filter "fdr <= 0.05" 
 ```
 
 The filter ignores the header row, and the row names, by default. If you need
 either, use the switches --with-headers and --with-rownames. With math, list all rows 
 
 ```sh
-    bio-table test/data/input/table1.csv --num-filter "values[3]-values[6] >= 0.05" > test1a.tab
+    bio-table table1.csv --num-filter "values[3]-values[6] >= 0.05"
 ```
 
 or, list all rows that have a least a field with values >= 1000.0
 
 ```sh
-    bio-table test/data/input/table1.csv --num-filter "values.max >= 1000.0" > test1a.tab
+    bio-table table1.csv --num-filter "values.max >= 1000.0" 
 ```
 
 Produce all rows that have at least 3 values above 3.0 and 1 one value
 above 10.0:
 
 ```sh
-    bio-table test/data/input/table1.csv --num-filter "values.max >= 10.0 and values.count{|x| x>=3.0} > 3"
+    bio-table table1.csv --num-filter "values.max >= 10.0 and values.count{|x| x>=3.0} > 3"
 ```
 
 How is that for expressiveness? Looks like Ruby to me.
@@ -127,7 +127,7 @@ valid numbers are converted). If there are NA (nil) values in the table, you
 may wish to remove them, like this
 
 ```sh
-    bio-table test/data/input/table1.csv --num-filter "values[0..12].compact.max >= 1000.0" > test1a.tab
+    bio-table table1.csv --num-filter "values[0..12].compact.max >= 1000.0"
 ```
 
 which takes the first 13 fields and compact removes the nil values.
@@ -142,27 +142,25 @@ Also string comparisons and regular expressions can be used. E.g.
 filter on rownames and a row field both containing 'BGT'
 
 ```sh
-    # non-numeric --filter not yet implemented
-    bio-table test/data/input/table1.csv --filter "rowname =~ /BGT/ and field[1] =~ /BGT/" > test1a.tab
+    bio-table table1.csv --filter "rowname =~ /BGT/ and field[1] =~ /BGT/"
 ```
 
 or use the column name, rather than the indexed column field:
 
 ```sh
-    # non-numeric --filter not yet implemented
-    bio-table test/data/input/table1.csv --filter "rowname =~ /BGT/ and genename =~ /BGT/" > test1a.tab
+    bio-table table1.csv --filter "rowname =~ /BGT/ and genename =~ /BGT/"
 ```
 
 To reorder/reduce table columns by name
 
 ```sh
-    bio-table test/data/input/table1.csv --columns AJ,B6,Axb1,Axb4,AXB13,Axb15,Axb19 > test1a.tab
+    bio-table table1.csv --columns AJ,B6,Axb1,Axb4,AXB13,Axb15,Axb19
 ```
 
 or use their index numbers (the first column is zero)
 
 ```sh
-    bio-table test/data/input/table1.csv --columns 0,1,8,2,4,6 > test1a.tab
+    bio-table table1.csv --columns 0,1,8,2,4,6
 ```
 
 
@@ -217,7 +215,7 @@ To sort a table on column 4 and 2
 
 ```sh
     # not yet implemented
-    bio-table test/data/input/table1.csv --sort 4,2 > test1a.tab
+    bio-table table1.csv --sort 4,2
 ```
 
 Note: not all is implemented (just yet). Please check bio-table --help first.
@@ -227,7 +225,7 @@ Note: not all is implemented (just yet). Please check bio-table --help first.
 You can combine/concat two or more tables by passing in multiple file names
 
 ```sh
-    bio-table test/data/input/table1.csv test/data/input/table2.csv
+    bio-table table1.csv table2.csv
 ```
 
 this will append table2 to table1, assuming they have the same headers
@@ -302,7 +300,7 @@ bio-table can read data from STDIN, by simply assuming that the data
 piped in is the first input file
 
 ```sh
-    cat test1.tab | bio-table table1.csv --num-filter "values[3] <= 0.05" > test1a.tab
+    cat test1.tab | bio-table table1.csv --num-filter "values[3] <= 0.05"
 ```
 
 will filter both files test1.tab and test1.csv and output to
@@ -395,7 +393,7 @@ Note: the Ruby API below is a work in progress.
 Tables are two dimensional matrixes, which can be read from a file
 
 ```ruby
-    t = Table.read_file('test/data/input/table1.csv')
+    t = Table.read_file('table1.csv')
     p t.header              # print the header array
     p t.name[0],t[0]        # print the row name and row row
     p t[0][0]               # print the top corner field
@@ -406,7 +404,7 @@ which column to use for names etc. More interestingly you can pass a
 function to limit the amount of row read into memory:
 
 ```ruby
-    t = Table.read_file('test/data/input/table1.csv',
+    t = Table.read_file('table1.csv',
       :by_row => { | row | row[0..3] } )
 ```
 
@@ -415,7 +413,7 @@ the same idea to reformat and reorder table columns when reading data
 into the table. E.g.
 
 ```ruby
-    t = Table.read_file('test/data/input/table1.csv',
+    t = Table.read_file('table1.csv',
       :by_row => { | row | [row.rowname, row[0..3], row[6].to_i].flatten } )
 ```
 
@@ -425,7 +423,7 @@ can pass in a :by_header, which will have :by_row only call on
 actual table rows.
 
 ```ruby
-    t = Table.read_file('test/data/input/table1.csv',
+    t = Table.read_file('table1.csv',
       :by_header => { | header | ["Row name", header[0..3], header[6]].flatten } )
       :by_row => { | row | [row.rowname, row[0..3], row[6].to_i].flatten } )
 ```
@@ -435,7 +433,7 @@ transform a file, and not loading it in memory, is
 
 ```ruby
     f = File.new('test.tab','w')
-    t = Table.read_file('test/data/input/table1.csv', 
+    t = Table.read_file('table1.csv', 
       :by_row => { | row | 
         TableRow::write(f,[row.rowname,row[0..3],row[6].to_i].flatten, :separator => "\t") 
         nil   # don't create a table in memory, effectively a filter
