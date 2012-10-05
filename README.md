@@ -163,6 +163,17 @@ or use their index numbers (the first column is zero)
     bio-table table1.csv --columns 0,1,8,2,4,6
 ```
 
+duplicate columns
+
+```sh
+    bio-table table1.csv --columns AJ,B6,AJ,Axb1,Axb4,AXB13,Axb15,Axb19
+```
+
+Combine column values (more on rewrite below)
+
+```sh
+    bio-table table1.csv --rewrite "rowname = rowname + '-' + field[0]"
+```
 
 To filter for columns using a regular expression
 
