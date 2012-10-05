@@ -481,7 +481,8 @@ ARGV.each do | fn |
 end
 ```
 
-Essentially you can pass in any object that has the *each* method to
+Essentially you can pass in any object that has the *each* method
+(here the File object) to
 iterate through rows as String (f's each method reads in a line at a
 time). The emit function yields the parsed row object as a simple
 array of fields (each field a String). The type is used to distinguish 
