@@ -93,11 +93,15 @@ private
     # --transform-ids (i.e. in the input side, rather than the output side)
     #
     def RDF::make_identifier(s)
-      clean_s = s.gsub(/[^[:print:]]/, '').gsub(/[#)(,]/,"").gsub(/[%]/,"perc").gsub(/(\s|\.|\$)+/,"_")
-      valid_id = if clean_s =~ /^\d/
-                   'r' + clean_s
+      id = s.gsub(/[^[:print:]]/, '').gsub(/[#)(,]/,"").gsub(/[%]/,"perc").gsub(/(\s|\.|\$|\/|\\)+/,"_")
+      if id != s 
+        logger = Bio::Log::LoggerPlus['bio-table']
+        logger.warn "Changed identifier <#{s}> to <#{id}>"
+      end
+      valid_id = if id =~ /^\d/
+                   'r' + id
                  else
-                   clean_s
+                   id
                  end
       valid_id
     end
