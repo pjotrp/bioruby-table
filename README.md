@@ -163,7 +163,14 @@ or use their index numbers (the first column is zero)
     bio-table table1.csv --columns 0,1,8,2,4,6
 ```
 
-duplicate columns
+If the table header happens to be one element shorter than the number of columns
+in the table, use unshift headers, 0 becomes an 'ID' column
+
+```sh
+    bio-table table1.csv --unshift-headers --columns 0,1,8,2,4,6
+```
+
+Duplicate columns with
 
 ```sh
     bio-table table1.csv --columns AJ,B6,AJ,Axb1,Axb4,AXB13,Axb15,Axb19
