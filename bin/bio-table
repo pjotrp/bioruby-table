@@ -98,6 +98,10 @@ opts = OptionParser.new do |o|
     options[:with_rownames] = true
   end
 
+  o.on('--unshift-headers','Add an extra header element at the front (header contains one fewer field than the number of columns)') do
+    options[:unshift_headers] = true
+  end
+
   o.on('--strip-quotes','Strip quotes from table fields') do
     options[:strip_quotes] = true
   end
@@ -228,7 +232,7 @@ writer =
   end
 
 if INPUT_ON_STDIN
-  opts = options.dup # so we can modify options
+  opts = options.dup # so we can 'safely' modify options
   BioTable::TableLoader.emit(STDIN, opts).each do |row, type| 
     writer.write(TableRow.new(row[0],row[1..-1]),type)
   end
@@ -242,7 +246,7 @@ statistics = if options[:statistics]
              end
 
 ARGV.each do | fn |
-  opts = options.dup # so we can modify options
+  opts = options.dup # so we can 'safely' modify options
   f = File.open(fn,"r")
   if not opts[:in_format] and fn =~ /\.csv$/
     logger.debug "Autodetected CSV file"

@@ -34,7 +34,11 @@ module BioTable
     def parse_header(line, options)  
       header = LineParser::parse(line, options[:in_format], options[:split_on])
       header = Formatter::strip_quotes(header) if @strip_quotes
-      return Formatter::transform_header_ids(@transform_ids, header) if @transform_ids
+      # Transform converts the header to upper/lower case
+      header = Formatter::transform_header_ids(@transform_ids, header) if @transform_ids
+      if options[:unshift_headers]
+        header.unshift("ID")
+      end
       @logger.info(header) if @logger
       header
     end
