@@ -29,6 +29,7 @@ module BioTable
       @include_rownames = options[:with_rownames]
       @logger.debug "Include row names" if @include_rownames
       @first_column = (@include_rownames ? 0 : 1)
+      @write_header = options[:write_header]
     end
 
     def parse_header(line, options)  
@@ -39,7 +40,7 @@ module BioTable
       if options[:unshift_headers]
         header.unshift("ID")
       end
-      @logger.info(header) if @logger
+      @logger.info(header) if @logger and @write_header 
       header
     end
 

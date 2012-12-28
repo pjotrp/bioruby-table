@@ -247,7 +247,14 @@ You can combine/concat two or more tables by passing in multiple file names
 ```
 
 this will append table2 to table1, assuming they have the same headers
-(you can use the --columns switch!)
+(you can use the --columns switch at the same time!). With --skip
+the header lines are skipped in every file. This can be a real asset
+when using the Unix split command on input files and combining output 
+files again. Something this might work:
+
+```sh
+    ls run/*.out -1|sort|xargs bio-table --skip 3
+```
 
 To combine tables side by side use the --merge switch:
 

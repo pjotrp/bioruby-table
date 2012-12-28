@@ -183,7 +183,7 @@ end
 
 Bio::Log::CLI.configure('bio-table')
 logger = Bio::Log::LoggerPlus['bio-table']
-logger.info [options, ARGV]
+logger.info [options]
 
 include BioTable
 
@@ -233,10 +233,12 @@ writer =
 
 if INPUT_ON_STDIN
   opts = options.dup # so we can 'safely' modify options
+  has_input = false
   BioTable::TableLoader.emit(STDIN, opts).each do |row, type| 
     writer.write(TableRow.new(row[0],row[1..-1]),type)
+    has_input = true
   end
-  options[:write_header] = false  # don't write the header for chained files
+  options[:write_header] = false if has_input  # don't write the header for chained files
 end
 
 statistics = if options[:statistics]
