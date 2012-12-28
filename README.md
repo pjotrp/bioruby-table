@@ -46,6 +46,7 @@ Features:
 * Convert key-value (attributes) to RDF (nyi)
 * Convert table to JSON/YAML/XML (nyi)
 * Transpose matrix (nyi)
+* Convert a FASTA file to a table
 * etc. etc.
 
 and bio-table is pretty fast. To convert a 3Mb file of 18670 rows
@@ -316,6 +317,15 @@ finds the overlapping rows, based on the content of column 2.
 
 bio-table currently reads comma separated files and tab delimited
 files.
+
+bio-table can also parse a FASTA file and turn it into a table using
+a flexible regular expression to fetch the IDs
+
+```sh
+    bio-table --fasta '^(\S+)' test/data/input/aa.fa
+```
+
+notice the parentheses.
 
 (more soon)
 

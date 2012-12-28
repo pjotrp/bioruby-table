@@ -26,6 +26,7 @@ require 'bio-table/diff.rb'
 require 'bio-table/overlap.rb'
 require 'bio-table/merge.rb'
 require 'bio-table/rdf.rb'
+require 'bio-table/parsers/fastareader.rb'
 
 module BioTable
   autoload :Statistics,'bio-table/statistics'

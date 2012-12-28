@@ -38,7 +38,6 @@ options[:show_help] = true if ARGV.size == 0 and not INPUT_ON_STDIN
 opts = OptionParser.new do |o|
   o.banner = "Usage: #{File.basename($0)} [options] filename\n\n"
 
- 
   o.on('--num-filter expression', 'Numeric filtering function') do |par|
     options[:num_filter] = par
   end
@@ -130,6 +129,10 @@ opts = OptionParser.new do |o|
     options[:evaluate] = s
   end
 
+  o.on("--fasta regex",String,"Read FASTA format creating ID with regex") do | regex |
+    options[:fasta] = regex
+  end
+
   o.on('--blank-nodes','Output (RDF) blank nodes - allowing for duplicate row names') do 
     options[:blank_nodes] = true
   end
@@ -137,7 +140,7 @@ opts = OptionParser.new do |o|
   o.on('--statistics','Output column statistics') do 
     options[:statistics] = true
   end
-
+ 
   o.separator "\n\tVerbosity:\n\n"
   
   o.on("--logger filename",String,"Log to file (default stderr)") do | name |
@@ -204,6 +207,17 @@ if options[:overlap]
   t2 = TableReader::read_file(ARGV[1], options)
   t = Overlap::overlap_tables(t1,t2, options)
   t.write(options)
+  exit
+end
+
+if options[:fasta]
+  logger.warn "Column settings are ignored for --fasta" if options[:columns]
+  ARGV.each do | fn |
+    print "id\tseq\n"
+    FastaReader.new(fn,options[:fasta]).each do | rec |
+      print rec.id,"\t",rec.seq,"\n"
+    end
+  end
   exit
 end
 
