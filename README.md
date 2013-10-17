@@ -211,7 +211,7 @@ gem
     gem install statsample
 ```
 
-(statsample is not loaded by default, as it has a host of
+(statsample is not loaded by default because it has a host of
 dependencies)
 
 Thereafter, to calculate the stats for columns 1 and 2 (rowname is column 0)
@@ -325,9 +325,12 @@ a flexible regular expression to fetch the IDs
     bio-table --fasta '^(\S+)' test/data/input/aa.fa
 ```
 
-notice the parentheses.
+notice the parentheses - these capture the ID and create the first 
+column. If two captures are defined another column gets added. Try
 
-(more soon)
+```sh
+    bio-table --fasta '^(\S+).*?(\d+) aa' test/data/input/aa.fa
+```
 
 ### Using STDIN
 
