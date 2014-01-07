@@ -268,7 +268,7 @@ to be sorted). For non-matching rownames the fields will be filled
 with NA's, unless you add a filter, e.g.
 
 ```sh
-    bio-table --merge table1.csv table2.csv --num-filter "values.compact.size == values.size"
+    bio-table --merge table1.csv table2.csv --num-filter "values.compact.size == values.to_a.size"
 ```
 
 ### Splitting a table
