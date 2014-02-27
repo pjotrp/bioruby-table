@@ -17,6 +17,7 @@ module BioTable
         field = @fields[index]
         @values[index] = (Filter::valid_number?(field) ? field.to_f : nil )
       end
+      @values[index].freeze
       @values[index]
     end
 

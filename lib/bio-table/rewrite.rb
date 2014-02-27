@@ -7,6 +7,7 @@ module BioTable
       fields = field.dup
       original = field.dup
       values = LazyValues.new(field)
+      value = values
       return rowname,field if not code or code==""
       begin
         eval(code)
@@ -20,7 +21,6 @@ module BioTable
         p [:field,field]
         raise "You can not rewrite both field and fields!"
       end
-      exit
       field = fields if fields != original
       return rowname,field
     end
