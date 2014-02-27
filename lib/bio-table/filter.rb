@@ -1,6 +1,10 @@
 module BioTable
 
+  # LazyValues fetches values on demand from the @fields array. In the [] method
+  # a field is transformed into a float when it is called.
+
   class LazyValues
+
     include Enumerable
 
     def initialize fields
@@ -16,12 +20,16 @@ module BioTable
       @values[index]
     end
 
-    def each
-      @fields.each_with_index do | field, i |
-        yield self[i]
+    def each &block
+      @fields.each_with_index do |field,i|
+        if block_given?
+          block.call self[i]
+        else
+          yield self[i]
+        end
       end
     end
-
+  
     def compact
       a = []
       each do | e |

@@ -3,7 +3,12 @@ module BioTable
 
   module Statistics
 
-require 'statsample'
+begin
+  require 'statsample'
+rescue LoadError
+  $stderr.print "Error: Missing statsample. Install with command 'gem install statsample'\n"
+  exit 1
+end
 
     attr_reader :columns
 

@@ -211,7 +211,7 @@ gem
     gem install statsample
 ```
 
-(statsample is not loaded by default, as it has a host of
+(statsample is not loaded by default because it has a host of
 dependencies)
 
 Thereafter, to calculate the stats for columns 1 and 2 (rowname is column 0)
