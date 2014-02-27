@@ -37,6 +37,10 @@ module BioTable
       end
       a
     end
+
+    def size
+      @fields.size
+    end
   end
 
   module Filter
