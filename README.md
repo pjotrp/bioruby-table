@@ -268,7 +268,8 @@ to be sorted). For non-matching rownames the fields will be filled
 with NA's, unless you add a filter, e.g.
 
 ```sh
-    bio-table --merge table1.csv table2.csv --num-filter "values.compact.size == values.size"
+    bio-table --merge table1.csv table2.csv --num-filter "values.compact.size == values.to_a.size"
+
 ```
 
 ### Splitting a table
@@ -325,9 +326,12 @@ a flexible regular expression to fetch the IDs
     bio-table --fasta '^(\S+)' test/data/input/aa.fa
 ```
 
-notice the parentheses.
+notice the parentheses - these capture the ID and create the first 
+column. If two captures are defined another column gets added. Try
 
-(more soon)
+```sh
+    bio-table --fasta '^(\S+).*?(\d+) aa' test/data/input/aa.fa
+```
 
 ### Using STDIN
 

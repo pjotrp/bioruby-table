@@ -22,6 +22,7 @@ class FastaReader
     @fread_once = false
     @regex = regex
     @regex = '^(\S+)' if @regex == nil
+    @regex = '('+regex+')' if regex !~ /\(/
     @logger.info "Parsing FASTA with ID regex '"+@regex+"'"
   end
 
@@ -105,10 +106,10 @@ class FastaReader
   def digest_tag tag
     if tag =~ /^>/
       descr = $'.strip
-      if descr =~ /#{@regex}/
-        id = $1
-        # p [descr,id]
-        return id, descr
+      matches = /#{@regex}/.match(descr).captures
+      if matches.size > 0
+        # p matches
+        return matches.join("\t"), descr
       end
       p descr  # do not remove these
       p @regex
