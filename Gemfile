@@ -12,7 +12,6 @@ group :development do
   gem "cucumber"
   gem "bundler"
   gem "jeweler", "~> 2.0.0"
-  gem "bio", ">= 1.4.2"
   gem "rdoc"
   gem "regressiontest", ">= 0.0.2"
 end
