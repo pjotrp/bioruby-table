@@ -87,7 +87,10 @@ When you have a special file format, it is also possible to use a string or rege
     bio-table --in-format regex --split-on '\s*,\s*' file
 ```
 
-To filter out rows that contain certain values
+To filter out rows that contain certain values, i.e., filter on the
+third column that have values less than 0.05 (this is actually the 5th
+column in a tabular file, where the fist column is the row name and
+the others count from zero).
 
 ```sh
     bio-table table1.csv --num-filter "values[3] <= 0.05" 
@@ -202,6 +205,21 @@ again
 where we rewrite the rowname in capitals, and set the second field to
 empty if the third field is below 0.25. 
 
+Say we need a log transform, we can also transform and rewrite a full matrix with:
+
+```sh
+    bio-table table1.csv --rewrite 'fields = fields.map { |f| Math::log(f.to_f) }'
+```
+
+Note that 'fields' is an alias for 'field', but do not use them in the same expression. 
+Another option is to use (lazy) values:
+
+```sh
+    bio-table table1.csv --rewrite 'fields = values.map { |v| Math::log(v) }'
+```
+
+which saves the typing to to_f.
+
 ### Statistics
 
 bio-table can handle some column statistics using the Ruby statsample
@@ -268,7 +286,7 @@ to be sorted). For non-matching rownames the fields will be filled
 with NA's, unless you add a filter, e.g.
 
 ```sh
-    bio-table --merge table1.csv table2.csv --num-filter "values.compact.size == values.to_a.size"
+    bio-table --merge table1.csv table2.csv --num-filter "values.compact.size == values.size"
 
 ```
 
