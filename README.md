@@ -554,7 +554,11 @@ Coming soon
 The API doc is online. For more code examples see the test files in
 the source tree.
 
-       
+## Troubleshooting
+
+Run bio-table with the --debug switch to get stack traces. Use --debug
+and or --trace for more output.
+
 ## Project home page
 
 Information on the source tree, documentation, examples, issues and
