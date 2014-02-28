@@ -287,8 +287,10 @@ with NA's, unless you add a filter, e.g.
 
 ```sh
     bio-table --merge table1.csv table2.csv --num-filter "values.compact.size == values.size"
-
 ```
+
+If you don't want the headers to be 'restyled' on merge, use the --keep-headers
+override.
 
 ### Splitting a table
 

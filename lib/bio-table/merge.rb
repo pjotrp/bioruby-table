@@ -6,7 +6,9 @@ module BioTable
       logger = Bio::Log::LoggerPlus['bio-table']
       logger.info("Merging tables")
       headers = tables.first.header[0..0] + 
-        tables.map { |t| t.header[1..-1].map{|n| t.name+'-'+n} }.flatten
+        tables.map { |t| t.header[1..-1].map{|n| 
+          (options[:keep_headers] ? n : t.name+'-'+n)
+        }}.flatten
       t = Table.new(headers)
       # index tables on rownames
       idxs = []

@@ -102,6 +102,11 @@ EOU
       options[:unshift_headers] = true
     end
 
+    o.on('--keep-headers','Keep original headers on merge') do
+      options[:keep_headers] = true
+    end
+
+
     o.on('--strip-quotes','Strip quotes from table fields') do
       options[:strip_quotes] = true
     end
