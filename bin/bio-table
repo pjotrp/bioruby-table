@@ -4,278 +4,285 @@
 # Author:: Pjotr Prins
 # Copyright:: 2012
 
-rootpath = File.dirname(File.dirname(__FILE__))
-$: << File.join(rootpath,'lib')
-
-_VERSION = File.new(File.join(rootpath,'VERSION')).read.chomp
-
-INPUT_ON_STDIN = !$stdin.tty?
-
-$stderr.print "bio-table "+_VERSION+" Copyright (C) 2012 Pjotr Prins <pjotr.prins@thebird.nl>\n\n"
-
-USAGE =<<EOU
-
-bio-table transforms, filters and reorders table files (CSV, tab-delimited).
-
-EOU
-
-if ARGV.size == 0 and not INPUT_ON_STDIN
-  print USAGE
-end
-
-require 'bio-table'
-require 'optparse'
-require 'bio-logger'
-
-log = Bio::Log::LoggerPlus.new 'bio-table'
-# log.outputters = Bio::Log::Outputter.stderr
-
-Bio::Log::CLI.logger('stderr')
-Bio::Log::CLI.trace('info')
-
-options = {show_help: false, write_header: true, skip: 0}
-options[:show_help] = true if ARGV.size == 0 and not INPUT_ON_STDIN
-opts = OptionParser.new do |o|
-  o.banner = "Usage: #{File.basename($0)} [options] filename\n\n"
-
-  o.on('--num-filter expression', 'Numeric filtering function') do |par|
-    options[:num_filter] = par
-  end
-
-  o.on('--filter expression', 'Generic filtering function') do |par|
-    options[:filter] = par
-  end
-
-  o.on('--rewrite expression', 'Rewrite function') do |par|
-    options[:rewrite] = par
-  end
-
-  o.on('--columns list', Array, 'List of column names or indices') do |l|
-    options[:columns] = l
-  end
-
-  o.on('--column-filter expression', 'Column name filtering function') do |par|
-    options[:column_filter] = par
-  end
-
-  o.on('--merge','Merge tables by rowname') do 
-    options[:merge] = true
-  end
-
-  o.on('--diff list',Array,'Diff two input files on columns (default rownames)') do |l|
-    if l.size==1 and File.exist?(l.first)
-      ARGV.unshift l.first
-      l = ["0"]
-    end
-    options[:diff] = l
-  end
-
-  o.on('--overlap list',Array,'Find overlap of two input files on columns)') do |l|
-    if l.size==1 and File.exist?(l.first)
-      ARGV.unshift l.first
-      l = ["0"]
-    end
-    options[:overlap] = l
-  end
-  
-  o.on('--merge','Merge tables by rowname') do 
-    options[:merge] = true
-  end
-
-  o.separator "\n\tOverrides:\n\n"
-
-  o.on('--skip lines',Integer,'Skip the first lines before parsing') do |skip|
-    options[:skip] = skip
-  end
-
-  o.on('--with-headers','Include the header element in filtering etc.') do
-    options[:with_headers] = true
-    options[:write_header] = false
-  end
-
-  o.on('--with-rownames','Include the rownames in filtering etc.') do
-    options[:with_rownames] = true
-  end
-
-  o.on('--unshift-headers','Add an extra header element at the front (header contains one fewer field than the number of columns)') do
-    options[:unshift_headers] = true
-  end
-
-  o.on('--strip-quotes','Strip quotes from table fields') do
-    options[:strip_quotes] = true
-  end
-
-  o.separator "\n\tTransform:\n\n"
-
-  o.on('--transform-ids [downcase,upcase]',[:downcase,:upcase],'Transform column and row identifiers') do |par|
-    options[:transform_ids] = par.to_sym
-  end
-
-  o.separator "\n\tFormat and options:\n\n"
-  
-  o.on('--in-format [tab,csv,split,regex]', [:tab, :csv, :split, :regex], 'Input format (default tab)') do |par|
-    options[:in_format] = par.to_sym
-  end
-
-  o.on('--format [tab,csv,rdf,eval]', [:tab, :csv, :rdf, :eval], 'Output format (default tab)') do |par|
-    options[:format] = par.to_sym
-  end
-
-  o.on("--split-on command",String,"Split on string or regex (use with --in-format)") do | s |
-    options[:split_on] = s
-  end
-
-  o.on("-e command",String,"Evaluate output command (use with --format eval)") do | s |
-    options[:evaluate] = s
-  end
-
-  o.on("--fasta regex",String,"Read FASTA format creating ID with regex") do | regex |
-    options[:fasta] = regex
-  end
-
-  o.on('--blank-nodes','Output (RDF) blank nodes - allowing for duplicate row names') do 
-    options[:blank_nodes] = true
-  end
-
-  o.on('--statistics','Output column statistics') do 
-    options[:statistics] = true
-  end
- 
-  o.separator "\n\tVerbosity:\n\n"
-  
-  o.on("--logger filename",String,"Log to file (default stderr)") do | name |
-    Bio::Log::CLI.logger(name)
-  end
-
-  o.on("--trace options",String,"Set log level (default INFO, see bio-logger)") do | s |
-    Bio::Log::CLI.trace(s)
-  end
-  
-  o.on("-q", "--quiet", "Run quietly") do |q|
-    Bio::Log::CLI.trace('error')
-  end
-  
-  o.on("-v", "--verbose", "Run verbosely") do |v|
-    Bio::Log::CLI.trace('info')
-  end
-  
-  o.on("--debug", "Show debug messages") do |v|
-    Bio::Log::CLI.trace('debug')
-  end
-
-  o.separator ""
-
-  o.on_tail('-h', '--help', 'Display this help and exit') do
-    options[:show_help] = true
-  end
-end
-
 begin
-  opts.parse!(ARGV)
 
-  if options[:show_help] 
-    print opts
+  rootpath = File.dirname(File.dirname(__FILE__))
+  $: << File.join(rootpath,'lib')
+
+  _VERSION = File.new(File.join(rootpath,'VERSION')).read.chomp
+
+  INPUT_ON_STDIN = !$stdin.tty?
+
+  $stderr.print "bio-table "+_VERSION+" Copyright (C) 2012 Pjotr Prins <pjotr.prins@thebird.nl>\n\n"
+
+  USAGE =<<EOU
+
+  bio-table transforms, filters and reorders table files (CSV, tab-delimited).
+
+  EOU
+
+  if ARGV.size == 0 and not INPUT_ON_STDIN
     print USAGE
   end
 
-  # TODO: your code here
-  # use options for your logic
-rescue OptionParser::InvalidOption => e
-  options[:invalid_argument] = e.message
-end
+  require 'bio-table'
+  require 'optparse'
+  require 'bio-logger'
 
-Bio::Log::CLI.configure('bio-table')
-logger = Bio::Log::LoggerPlus['bio-table']
-logger.info [options]
+  log = Bio::Log::LoggerPlus.new 'bio-table'
+  # log.outputters = Bio::Log::Outputter.stderr
 
-include BioTable
+  Bio::Log::CLI.logger('stderr')
+  Bio::Log::CLI.trace('info')
 
-if options[:diff]
-  logger.warn "Column settings are ignored for --diff" if options[:columns]
-  logger.warn "Ignoring extraneaous files "+ARGV[2..-1].join(",") if ARGV.size>2
-  t1 = TableReader::read_file(ARGV[0], options)
-  t2 = TableReader::read_file(ARGV[1], options)
-  t = Diff::diff_tables(t1,t2, options)
-  t.write(options)
-  exit
-end
+  options = {show_help: false, write_header: true, skip: 0}
+  options[:show_help] = true if ARGV.size == 0 and not INPUT_ON_STDIN
+  opts = OptionParser.new do |o|
+    o.banner = "Usage: #{File.basename($0)} [options] filename\n\n"
 
-if options[:overlap]
-  logger.warn "Column settings are ignored for --overlap" if options[:columns]
-  logger.warn "Ignoring extraneaous files "+ARGV[2..-1].join(",") if ARGV.size>2
-  t1 = TableReader::read_file(ARGV[0], options)
-  t2 = TableReader::read_file(ARGV[1], options)
-  t = Overlap::overlap_tables(t1,t2, options)
-  t.write(options)
-  exit
-end
+    o.on('--num-filter expression', 'Numeric filtering function') do |par|
+      options[:num_filter] = par
+    end
 
-if options[:fasta]
-  logger.warn "Column settings are ignored for --fasta" if options[:columns]
-  ARGV.each do | fn |
-    print "id\tseq\n"
-    FastaReader.new(fn,options[:fasta]).each do | rec |
-      print rec.id,"\t",rec.seq,"\n"
+    o.on('--filter expression', 'Generic filtering function') do |par|
+      options[:filter] = par
+    end
+
+    o.on('--rewrite expression', 'Rewrite function') do |par|
+      options[:rewrite] = par
+    end
+
+    o.on('--columns list', Array, 'List of column names or indices') do |l|
+      options[:columns] = l
+    end
+
+    o.on('--column-filter expression', 'Column name filtering function') do |par|
+      options[:column_filter] = par
+    end
+
+    o.on('--merge','Merge tables by rowname') do 
+      options[:merge] = true
+    end
+
+    o.on('--diff list',Array,'Diff two input files on columns (default rownames)') do |l|
+      if l.size==1 and File.exist?(l.first)
+        ARGV.unshift l.first
+        l = ["0"]
+      end
+      options[:diff] = l
+    end
+
+    o.on('--overlap list',Array,'Find overlap of two input files on columns)') do |l|
+      if l.size==1 and File.exist?(l.first)
+        ARGV.unshift l.first
+        l = ["0"]
+      end
+      options[:overlap] = l
+    end
+    
+    o.on('--merge','Merge tables by rowname') do 
+      options[:merge] = true
+    end
+
+    o.separator "\n\tOverrides:\n\n"
+
+    o.on('--skip lines',Integer,'Skip the first lines before parsing') do |skip|
+      options[:skip] = skip
+    end
+
+    o.on('--with-headers','Include the header element in filtering etc.') do
+      options[:with_headers] = true
+      options[:write_header] = false
+    end
+
+    o.on('--with-rownames','Include the rownames in filtering etc.') do
+      options[:with_rownames] = true
+    end
+
+    o.on('--unshift-headers','Add an extra header element at the front (header contains one fewer field than the number of columns)') do
+      options[:unshift_headers] = true
+    end
+
+    o.on('--strip-quotes','Strip quotes from table fields') do
+      options[:strip_quotes] = true
+    end
+
+    o.separator "\n\tTransform:\n\n"
+
+    o.on('--transform-ids [downcase,upcase]',[:downcase,:upcase],'Transform column and row identifiers') do |par|
+      options[:transform_ids] = par.to_sym
+    end
+
+    o.separator "\n\tFormat and options:\n\n"
+    
+    o.on('--in-format [tab,csv,split,regex]', [:tab, :csv, :split, :regex], 'Input format (default tab)') do |par|
+      options[:in_format] = par.to_sym
+    end
+
+    o.on('--format [tab,csv,rdf,eval]', [:tab, :csv, :rdf, :eval], 'Output format (default tab)') do |par|
+      options[:format] = par.to_sym
+    end
+
+    o.on("--split-on command",String,"Split on string or regex (use with --in-format)") do | s |
+      options[:split_on] = s
+    end
+
+    o.on("-e command",String,"Evaluate output command (use with --format eval)") do | s |
+      options[:evaluate] = s
+    end
+
+    o.on("--fasta regex",String,"Read FASTA format creating ID with regex") do | regex |
+      options[:fasta] = regex
+    end
+
+    o.on('--blank-nodes','Output (RDF) blank nodes - allowing for duplicate row names') do 
+      options[:blank_nodes] = true
+    end
+
+    o.on('--statistics','Output column statistics') do 
+      options[:statistics] = true
+    end
+   
+    o.separator "\n\tVerbosity:\n\n"
+    
+    o.on("--logger filename",String,"Log to file (default stderr)") do | name |
+      Bio::Log::CLI.logger(name)
+    end
+
+    o.on("--trace options",String,"Set log level (default INFO, see bio-logger)") do | s |
+      Bio::Log::CLI.trace(s)
+    end
+    
+    o.on("-q", "--quiet", "Run quietly") do |q|
+      Bio::Log::CLI.trace('error')
+    end
+    
+    o.on("-v", "--verbose", "Run verbosely") do |v|
+      Bio::Log::CLI.trace('info')
+    end
+    
+    o.on("--debug", "Show debug messages") do |v|
+      Bio::Log::CLI.trace('debug')
+    end
+
+    o.separator ""
+
+    o.on_tail('-h', '--help', 'Display this help and exit') do
+      options[:show_help] = true
     end
   end
-  exit
-end
 
-if options[:merge]
-  ts = []
-  ARGV.each do | fn |
-    ts << TableReader::read_file(fn, options)
-  end
-  t = Merge::merge_tables(ts, options)
-  t.write(options)
-  exit
-end
+  begin
+    opts.parse!(ARGV)
 
-#
-# We also support STDIN for the first 'file'. A non-blocking idea can
-# be found here:
-#
-# http://eric.lubow.org/2010/ruby/multiple-input-locations-from-bash-into-ruby/
-#
+    if options[:show_help] 
+      print opts
+      print USAGE
+    end
 
-writer = 
-  if options[:format] == :rdf
-    BioTable::RDF::Writer.new(options[:blank_nodes])
-  else
-    BioTable::TableWriter::Writer.new(options[:format],options[:evaluate])
+    # TODO: your code here
+    # use options for your logic
+  rescue OptionParser::InvalidOption => e
+    options[:invalid_argument] = e.message
   end
 
-if INPUT_ON_STDIN
-  opts = options.dup # so we can 'safely' modify options
-  has_input = false
-  BioTable::TableLoader.emit(STDIN, opts).each do |row, type| 
-    writer.write(TableRow.new(row[0],row[1..-1]),type)
-    has_input = true
-  end
-  options[:write_header] = false if has_input  # don't write the header for chained files
-end
+  Bio::Log::CLI.configure('bio-table')
+  logger = Bio::Log::LoggerPlus['bio-table']
+  logger.info [options]
 
-statistics = if options[:statistics]
-               BioTable::Statistics::Accumulate.new
-             else
-               nil
-             end
+  include BioTable
 
-ARGV.each do | fn |
-  opts = options.dup # so we can 'safely' modify options
-  f = File.open(fn,"r")
-  if not opts[:in_format] and fn =~ /\.csv$/
-    logger.debug "Autodetected CSV file"
-    opts[:in_format] = :csv
+  if options[:diff]
+    logger.warn "Column settings are ignored for --diff" if options[:columns]
+    logger.warn "Ignoring extraneaous files "+ARGV[2..-1].join(",") if ARGV.size>2
+    t1 = TableReader::read_file(ARGV[0], options)
+    t2 = TableReader::read_file(ARGV[1], options)
+    t = Diff::diff_tables(t1,t2, options)
+    t.write(options)
+    exit
   end
-  BioTable::TableLoader.emit(f, opts).each do |row,type| 
-    if statistics 
-      statistics.add(row,type)
+
+  if options[:overlap]
+    logger.warn "Column settings are ignored for --overlap" if options[:columns]
+    logger.warn "Ignoring extraneaous files "+ARGV[2..-1].join(",") if ARGV.size>2
+    t1 = TableReader::read_file(ARGV[0], options)
+    t2 = TableReader::read_file(ARGV[1], options)
+    t = Overlap::overlap_tables(t1,t2, options)
+    t.write(options)
+    exit
+  end
+
+  if options[:fasta]
+    logger.warn "Column settings are ignored for --fasta" if options[:columns]
+    ARGV.each do | fn |
+      print "id\tseq\n"
+      FastaReader.new(fn,options[:fasta]).each do | rec |
+        print rec.id,"\t",rec.seq,"\n"
+      end
+    end
+    exit
+  end
+
+  if options[:merge]
+    ts = []
+    ARGV.each do | fn |
+      ts << TableReader::read_file(fn, options)
+    end
+    t = Merge::merge_tables(ts, options)
+    t.write(options)
+    exit
+  end
+
+  #
+  # We also support STDIN for the first 'file'. A non-blocking idea can
+  # be found here:
+  #
+  # http://eric.lubow.org/2010/ruby/multiple-input-locations-from-bash-into-ruby/
+  #
+
+  writer = 
+    if options[:format] == :rdf
+      BioTable::RDF::Writer.new(options[:blank_nodes])
     else
-      writer.write(TableRow.new(row[0],row[1..-1]),type)
+      BioTable::TableWriter::Writer.new(options[:format],options[:evaluate])
     end
-  end
-  options[:write_header] = false  # don't write the header for chained files
-end
 
-statistics.write(writer) if statistics
+  if INPUT_ON_STDIN
+    opts = options.dup # so we can 'safely' modify options
+    has_input = false
+    BioTable::TableLoader.emit(STDIN, opts).each do |row, type| 
+      writer.write(TableRow.new(row[0],row[1..-1]),type)
+      has_input = true
+    end
+    options[:write_header] = false if has_input  # don't write the header for chained files
+  end
+
+  statistics = if options[:statistics]
+                 BioTable::Statistics::Accumulate.new
+               else
+                 nil
+               end
+
+  ARGV.each do | fn |
+    opts = options.dup # so we can 'safely' modify options
+    f = File.open(fn,"r")
+    if not opts[:in_format] and fn =~ /\.csv$/
+      logger.debug "Autodetected CSV file"
+      opts[:in_format] = :csv
+    end
+    BioTable::TableLoader.emit(f, opts).each do |row,type| 
+      if statistics 
+        statistics.add(row,type)
+      else
+        writer.write(TableRow.new(row[0],row[1..-1]),type)
+      end
+    end
+    options[:write_header] = false  # don't write the header for chained files
+  end
+
+  statistics.write(writer) if statistics
+
+rescue => msg
+  $stderr.print "Error: ",msg
+  exit 1
+end
