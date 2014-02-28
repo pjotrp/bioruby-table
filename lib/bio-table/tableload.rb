@@ -9,7 +9,7 @@ module BioTable
     #
     # Note that you need to pass in :with_header to get the header row
     def TableLoader::emit generator, options = {}
-      table_apply = TableApply.new(options)
+      table_apply = TableApply.new(options) # parser and filters
       column_index = nil, prev_line = nil
       skip = options[:skip]
       skip = 0 if skip == nil

@@ -162,6 +162,7 @@ EOU
     
     o.on("--debug", "Show debug messages") do |v|
       Bio::Log::CLI.trace('debug')
+      options[:debug] = true
     end
 
     o.separator ""
@@ -282,6 +283,10 @@ EOU
   statistics.write(writer) if statistics
 
 rescue => msg
-  $stderr.print "Error: ",msg
-  exit 1
+  if options[:debug]
+    raise
+  else
+    $stderr.print "Error: ",msg
+    exit 1
+  end
 end
