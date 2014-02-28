@@ -16,9 +16,9 @@ module BioTable
         raise 
       end
       if (fields & original != fields.uniq) and (field & original != field.uniq)
-        p [:original,original]
-        p [:fields,fields]
-        p [:field,field]
+        $stderr.print [:original,original],"\n"
+        $stderr.print [:fields,fields],"\n"
+        $stderr.print [:field,field],"\n"
         raise "You can not rewrite both field and fields!"
       end
       field = fields if fields != original
