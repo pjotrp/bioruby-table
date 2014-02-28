@@ -2,7 +2,6 @@
 #
 # BioRuby bio-table Plugin BioTable
 # Author:: Pjotr Prins
-# Copyright:: 2012
 
 begin
 
@@ -13,13 +12,13 @@ begin
 
   INPUT_ON_STDIN = !$stdin.tty?
 
-  $stderr.print "bio-table "+_VERSION+" Copyright (C) 2012 Pjotr Prins <pjotr.prins@thebird.nl>\n\n"
+  $stderr.print "bio-table "+_VERSION+" Copyright (C) 2012-2014 Pjotr Prins <pjotr.prins@thebird.nl>\n\n"
 
   USAGE =<<EOU
 
   bio-table transforms, filters and reorders table files (CSV, tab-delimited).
 
-  EOU
+EOU
 
   if ARGV.size == 0 and not INPUT_ON_STDIN
     print USAGE
