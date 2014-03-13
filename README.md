@@ -186,6 +186,13 @@ Combine column values (more on rewrite below)
     bio-table table1.csv --rewrite "rowname = rowname + '-' + field[0]"
 ```
 
+To insert a table column simply add a tab, e.g., to inject a 
+column containing 'PATHWAY'
+
+```sh
+    bio-table table1.csv --rewrite 'field[0] = "PATHWAY\t"+field[0]'
+```
+
 To filter for columns using a regular expression
 
 ```sh
