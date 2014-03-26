@@ -174,6 +174,13 @@ in the table, use unshift headers, 0 becomes an 'ID' column
     bio-table table1.csv --unshift-headers --columns 0,1,8,2,4,6
 ```
 
+Another option will add fields to a row to get the same number of
+fields
+
+```sh
+    bio-table table1.csv --pad-fields
+```
+
 Duplicate columns with
 
 ```sh
