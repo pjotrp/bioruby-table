@@ -111,6 +111,10 @@ EOU
       options[:strip_quotes] = true
     end
 
+    o.on('--pad-fields','Add empty fields if a row is too short') do
+      options[:pad_fields] = true
+    end
+
     o.separator "\n\tTransform:\n\n"
 
     o.on('--transform-ids [downcase,upcase]',[:downcase,:upcase],'Transform column and row identifiers') do |par|

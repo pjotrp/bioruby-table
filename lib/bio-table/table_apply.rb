@@ -51,9 +51,13 @@ module BioTable
       return column_idx, new_header
     end
 
+    # Take a line as a string and return it as a tuple of rowname and datafields
     def parse_row(line_num, line, header, column_idx, prev_fields, options)
       fields = LineParser::parse(line, options[:in_format], options[:split_on])
       return nil,nil if fields.compact == []
+      if options[:pad_fields] and fields.size < header.size
+        fields += [''] * (header.size - fields.size) 
+      end
       fields = Formatter::strip_quotes(fields) if @strip_quotes
       fields = Formatter::transform_row_ids(@transform_ids, fields) if @transform_ids
       fields = Filter::apply_column_filter(fields,column_idx) 
