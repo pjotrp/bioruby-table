@@ -9,19 +9,19 @@ module BioTable
       if in_format == :csv
         CSV.parse(line)[0]
       elsif in_format == :split
-        line.strip.split(split_on).map { |field| 
+        line.split(split_on).map { |field| 
           fld = field.strip
           fld = nil if fld == "NA"
           fld
         }
       elsif in_format == :regex
-        line.strip.split(/#{split_on}/).map { |field| 
+        line.split(/#{split_on}/).map { |field| 
           fld = field.strip
           fld = nil if fld == "NA"
           fld
         }
       else
-        line.strip.split("\t").map { |field| 
+        line.split("\t").map { |field| 
           fld = field.strip
           fld = nil if fld == "NA"
           fld
