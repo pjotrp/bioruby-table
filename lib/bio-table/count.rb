@@ -12,25 +12,23 @@ module BioTable
       # type is :header or :row
       def add row, type, flush: false
         return row+["count"] if type == :header
+        num = @rows.size
         prev = @rows.last
         if flush
-          prev
+          prev+[num]
         else
           # Take the list and compare each item to the previous row
-          same = if prev
-                   @list.reduce(true) { |memo,i| row[i]==prev[i] }
-                 else
-                   false
-                 end
-          if not same
-            num = @rows.size
+          prev_same = if prev
+                        @list.reduce(true) { |memo,i| memo && (row[i]==prev[i]) }
+                      else
+                        false
+                      end
+          if prev_same
+            @rows << row
+          else
             @rows = []
             @rows << row
-            if prev
-              return prev+[num]
-            end
-          else
-            @rows << row
+            return prev+[num] if prev
           end
           nil
         end

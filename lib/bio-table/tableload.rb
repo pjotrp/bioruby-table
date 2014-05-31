@@ -19,6 +19,7 @@ module BioTable
         generator.each_with_index do |line, line_num|
           # p [line_num, line]
           if line_num-skip == 0
+            # ---- This is the header section
             header = table_apply.parse_header(line, options)
             # Validator::valid_header?(header, @header)  # compare against older header when merging
             column_index,header = table_apply.column_index(header) # we may rewrite the header
