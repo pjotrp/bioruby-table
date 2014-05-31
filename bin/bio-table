@@ -264,7 +264,11 @@ EOU
     opts = options.dup # so we can 'safely' modify options
     has_input = false
     BioTable::TableLoader.emit(STDIN, opts).each do |row, type| 
-      writer.write(TableRow.new(row[0],row[1..-1]),type)
+      if statistics 
+        statistics.add(row,type)
+      else
+        writer.write(TableRow.new(row[0],row[1..-1]),type)
+      end
       has_input = true
     end
     options[:write_header] = false if has_input  # don't write the header for chained files
@@ -279,7 +283,7 @@ EOU
   ARGV.each do | fn |
     opts = options.dup # so we can 'safely' modify options
     f = File.open(fn,"r")
-    if not opts[:in_format] and fn =~ /\.csv$/
+    if not opts[:in_format] and fn =~ /\.csv$/i
       logger.debug "Autodetected CSV file"
       opts[:in_format] = :csv
     end
