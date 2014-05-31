@@ -54,3 +54,5 @@ Gemfile.lock
 *.tab
 *.new
 *.tsv
+TAGS
+*.csv
