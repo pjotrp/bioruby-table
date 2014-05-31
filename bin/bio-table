@@ -260,6 +260,12 @@ EOU
       BioTable::TableWriter::Writer.new(options[:format],options[:evaluate])
     end
 
+  statistics = if options[:statistics]
+                 BioTable::Statistics::Accumulate.new
+               else
+                 nil
+               end
+
   if INPUT_ON_STDIN
     opts = options.dup # so we can 'safely' modify options
     has_input = false
@@ -273,12 +279,6 @@ EOU
     end
     options[:write_header] = false if has_input  # don't write the header for chained files
   end
-
-  statistics = if options[:statistics]
-                 BioTable::Statistics::Accumulate.new
-               else
-                 nil
-               end
 
   ARGV.each do | fn |
     opts = options.dup # so we can 'safely' modify options
