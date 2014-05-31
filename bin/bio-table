@@ -262,20 +262,26 @@ EOU
 
   statistics = if options[:statistics]
                  BioTable::Statistics::Accumulate.new
-               else
-                 nil
+               end
+  count      = if options[:count]
+                 BioTable::Count::CountTracker.new(options[:count])
                end
 
   opts = options.dup # so we can 'safely' modify options
   has_input = false
   walk_table = lambda { |f|
-    BioTable::TableLoader.emit(f, opts).each do |row, type| 
+    BioTable::TableLoader.emit(f, opts).each do |row, type| # type is :header or :row
       if statistics 
         statistics.add(row,type)
       else
-        writer.write(TableRow.new(row[0],row[1..-1]),type)
+        row = count.add(row,type) if count # merge and count
+        writer.write(TableRow.new(row[0],row[1..-1]),type) if row
       end
       has_input = true
+    end
+    if count
+      row = count.add(row,:row,flush: true)
+      writer.write(TableRow.new(row[0],row[1..-1]),:row) if row
     end
     options[:write_header] = false if has_input  # don't write the header for chained files
   }

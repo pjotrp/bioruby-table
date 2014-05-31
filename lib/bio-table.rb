@@ -30,5 +30,6 @@ require 'bio-table/parsers/fastareader.rb'
 
 module BioTable
   autoload :Statistics,'bio-table/statistics'
+  autoload :Count,'bio-table/count'
 end
 
