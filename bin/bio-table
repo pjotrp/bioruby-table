@@ -266,10 +266,10 @@ EOU
                  nil
                end
 
-  if INPUT_ON_STDIN
-    opts = options.dup # so we can 'safely' modify options
-    has_input = false
-    BioTable::TableLoader.emit(STDIN, opts).each do |row, type| 
+  opts = options.dup # so we can 'safely' modify options
+  has_input = false
+  walk_table = lambda { |f|
+    BioTable::TableLoader.emit(f, opts).each do |row, type| 
       if statistics 
         statistics.add(row,type)
       else
@@ -278,6 +278,10 @@ EOU
       has_input = true
     end
     options[:write_header] = false if has_input  # don't write the header for chained files
+  }
+
+  if INPUT_ON_STDIN
+    walk_table.call(STDIN)
   end
 
   ARGV.each do | fn |
@@ -287,14 +291,7 @@ EOU
       logger.debug "Autodetected CSV file"
       opts[:in_format] = :csv
     end
-    BioTable::TableLoader.emit(f, opts).each do |row,type| 
-      if statistics 
-        statistics.add(row,type)
-      else
-        writer.write(TableRow.new(row[0],row[1..-1]),type)
-      end
-    end
-    options[:write_header] = false  # don't write the header for chained files
+    walk_table.call(f)
   end
 
   statistics.write(writer) if statistics
