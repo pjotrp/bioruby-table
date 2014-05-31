@@ -38,6 +38,7 @@ Features:
 * Calculate new values
 * Calculate column statistics (mean, standard deviation)
 * Diff between tables, selecting on specific column values
+* Count elements in columns
 * Merge tables side by side on column value/rowname
 * Split/reduce tables by column
 * Write formatted tables, e.g. HTML, LaTeX
@@ -233,6 +234,29 @@ Another option is to use (lazy) values:
 ```
 
 which saves the typing to to_f.
+
+Another feature is counting column elements. With
+
+```sh
+    bio-table table1.csv --count 0,1,4
+```
+
+All records are combined that have the same rowname and values in
+columns 0 and 3. In addition a column is added counting the number of
+merged rows. So,
+
+```
+    hs8     48713371        53713371        G       SAMPLE005
+    hs8     48713371        53713371        G       SAMPLE005
+    hs9     136643994       141643994       C       SAMPLE005
+```
+
+becomes
+
+```
+    hs8     48713371        53713371        G       SAMPLE005    2
+    hs9     136643994       141643994       C       SAMPLE005    1
+```
 
 ### Statistics
 

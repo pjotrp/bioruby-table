@@ -51,6 +51,10 @@ EOU
       options[:rewrite] = par
     end
 
+    o.on('--count list', Array, 'Merge and count similar rows') do |list|
+      options[:count] = list
+    end
+
     o.on('--columns list', Array, 'List of column names or indices') do |l|
       options[:columns] = l
     end
