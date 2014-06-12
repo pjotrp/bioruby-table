@@ -47,7 +47,7 @@ EOU
       options[:filter] = par
     end
 
-    o.on('--rewrite expression', 'Rewrite function') do |par|
+    o.on('--rewrite expression', String, 'Rewrite function') do |par|
       options[:rewrite] = par
     end
 
@@ -291,6 +291,7 @@ EOU
   end
 
   ARGV.each do | fn |
+    $stderr.print "Reading <#{fn}>\n" if options[:debug]
     opts = options.dup # so we can 'safely' modify options
     f = File.open(fn,"r")
     if not opts[:in_format] and fn =~ /\.csv$/i
