@@ -24,7 +24,7 @@ even better, you can use the actual column name
     bio-table table1.csv --num-filter "fdr <= 0.05"
 ```
 
-bio-table should be lazy. And be good for big data, bio-table is
+bio-table is lazy where it can be. And bio-table should be good for big data, bio-table is
 designed so that most important functions do not load the data in
 memory. The library supports a functional style of programming, but
 you don't need to know Ruby to use the command line interface (CLI).
@@ -53,9 +53,6 @@ Features:
 and bio-table is pretty fast. To convert a 3Mb file of 18670 rows
 takes 0.87 second with Ruby 1.9. Adding a filter makes it parse at 0.95 second on
 my 3.2 GHz desktop (with preloaded disk cache).
-
-Note: this software is under active development, though what is
-documented here should just work.
 
 ## Installation
 
