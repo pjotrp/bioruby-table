@@ -8,7 +8,7 @@ gem "bio-logger"
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
 group :development do
-  gem "rspec-expectations", ">= 2.9"
+  gem "rspec-expectations", "2.99"
   gem "cucumber"
   gem "bundler"
   gem "jeweler", "~> 2.0.0"

@@ -4,5 +4,11 @@ rvm:
   - 2.1.0 
   - ruby-head
 #  - jruby-head
+
+before_script:
+  - bundle exec gem env
+  - bundle exec gem list
+
 # uncomment this line if your project needs to run something other than `rake`:
 # script: bundle exec rspec spec
+
