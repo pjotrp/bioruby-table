@@ -8,5 +8,5 @@ When /^I execute "(.*?)"$/ do |arg1|
 end
 
 Then /^I expect the named output to match "(.*?)"$/ do |arg1|
-  RegressionTest::CliExec::exec(@cmd,arg1).should be_true
+  expect(RegressionTest::CliExec::exec(@cmd,arg1)).to be_true
 end

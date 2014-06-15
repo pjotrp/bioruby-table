@@ -15,6 +15,7 @@ $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../../lib')
 require 'bio-table'
 
 require 'rspec/expectations'
+World(RSpec::Matchers)
 
 log = Bio::Log::LoggerPlus.new 'bio-table'
 log.level = Bio::Log::DEBUG
