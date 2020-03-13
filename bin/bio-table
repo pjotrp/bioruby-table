@@ -7,6 +7,7 @@ begin
 
   rootpath = File.dirname(File.dirname(__FILE__))
   $: << File.join(rootpath,'lib')
+  $: << File.join(rootpath,'../bioruby-logger/lib')
 
   _VERSION = File.new(File.join(rootpath,'VERSION')).read.chomp
 
@@ -63,7 +64,7 @@ EOU
       options[:column_filter] = par
     end
 
-    o.on('--merge','Merge tables by rowname') do 
+    o.on('--merge','Merge tables by rowname') do
       options[:merge] = true
     end
 
@@ -82,8 +83,8 @@ EOU
       end
       options[:overlap] = l
     end
-    
-    o.on('--merge','Merge tables by rowname') do 
+
+    o.on('--merge','Merge tables by rowname') do
       options[:merge] = true
     end
 
@@ -126,7 +127,7 @@ EOU
     end
 
     o.separator "\n\tFormat and options:\n\n"
-    
+
     o.on('--in-format [tab,csv,split,regex]', [:tab, :csv, :split, :regex], 'Input format (default tab)') do |par|
       options[:in_format] = par.to_sym
     end
@@ -147,16 +148,16 @@ EOU
       options[:fasta] = regex
     end
 
-    o.on('--blank-nodes','Output (RDF) blank nodes - allowing for duplicate row names') do 
+    o.on('--blank-nodes','Output (RDF) blank nodes - allowing for duplicate row names') do
       options[:blank_nodes] = true
     end
 
-    o.on('--statistics','Output column statistics') do 
+    o.on('--statistics','Output column statistics') do
       options[:statistics] = true
     end
-   
+
     o.separator "\n\tVerbosity:\n\n"
-    
+
     o.on("--logger filename",String,"Log to file (default stderr)") do | name |
       Bio::Log::CLI.logger(name)
     end
@@ -164,15 +165,15 @@ EOU
     o.on("--trace options",String,"Set log level (default INFO, see bio-logger)") do | s |
       Bio::Log::CLI.trace(s)
     end
-    
+
     o.on("-q", "--quiet", "Run quietly") do |q|
       Bio::Log::CLI.trace('error')
     end
-    
+
     o.on("-v", "--verbose", "Run verbosely") do |v|
       Bio::Log::CLI.trace('info')
     end
-    
+
     o.on("--debug", "Show debug messages") do |v|
       Bio::Log::CLI.trace('debug')
       options[:debug] = true
@@ -188,7 +189,7 @@ EOU
   begin
     opts.parse!(ARGV)
 
-    if options[:show_help] 
+    if options[:show_help]
       print opts
       print USAGE
     end
@@ -253,7 +254,7 @@ EOU
   # http://eric.lubow.org/2010/ruby/multiple-input-locations-from-bash-into-ruby/
   #
 
-  writer = 
+  writer =
     if options[:format] == :rdf
       BioTable::RDF::Writer.new(options[:blank_nodes])
     else
@@ -271,7 +272,7 @@ EOU
   has_input = false
   walk_table = lambda { |f|
     BioTable::TableLoader.emit(f, opts).each do |row, type| # type is :header or :row
-      if statistics 
+      if statistics
         statistics.add(row,type)
       else
         row = count.add(row,type) if count # merge and count
